@@ -2,7 +2,7 @@
 
 
 ## Project Synopsis
-At the moment, we plan to develop an app for Android
+Based on our team's collective skills, we plan to build an Android app that centers around one of our many interests - we still need to brainstorm which one.
 
 
 ## Team Members
@@ -19,7 +19,7 @@ Member | Skills | Personal Traits | Desired Growth | Weaknesses
 --- | --- | --- | --- | ---
 Paulina | Game dev, Android app dev, UI design & prototyping, Web dev, API design & dev | Dependent on time schedules/personally set deadlines, Appreciates organized & focused meetings, Open communicator | Better design/front-end skills, Using APIs for more advanced use cases | Database manipulation, sending too many messages to a group chat at once
 Richard | Web Dev, Android Programming, Game Design, Marketing + Storytelling, Project Management, Figma prototyping | Planning ahead, thinking big picture, clean + cohesive design | Design skills | Low level systems
-Maribel | Robotics, Electronics & hardware, Git Version Control, Algorithms & data analysis, Web Dev, Digital Design | Timely, a morning person, team oriented |  | 
+Maribel | AI/ML, Python, C++, Math, Robotics Research | Meticulous, detail oriented, time-management | Public speaking, leadership | Decisive leadership, public speaking, lacks impromptu creativity
 Jorge | Graphics, Computer Vision, NLP, Android App Dev, git version control, Game Dev (Unity) | Organized, team oriented, timely, decisive | Web development, UI | Public speaking, getting hung up on details
 
 ## Team Communication  
