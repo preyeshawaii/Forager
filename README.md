@@ -9,7 +9,7 @@ Based on our team's collective skills, we plan to build an Android app that cent
 
 Member | Photograph
 --- | ---
-Paulina Reyes | <img src="img/rachel-hyon.jpg" alt="Paulina Reyes" title="Paulina Reyes" width="150">
+Paulina Reyes | <img src="img/paulinareyesphoto.jpg" alt="Paulina Reyes" title="Paulina Reyes" width="150">
 Richard Verdin | <img src="img/cindy-jiang.png" alt="Richard Verdin" title="Richard Verdin" width="150">
 Maribel Cardiel | <img src="img/james-li.jpg" alt="Maribel Cardiel" title="Maribel Cardiel" width="150">
 Jorge Avelar-Lopez | <img src="img/po-tsui.jpg" alt="Jorge Avelar-Lopez" title="Jorge Avelar-Lopez" width="150">
