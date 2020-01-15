@@ -20,7 +20,7 @@ Member | Skills | Personal Traits | Desired Growth | Weaknesses
 Paulina | Computer Graphics, Game Dev, UI design | Team oriented, open-minded/open to ideas | Full stack web development | Generating ideas, programming, chocolate
 Richard | Python, AI/ML, backend, Android (minimal), Unity/C# (game dev) | Sensitive to work environment, organized | Communication, frontend, organized documentation | Public speaking, team communication, making decisions, chocolate
 Maribel | AI/ML, Python, C++, Math, Robotics Research | Meticulous, detail oriented, time-management | Public speaking, leadership | Decisive leadership, public speaking, lacks impromptu creativity
-Jorge | Computer Graphics, Computer Vision, NLP, Android App Dev, git version control, Game Dev (Unity) | Organized, team oriented, timely, decisive | Web development, UI | Public speaking, getting hung on details
+Jorge | Graphics, Computer Vision, NLP, Android App Dev, git version control, Game Dev (Unity) | Organized, team oriented, timely, decisive | Web development, UI | Public speaking, getting hung on details
 
 ## Team Communication  
 1. Emails: preyeshi@, rverdin@, mcardiel@, avelar98@
