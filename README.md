@@ -17,10 +17,10 @@ Jorge Avelar-Lopez | <img src="img/po-tsui.jpg" alt="Jorge Avelar-Lopez" title="
 ## Team Skills Matrix
 Member | Skills | Personal Traits | Desired Growth | Weaknesses
 --- | --- | --- | --- | ---
-Paulina | Game Dev, UI design | Team oriented, open-minded/open to ideas | Full stack web development | Generating ideas, programming, chocolate
-Richard | Python, AI/ML, backend, Android (minimal), Unity/C# (game dev) | Sensitive to work environment, organized | Communication, frontend, organized documentation | Public speaking, team communication, making decisions, chocolate
+Paulina | Computer Graphics, Game Dev, UI design | Team oriented, open-minded/open to ideas | Full stack web development | Generating ideas, programming, chocolate
+Richard | Web Dev, Android Programming, Game Design, Marketing + Storytelling, Project Management, Figma prototyping | Planning ahead, thinking big picture, clean + cohesive design | Design skills | systems,  
 Maribel | AI/ML, Python, C++, Math, Robotics Research | Meticulous, detail oriented, time-management | Public speaking, leadership | Decisive leadership, public speaking, lacks impromptu creativity
-Jorge | Graphics, Computer Vision, NLP, Android App Dev, git version control, Game Dev (Unity) | Organized, team oriented, timely, decisive | Web development, UI | Public speaking, getting hung on details
+Jorge | Graphics, Computer Vision, NLP, Android App Dev, git version control, Game Dev (Unity) | Organized, team oriented, timely, decisive | Web development, UI | Public speaking, getting hung up on details
 
 ## Team Communication  
 1. Emails: preyeshi@, rverdin@, mcardiel@, avelar98@
