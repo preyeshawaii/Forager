@@ -9,10 +9,10 @@ Based on our team's collective skills, we plan to build an Android app that cent
 
 Member | Photograph
 --- | ---
-Paulina Reyes | <img src="paulinareyesphoto.jpg" alt="Paulina Reyes" title="Paulina Reyes" width="150">
-Richard Verdin | <img src="Richard Portrait.jpg" alt="Richard Verdin" title="Richard Verdin" width="150">
-Maribel Cardiel | <img src="IMG_4485.JPG" alt="Maribel Cardiel" title="Maribel Cardiel" width="150">
-Jorge Avelar-Lopez | <img src="6139861_Avelar-Lopez_KATZQ_Photo.jpg" alt="Jorge Avelar-Lopez" title="Jorge Avelar-Lopez" width="150">
+Paulina Reyes | <img src="team_images/paulinareyesphoto.jpg" alt="Paulina Reyes" title="Paulina Reyes" width="150">
+Richard Verdin | <img src="team_images/Richard Portrait.jpg" alt="Richard Verdin" title="Richard Verdin" width="150">
+Maribel Cardiel | <img src="team_images/IMG_4485.JPG" alt="Maribel Cardiel" title="Maribel Cardiel" width="150">
+Jorge Avelar-Lopez | <img src="team_images/6139861_Avelar-Lopez_KATZQ_Photo.jpg" alt="Jorge Avelar-Lopez" title="Jorge Avelar-Lopez" width="150">
 
 ## Team Skills Matrix
 Member | Skills | Personal Traits | Desired Growth | Weaknesses
@@ -28,4 +28,3 @@ Jorge | Graphics, Computer Vision, NLP, Android App Dev, Git Version Control, Ga
 2. For project work - [Github](https://github.com/orgs/StanfordCS194/teams/team-15/)
 
 3. Between teammates - Facebook Messenger
-
