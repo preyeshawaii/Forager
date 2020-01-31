@@ -9,6 +9,8 @@ import android.util.Log;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -18,18 +20,31 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String KEY_ORGANIZER = "organizer";
+    private static final String KEY_PLAYER = "player";
+
     private Button signOutButton;
+    private String userType;
+
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     private int RC_SIGN_IN = 1;
     private  String TAG = "MainActivity";
 
@@ -41,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         signInButton = findViewById(R.id.sign_in_button);
         signOutButton = findViewById(R.id.sign_out);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -65,12 +81,16 @@ public class MainActivity extends AppCompatActivity {
                 signOutButton.setVisibility(View.GONE);
             }
         });
-
     }
 
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        RadioGroup userType = findViewById(R.id.radioGroup_userType);
+        if (userType.getCheckedRadioButtonId() == -1)
+            Toast.makeText(MainActivity.this, "Select User Type", Toast.LENGTH_LONG).show();
+        else{
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        }
     }
 
     @Override
@@ -129,9 +149,47 @@ public class MainActivity extends AppCompatActivity {
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
 
-            Toast.makeText(this, "User Name: " + personName, Toast.LENGTH_LONG).show();
+            final String userID = mAuth.getCurrentUser().getUid();
+
+            DocumentReference documentReference;
+            documentReference = db.collection(userType + "s").document(userID);
+            Map<String, Object>  user = new HashMap<>();
+            user.put("fullName", personName);
+            user.put("email", personEmail);
+            user.put("userType", userType );
+            user.put("userId", userID );
+
+            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "onSuccess: Created profile successfully for user: " + userID);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
+
+            Toast.makeText(this, "User Name: " + personName + ", User Type: " + userType, Toast.LENGTH_LONG).show();
+
         }
+    }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
 
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_organizer:
+                if (checked)
+                    userType = KEY_ORGANIZER;
+                    break;
+            case R.id.radio_player:
+                if (checked)
+                    userType = KEY_PLAYER;
+                    break;
+        }
     }
 }
