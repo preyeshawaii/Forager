@@ -9,14 +9,13 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class PlayerGamesListActivity extends AppCompatActivity {
-
+public class OrganizerLandingActivity extends AppCompatActivity {
     private Button signOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_games_list);
+        setContentView(R.layout.activity_organizer_landing);
 
         signOutButton = findViewById(R.id.sign_out);
 
@@ -25,9 +24,11 @@ public class PlayerGamesListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(PlayerGamesListActivity.this, MainActivity.class);
+                Intent intent = new Intent(OrganizerLandingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
     }
+
+
 }

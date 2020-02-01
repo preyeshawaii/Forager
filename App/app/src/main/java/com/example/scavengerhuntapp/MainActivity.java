@@ -187,12 +187,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openOrganizerGamesListActivity(){
-        Intent intent = new Intent(this, OrganizerGamesListActivity.class);
+        Intent intent = new Intent(this, OrganizerLandingActivity.class);
         startActivity(intent);
     }
 
     public void openPlayerGamesListActivity(){
-        Intent intent = new Intent(this, PlayerGamesListActivity.class);
+        Intent intent = new Intent(this, PlayerLandingActivity.class);
         startActivity(intent);
     }
 }
