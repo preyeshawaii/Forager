@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -38,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_ORGANIZER = "organizer";
     private static final String KEY_PLAYER = "player";
 
-    private Button signOutButton;
     private String userType;
-
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         signInButton = findViewById(R.id.sign_in_button);
-        signOutButton = findViewById(R.id.sign_out);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -70,27 +66,20 @@ public class MainActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signIn();
-            }
-        });
-
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                signOutButton.setVisibility(View.GONE);
+                RadioGroup userType = findViewById(R.id.radioGroup_userType);
+                if (userType.getCheckedRadioButtonId() == -1)
+                    Toast.makeText(MainActivity.this, "Select User Type", Toast.LENGTH_LONG).show();
+                else {
+                    signIn();
+                }
             }
         });
     }
 
     private void signIn() {
-        RadioGroup userType = findViewById(R.id.radioGroup_userType);
-        if (userType.getCheckedRadioButtonId() == -1)
-            Toast.makeText(MainActivity.this, "Select User Type", Toast.LENGTH_LONG).show();
-        else{
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
-        }
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     @Override
@@ -138,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser fUser){
-        signOutButton.setVisibility(View.VISIBLE);
-
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
             String personName = acct.getDisplayName();
@@ -173,6 +160,12 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, "User Name: " + personName + ", User Type: " + userType, Toast.LENGTH_LONG).show();
 
+            if (userType == KEY_ORGANIZER){
+                openOrganizerGamesListActivity();
+            } else{
+                openPlayerGamesListActivity();
+            }
+
         }
     }
 
@@ -191,5 +184,15 @@ public class MainActivity extends AppCompatActivity {
                     userType = KEY_PLAYER;
                     break;
         }
+    }
+
+    public void openOrganizerGamesListActivity(){
+        Intent intent = new Intent(this, OrganizerGamesListActivity.class);
+        startActivity(intent);
+    }
+
+    public void openPlayerGamesListActivity(){
+        Intent intent = new Intent(this, PlayerGamesListActivity.class);
+        startActivity(intent);
     }
 }
