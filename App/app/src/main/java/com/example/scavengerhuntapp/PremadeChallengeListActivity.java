@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class PremadeTaskListActivity extends AppCompatActivity {
+public class PremadeChallengeListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_premade_task_list);
+        setContentView(R.layout.activity_premade_challenge_list);
     }
 }
