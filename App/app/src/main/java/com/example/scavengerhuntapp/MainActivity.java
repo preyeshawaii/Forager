@@ -28,14 +28,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String KEY_ORGANIZER = "organizer";
-    private static final String KEY_PLAYER = "player";
+    static final String KEY_ORGANIZER = "organizer";
+    static final String KEY_PLAYER = "player";
 
     private String userType;
     private SignInButton signInButton;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private int RC_SIGN_IN = 1;
     private  String TAG = "MainActivity";
+
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,46 +132,92 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser fUser){
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        final GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
+            userID = mAuth.getCurrentUser().getUid();
 
-            final String userID = mAuth.getCurrentUser().getUid();
+            final DocumentReference documentReference = db.collection(userType + "s").document(userID);
+            db.collection(userType + "s").document(userID).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()){
+                                Log.w(TAG, "Loading user information");
+                                loadUser();
 
-            DocumentReference documentReference;
-            documentReference = db.collection(userType + "s").document(userID);
-            Map<String, Object>  user = new HashMap<>();
-            user.put("fullName", personName);
-            user.put("email", personEmail);
-            user.put("userType", userType );
-            user.put("userId", userID );
-
-            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "onSuccess: Created profile successfully for user: " + userID);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
-                }
-            });
-
-            Toast.makeText(this, "User Name: " + personName + ", User Type: " + userType, Toast.LENGTH_LONG).show();
-
-            if (userType == KEY_ORGANIZER){
-                openOrganizerGamesListActivity();
-            } else{
-                openPlayerGamesListActivity();
-            }
+                            } else{
+                                Log.w(TAG, "Creating new user");
+                                createNewUser(acct, documentReference);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, e.toString());
+                        }
+                    });
 
         }
+    }
+
+    public void loadUser(){
+        Log.d(TAG, "Loaded user: " + userID);
+        Toast.makeText(getApplicationContext(), "Logged in as an " + userType, Toast.LENGTH_LONG).show();
+
+        if (userType == KEY_ORGANIZER){
+            openOrganizerGamesListActivity();
+        } else{
+            openPlayerGamesListActivity();
+        }
+    }
+
+    public void createNewUser(GoogleSignInAccount acct, DocumentReference documentReference){
+        String personName = acct.getDisplayName();
+        String personGivenName = acct.getGivenName();
+        String personFamilyName = acct.getFamilyName();
+        String personEmail = acct.getEmail();
+        String personId = acct.getId();
+        Uri personPhoto = acct.getPhotoUrl();
+        List<String> emptyHuntsList = new ArrayList<String>();
+
+        Map<String, Object>  user = new HashMap<>();
+        user.put("fullName", personName);
+        user.put("email", personEmail);
+        user.put("userType", userType );
+        user.put("userId", userID );
+        user.put("previousHunts", emptyHuntsList);
+        user.put("currentHunt", "");
+
+        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: Created profile successfully for user: " + userID);
+
+                Toast.makeText(getApplicationContext(), "Created an " + userType, Toast.LENGTH_LONG).show();
+
+                if (userType == KEY_ORGANIZER){
+                    openOrganizerGamesListActivity();
+                } else{
+                    openPlayerGamesListActivity();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.toString());
+            }
+        });
+    }
+
+    public void openOrganizerGamesListActivity(){
+        Intent intent = new Intent(this, OrganizerLandingActivity.class);
+        startActivity(intent);
+    }
+
+    public void openPlayerGamesListActivity(){
+        Intent intent = new Intent(this, PlayerLandingActivity.class);
+        startActivity(intent);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -178,21 +229,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radio_organizer:
                 if (checked)
                     userType = KEY_ORGANIZER;
-                    break;
+                break;
             case R.id.radio_player:
                 if (checked)
                     userType = KEY_PLAYER;
-                    break;
+                break;
         }
-    }
-
-    public void openOrganizerGamesListActivity(){
-        Intent intent = new Intent(this, OrganizerLandingActivity.class);
-        startActivity(intent);
-    }
-
-    public void openPlayerGamesListActivity(){
-        Intent intent = new Intent(this, PlayerLandingActivity.class);
-        startActivity(intent);
     }
 }
