@@ -4,10 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".PremadeHuntsActivity">
-    <TextView android:id="@+id/text"
+    <TextView android:id="@+id/locations_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Locations:" />
+        android:text="@string/locations_text"
+        style="@style/HeadingText"/>
+    <ListView
+        android:id="@+id/locations_list"
+        android:layout_width="wrap_content"
+        android:layout_height="386dp" />
 
 </LinearLayout>

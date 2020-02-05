@@ -8,6 +8,9 @@
     <string name="premade_chall_button">Add pre-made challenge</string>
     <string name="create_hunt_button">Create hunt</string>
     <string name="custom_chall_et">Enter custom challenge</string>
+    <string name="locations_text">Locations:</string>
+    <string name="add_to_hunt_button">Add to hunt</string>
+
 
 
 </resources>
