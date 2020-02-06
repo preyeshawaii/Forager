@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Scavenger Hunt App</string>
+
+    <!--Create Hunt strings-->
+    <string name="hunt_name_et">Hunt Name</string>
+    <string name="challenges_text">Challenges:</string>
+    <string name="custom_chall_button">Add custom challenge</string>
+    <string name="premade_chall_button">Add pre-made challenge</string>
+    <string name="create_hunt_button">Create hunt</string>
+    <string name="custom_chall_et">Enter custom challenge</string>
+    <string name="locations_text">Locations:</string>
+    <string name="add_to_hunt_button">Add to hunt</string>
+
+
+
 </resources>
