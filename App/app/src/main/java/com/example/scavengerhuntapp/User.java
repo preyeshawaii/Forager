@@ -55,4 +55,8 @@ public class User {
     public List<String> getPreviousHuntIDs() {
         return previousHuntIDs;
     }
+
+    public void addHunt(String newHunt){
+        this.previousHuntIDs.add(newHunt);
+    }
 }

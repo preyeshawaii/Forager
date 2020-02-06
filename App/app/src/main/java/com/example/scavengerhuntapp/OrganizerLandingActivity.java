@@ -72,33 +72,41 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadInfo();
+    }
+
+    private void loadInfo(){
         previousHuntNames = new ArrayList<>();
 
         db.collection(User.KEY_ORGANIZERS).document(mAuth.getCurrentUser().getUid()).get()
-            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    Log.w(TAG, mAuth.getCurrentUser().getUid());
-                    if (documentSnapshot.exists()){
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.w(TAG, mAuth.getCurrentUser().getUid());
+                        if (documentSnapshot.exists()){
 
-                        previousHuntIDs = (List<String>)documentSnapshot.get(User.KEY_PREVIOUS_HUNT_IDS);
-                        Log.w(TAG, previousHuntIDs.toString());
-                        CreatePreviousListView();
+                            previousHuntIDs = (List<String>)documentSnapshot.get(User.KEY_PREVIOUS_HUNT_IDS);
+                            Log.w(TAG, previousHuntIDs.toString());
+                            CreatePreviousListView();
 
-                        String currentHunt = (String)documentSnapshot.get(User.KEY_CURRENT_HUNT);
-                        CreateCurrentListView(currentHunt);
-                    } else{
-                        Log.w(TAG, "Organizer does not exist");
+                            String currentHunt = (String)documentSnapshot.get(User.KEY_CURRENT_HUNT);
+                            CreateCurrentListView(currentHunt);
+                        } else{
+                            Log.w(TAG, "Organizer does not exist");
+                        }
                     }
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, e.toString());
-                }
-            });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
     }
 
     private void CreatePreviousListView(){
@@ -110,13 +118,15 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                         Log.w(TAG, documentSnapshot.getId());
 
 
-                        previousHuntNames.add((String)documentSnapshot.get(Hunt.KEY_HUNTS));
+                        previousHuntNames.add((String)documentSnapshot.get(Hunt.KEY_HUNT_NAME));
                     }
                 }
 
                 if (previousHuntNames.size() == 0){
+                    Log.w(TAG, "No hunts found");
                     noPrevHuntsView.setVisibility(View.VISIBLE);
                 } else{
+                    Log.w(TAG, previousHuntNames.size() + " hunt(s) found");
                     ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<String >(getApplicationContext(),
                             android.R.layout.simple_list_item_1, previousHuntNames);
                     previousHuntsListView.setAdapter(prevHuntNamesArray);

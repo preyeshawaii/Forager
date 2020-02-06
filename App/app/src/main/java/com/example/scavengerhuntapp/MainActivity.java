@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 RadioGroup userType = findViewById(R.id.radioGroup_userType);
                 if (userType.getCheckedRadioButtonId() == -1)
-                    Toast.makeText(MainActivity.this, "Select User Type", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Select User Type", Toast.LENGTH_SHORT).show();
                 else {
                     signIn();
                 }
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadUser(){
         Log.d(TAG, "Loaded user: " + user.getUserID());
-        Toast.makeText(getApplicationContext(), "Logged in as an " + userType, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Logged in as an " + userType, Toast.LENGTH_SHORT).show();
 
         if (userType == ORGANIZER){
             openOrganizerGamesListActivity();
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "onSuccess: Created profile successfully for user: " + user.getUserID());
 
-                Toast.makeText(getApplicationContext(), "Created an " + userType, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Created an " + userType, Toast.LENGTH_SHORT).show();
 
                 if (userType == ORGANIZER){
                     openOrganizerGamesListActivity();
