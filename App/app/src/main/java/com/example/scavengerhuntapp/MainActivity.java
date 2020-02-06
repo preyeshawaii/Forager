@@ -37,18 +37,19 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    static final String KEY_ORGANIZER = "organizer";
-    static final String KEY_PLAYER = "player";
+    static final String ORGANIZER = "organizer";
+    static final String PLAYER = "player";
 
-    private String userType;
+
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private int RC_SIGN_IN = 1;
     private  String TAG = "MainActivity";
+    private int RC_SIGN_IN = 1;
 
-    private String userID;
+    private String userType;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            loadOrCreateNewUser(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -131,23 +132,25 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateUI(FirebaseUser fUser){
-        final GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+    private void loadOrCreateNewUser(FirebaseUser fUser){
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
-            userID = mAuth.getCurrentUser().getUid();
 
+            String userID = mAuth.getCurrentUser().getUid();
             final DocumentReference documentReference = db.collection(userType + "s").document(userID);
+
             db.collection(userType + "s").document(userID).get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()){
                                 Log.w(TAG, "Loading user information");
+                                user = documentSnapshot.toObject(User.class);
                                 loadUser();
 
                             } else{
                                 Log.w(TAG, "Creating new user");
-                                createNewUser(acct, documentReference);
+                                createNewUser(documentReference);
                             }
                         }
                     })
@@ -162,41 +165,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadUser(){
-        Log.d(TAG, "Loaded user: " + userID);
+        Log.d(TAG, "Loaded user: " + user.getUserID());
         Toast.makeText(getApplicationContext(), "Logged in as an " + userType, Toast.LENGTH_LONG).show();
 
-        if (userType == KEY_ORGANIZER){
+        if (userType == ORGANIZER){
             openOrganizerGamesListActivity();
         } else{
             openPlayerGamesListActivity();
         }
     }
 
-    public void createNewUser(GoogleSignInAccount acct, DocumentReference documentReference){
-        String personName = acct.getDisplayName();
-        String personGivenName = acct.getGivenName();
-        String personFamilyName = acct.getFamilyName();
-        String personEmail = acct.getEmail();
-        String personId = acct.getId();
-        Uri personPhoto = acct.getPhotoUrl();
-        List<String> emptyHuntsList = new ArrayList<String>();
+    public void createNewUser(DocumentReference documentReference){
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        String userID = mAuth.getCurrentUser().getUid();
 
-        Map<String, Object>  user = new HashMap<>();
-        user.put("fullName", personName);
-        user.put("email", personEmail);
-        user.put("userType", userType );
-        user.put("userId", userID );
-        user.put("previousHunts", emptyHuntsList);
-        user.put("currentHunt", "");
+        String personName = acct.getDisplayName();
+        //String personGivenName = acct.getGivenName();
+        //String personFamilyName = acct.getFamilyName();
+        String personEmail = acct.getEmail();
+        //String personId = acct.getId();
+        //Uri personPhoto = acct.getPhotoUrl();
+        //List<String> emptyHuntsList = new ArrayList<String>();
+
+        user = new User(userID, personName, personEmail, userType);
 
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: Created profile successfully for user: " + userID);
+                Log.d(TAG, "onSuccess: Created profile successfully for user: " + user.getUserID());
 
                 Toast.makeText(getApplicationContext(), "Created an " + userType, Toast.LENGTH_LONG).show();
 
-                if (userType == KEY_ORGANIZER){
+                if (userType == ORGANIZER){
                     openOrganizerGamesListActivity();
                 } else{
                     openPlayerGamesListActivity();
@@ -228,11 +228,11 @@ public class MainActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_organizer:
                 if (checked)
-                    userType = KEY_ORGANIZER;
+                    userType = ORGANIZER;
                 break;
             case R.id.radio_player:
                 if (checked)
-                    userType = KEY_PLAYER;
+                    userType = PLAYER;
                 break;
         }
     }

@@ -26,15 +26,18 @@ import java.util.List;
 public class OrganizerLandingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
     private Button createNewHuntBtn;
     private Button signOutButton;
-    private TextView noPrevHuntsView;
+
     private TextView noCurrHuntsView;
+    private TextView noPrevHuntsView;
     private ListView currentHuntsListView;
+    private ListView previousHuntsListView;
 
     private List<String> previousHuntIDs;
     private List<String> previousHuntNames;
-    private ListView previousHuntsListView;
+
 
     private  String TAG = "OrganizerLandingActivity";
 
@@ -52,7 +55,6 @@ public class OrganizerLandingActivity extends AppCompatActivity {
         noPrevHuntsView = findViewById(R.id.no_prev_hunts_view);
         noCurrHuntsView = findViewById(R.id.no_curr_hunts_view);
         currentHuntsListView = findViewById(R.id.curr_hunts_listView);
-
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,17 +75,18 @@ public class OrganizerLandingActivity extends AppCompatActivity {
 
         previousHuntNames = new ArrayList<>();
 
-        db.collection(MainActivity.KEY_ORGANIZER + "s").document(mAuth.getCurrentUser().getUid()).get()
+        db.collection(User.KEY_ORGANIZERS).document(mAuth.getCurrentUser().getUid()).get()
             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     Log.w(TAG, mAuth.getCurrentUser().getUid());
                     if (documentSnapshot.exists()){
-                        previousHuntIDs = (List<String>)documentSnapshot.get("previousHunts");
+
+                        previousHuntIDs = (List<String>)documentSnapshot.get(User.KEY_PREVIOUS_HUNT_IDS);
                         Log.w(TAG, previousHuntIDs.toString());
                         CreatePreviousListView();
 
-                        String currentHunt = (String)documentSnapshot.get("currentHunt");
+                        String currentHunt = (String)documentSnapshot.get(User.KEY_CURRENT_HUNT);
                         CreateCurrentListView(currentHunt);
                     } else{
                         Log.w(TAG, "Organizer does not exist");
@@ -99,7 +102,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
     }
 
     private void CreatePreviousListView(){
-        db.collection("hunts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection(Hunt.KEY_HUNTS).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
@@ -107,7 +110,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                         Log.w(TAG, documentSnapshot.getId());
 
 
-                        previousHuntNames.add((String)documentSnapshot.get("huntName"));
+                        previousHuntNames.add((String)documentSnapshot.get(Hunt.KEY_HUNTS));
                     }
                 }
 
