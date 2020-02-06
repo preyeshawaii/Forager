@@ -4,18 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RankingsActivity">
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ranking"
+        android:text="@string/ranking"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/team_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="#f00"
+        android:dividerHeight="1dp"
+        />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Go Back" />
+        android:layout_height="47dp"
+        android:clickable="false"
+        android:fadingEdge="horizontal|vertical"
+        android:text="@string/go_back" />
+
 </LinearLayout>

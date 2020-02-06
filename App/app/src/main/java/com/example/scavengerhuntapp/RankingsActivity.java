@@ -13,17 +13,27 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 
-
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 public class RankingsActivity extends AppCompatActivity {
 
     Button button;
+    ListView simpleList;
+    String[] teamArray = {"Team1","Team2","Team3","Team4",
+            "Team5"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rankings);
         addListenerOnButton();
+
+        simpleList = (ListView)findViewById(R.id.team_list);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_rankings, R.id.team_list, teamArray);
+        simpleList.setAdapter(arrayAdapter);
+
     }
 
     public void addListenerOnButton() {

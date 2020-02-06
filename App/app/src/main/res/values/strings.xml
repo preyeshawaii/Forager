@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Scavenger Hunt App</string>
+    <string name="broadcast">Broadcast</string>
+    <string name="go_back">Go Back</string>
+    <string name="ranking">Ranking</string>
+    <string name="submit">Submit</string>
+
 </resources>

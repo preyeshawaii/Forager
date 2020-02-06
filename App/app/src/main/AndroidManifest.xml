@@ -15,12 +15,14 @@
         <activity android:name=".CurrentTeamActivity" />
         <activity android:name=".SubmissionsActivity" />
         <activity android:name=".RankingsActivity" >
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".BroadcastActivity" />
+
         <activity android:name=".CurrentChallengesActivity" />
         <activity android:name=".TeamsActivity" />
         <activity android:name=".HuntLandingActivity" />
