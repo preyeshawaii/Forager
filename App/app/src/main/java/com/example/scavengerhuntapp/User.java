@@ -31,7 +31,6 @@ public class User {
         this.previousHuntIDs = new ArrayList<>();
     }
 
-    @Exclude
     public String getUserID() {
         return userID;
     }

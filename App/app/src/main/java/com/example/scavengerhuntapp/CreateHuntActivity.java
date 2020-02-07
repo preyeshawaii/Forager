@@ -19,6 +19,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.UUID;
+
 public class CreateHuntActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -61,14 +63,14 @@ public class CreateHuntActivity extends AppCompatActivity {
     }
 
     private void CreateHunt() {
-        Hunt hunt = new Hunt(huntNameEditText.getText().toString());
+        String uniqueID = UUID.randomUUID().toString();
+        Hunt hunt = new Hunt(uniqueID, huntNameEditText.getText().toString());
 
         db.collection(Hunt.KEY_HUNTS).add(hunt)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        String huntID = documentReference.getId();
-                        UpdateUserHuntList(huntID);
+                        UpdateUserHuntList(documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

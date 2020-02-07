@@ -19,12 +19,12 @@ public class Hunt {
 
     public Hunt(){ }
 
-    public Hunt(String huntName){
+    public Hunt(String huntID, String huntName){
+        this.huntID = huntID;
         this.huntName = huntName;
         this.dateCreated = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
     }
 
-    @Exclude
     public String getHuntID() {
         return huntID;
     }
@@ -37,7 +37,4 @@ public class Hunt {
         return dateCreated;
     }
 
-    public void setHuntID(String huntID) {
-        this.huntID = huntID;
-    }
 }
