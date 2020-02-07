@@ -4,6 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeamsActivity">
+    tools:context=".TeamsActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:textSize="40dp"
+        android:text="Teams for xHunt"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+
+    </TextView>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamsListView"
+        >
+
+
+    </ListView>
 
 </LinearLayout>
