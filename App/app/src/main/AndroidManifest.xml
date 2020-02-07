@@ -14,13 +14,8 @@
         <activity android:name=".CreateHuntActivity"></activity>
         <activity android:name=".CurrentTeamActivity" />
         <activity android:name=".SubmissionsActivity" />
-        <activity android:name=".RankingsActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".RankingsActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".BroadcastActivity" />
 
         <activity android:name=".CurrentChallengesActivity" />
