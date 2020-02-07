@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -127,9 +129,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                     noPrevHuntsView.setVisibility(View.VISIBLE);
                 } else{
                     Log.w(TAG, previousHuntNames.size() + " hunt(s) found");
-                    ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<String >(getApplicationContext(),
-                            android.R.layout.simple_list_item_1, previousHuntNames);
-                    previousHuntsListView.setAdapter(prevHuntNamesArray);
+                    SetUpPreviousHuntsListView();
                 }
             }
         });
@@ -149,6 +149,25 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                     android.R.layout.simple_list_item_1, currentHuntList);
             currentHuntsListView.setAdapter(prevHuntNamesArray);
         }
+    }
+
+    private void SetUpPreviousHuntsListView(){
+        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<String >(getApplicationContext(),
+                android.R.layout.simple_list_item_1, previousHuntNames);
+        previousHuntsListView.setAdapter(prevHuntNamesArray);
+
+        previousHuntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String huntName = previousHuntNames.get(position);
+
+                Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(OrganizerLandingActivity.this, HuntLandingActivity.class);
+                //intent.putExtra("huntID", );
+                startActivity(intent);
+            }
+        });
     }
 
 

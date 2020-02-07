@@ -97,7 +97,4 @@ public class CreateHuntActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
-
 }
