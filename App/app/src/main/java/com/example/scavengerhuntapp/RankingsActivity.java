@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 import java.util.Arrays;
 
 
@@ -64,10 +65,13 @@ public class RankingsActivity extends AppCompatActivity {
     }
 
     private String[] sort_elements(String[] teamArray,int[] teamScores)   {
-        String[] names = new String[ teamArray.length ];
-        int[] nums = teamScores;
+        String[] names = new String[teamArray.length];
+        int[] nums = new int[teamArray.length];
+        for (int k = 0; k < nums.length; k ++)  {
+            nums[k] = teamScores[k];
+        }
         Arrays.sort(nums);
-
+       // int[] nums = {1,3,4,20,40};
         for (int i = 0; i < nums.length; i++)   {
             int value = nums[i];
             for (int j = 0; j < nums.length; j++)   {
