@@ -17,18 +17,21 @@
         <activity android:name=".RankingsActivity" />
         <activity android:name=".BroadcastActivity" />
         <activity android:name=".CurrentChallengesActivity" />
-        <activity android:name=".TeamsActivity" />
-        <activity android:name=".HuntLandingActivity" />
-        <activity android:name=".PremadeChallengeListActivity" />
-        <activity android:name=".PremadeHuntsActivity" />
-        <activity android:name=".PlayerLandingActivity" />
-        <activity android:name=".OrganizerLandingActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".TeamsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".TeamInfoActivity"></activity>
+        <activity android:name=".HuntLandingActivity" />
+        <activity android:name=".PremadeChallengeListActivity" />
+        <activity android:name=".PremadeHuntsActivity" />
+        <activity android:name=".PlayerLandingActivity" />
+        <activity android:name=".OrganizerLandingActivity" />
+
+        <activity android:name=".MainActivity">
         </activity>
     </application>
 
