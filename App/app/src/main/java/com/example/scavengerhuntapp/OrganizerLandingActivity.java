@@ -181,6 +181,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(OrganizerLandingActivity.this, HuntLandingActivity.class);
                 intent.putExtra("huntID", previousHunts.get(position).getHuntID());
+                intent.putExtra("huntName", huntName);
                 Log.w(TAG, previousHunts.get(position).getHuntID());
                 startActivity(intent);
             }

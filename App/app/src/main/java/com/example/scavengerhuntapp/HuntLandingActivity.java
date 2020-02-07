@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,9 +29,11 @@ public class HuntLandingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private ListView currentChallengesListView;
-    private List<Challenge> challengesList;
-    private List<String> challengeNames;
+    private TextView title;
+    private Button teamsBtn;
+    private Button rankingsBtn;
+    private Button challangesBtn;
+    private Button broadcastBtn;
 
     private  String TAG = "HuntLandingActivity";
 
@@ -41,60 +45,59 @@ public class HuntLandingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        currentChallengesListView = findViewById(R.id.curr_challenges_list);
+        title = findViewById(R.id.hunt_landing_title);
+        teamsBtn = findViewById(R.id.teams_button);
+        rankingsBtn = findViewById(R.id.rankings_button);
+        challangesBtn = findViewById(R.id.challenges_button);
+        broadcastBtn = findViewById(R.id.broadcast_button);
 
-        challengesList = new ArrayList<>();
-        challengeNames = new ArrayList<>();
+        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+
+        title.setText(huntName);
+
+        teamsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HuntLandingActivity.this, TeamsActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                startActivity(intent);
+            }
+        });
+
+        rankingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HuntLandingActivity.this, RankingsActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                startActivity(intent);
+            }
+        });
+
+        challangesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HuntLandingActivity.this, CurrentChallengesActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                startActivity(intent);
+            }
+        });
+
+        broadcastBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HuntLandingActivity.this, BroadcastActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        createCurrChallListView();
-    }
 
-    private void createCurrChallListView(){
-        challengesList.clear();
-        challengeNames.clear();
-
-        String huntID = getIntent().getExtras().getString("huntID");
-        Log.w(TAG, "Given huntID: " + huntID);
-
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots){
-                        Log.w(TAG, Integer.toString(queryDocumentSnapshots.size()));
-                        for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                            challengesList.add(documentSnapshot.toObject(Challenge.class));
-                            Log.w(TAG, documentSnapshot.getId());
-                        }
-
-                        createArrayAdapter();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, e.toString());
-                    }
-                });
-    }
-
-    private void createArrayAdapter(){
-        getChallengeNames();
-
-        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, challengeNames);
-        currentChallengesListView.setAdapter(prevHuntNamesArray);
-
-        // Add popup to look at details, not activity
-    }
-
-    private void getChallengeNames(){
-        for (Challenge currChallenge: challengesList){
-            challengeNames.add(currChallenge.getDescription());
-            Log.w(TAG, currChallenge.getDescription());
-        }
     }
 }

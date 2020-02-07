@@ -10,6 +10,7 @@ import java.util.Locale;
 
 public class Hunt {
     static final String KEY_HUNTS = "hunts";
+    static final String KEY_HUNT_ID = "huntID";
     static final String KEY_HUNT_NAME = "huntName";
 
     private String huntID;

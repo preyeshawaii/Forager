@@ -64,13 +64,13 @@ public class CreateHuntActivity extends AppCompatActivity {
 
     private void CreateHunt() {
         final String uniqueID = UUID.randomUUID().toString();
-        Hunt hunt = new Hunt(uniqueID, huntNameEditText.getText().toString());
+        final Hunt hunt = new Hunt(uniqueID, huntNameEditText.getText().toString());
 
         db.collection(Hunt.KEY_HUNTS).document(uniqueID).set(hunt)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        UpdateUserHuntList(uniqueID);
+                        UpdateUserHuntList(uniqueID, hunt.getHuntName());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -81,7 +81,7 @@ public class CreateHuntActivity extends AppCompatActivity {
                 });
     }
 
-    private void UpdateUserHuntList(final String huntID){
+    private void UpdateUserHuntList(final String huntID, final String huntName){
         final String userID = mAuth.getCurrentUser().getUid();
 
         db.collection(User.KEY_ORGANIZERS).document(userID).get()
@@ -97,7 +97,8 @@ public class CreateHuntActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Intent intent = new Intent(CreateHuntActivity.this, HuntLandingActivity.class);
-                                            intent.putExtra("huntID", huntID);
+                                            intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                                            intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                                             startActivity(intent);
                                         }
                                     });
