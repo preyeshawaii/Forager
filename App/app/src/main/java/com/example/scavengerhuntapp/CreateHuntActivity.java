@@ -3,6 +3,7 @@ package com.example.scavengerhuntapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +23,9 @@ public class CreateHuntActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private Button createHuntButton;
     private EditText huntNameEditText;
+    private Button premadeChallButton;
+    private Button createHuntButton;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -31,12 +33,20 @@ public class CreateHuntActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_hunt);
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         huntNameEditText = findViewById(R.id.hunt_name_et);
+        premadeChallButton = findViewById(R.id.premade_chall_button);
         createHuntButton = findViewById(R.id.create_hunt_button);
+
+        premadeChallButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateHuntActivity.this, PremadeHuntsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         createHuntButton.setOnClickListener(new View.OnClickListener() {
             @Override
