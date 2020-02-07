@@ -1,7 +1,5 @@
 package com.example.scavengerhuntapp;
 
-import com.google.firebase.firestore.Exclude;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,6 @@ public class User {
     private List<String> previousHuntIDs;
 
     public User(){
-
     }
 
     public User(String userID, String fullName, String email, String userType){

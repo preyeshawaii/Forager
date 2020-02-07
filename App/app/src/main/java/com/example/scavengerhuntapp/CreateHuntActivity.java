@@ -63,14 +63,14 @@ public class CreateHuntActivity extends AppCompatActivity {
     }
 
     private void CreateHunt() {
-        String uniqueID = UUID.randomUUID().toString();
+        final String uniqueID = UUID.randomUUID().toString();
         Hunt hunt = new Hunt(uniqueID, huntNameEditText.getText().toString());
 
-        db.collection(Hunt.KEY_HUNTS).add(hunt)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        db.collection(Hunt.KEY_HUNTS).document(uniqueID).set(hunt)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        UpdateUserHuntList(documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        UpdateUserHuntList(uniqueID);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -92,10 +92,15 @@ public class CreateHuntActivity extends AppCompatActivity {
                             Log.w(TAG, "Create hunt");
                             User user = documentSnapshot.toObject(User.class);
                             user.addHunt(huntID);
-                            db.collection(User.KEY_ORGANIZERS).document(userID).set(user);
-
-                            Intent intent = new Intent(CreateHuntActivity.this, HuntLandingActivity.class);
-                            startActivity(intent);
+                            db.collection(User.KEY_ORGANIZERS).document(userID).set(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Intent intent = new Intent(CreateHuntActivity.this, HuntLandingActivity.class);
+                                            intent.putExtra("huntID", huntID);
+                                            startActivity(intent);
+                                        }
+                                    });
 
                         } else{
                             Log.w(TAG, "Could not create the hunt");
