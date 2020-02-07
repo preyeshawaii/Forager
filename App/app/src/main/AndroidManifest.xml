@@ -13,17 +13,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CreateHuntActivity"></activity>
         <activity android:name=".CurrentTeamActivity" />
-        <activity android:name=".SubmissionsActivity" />
+        <activity android:name=".SubmissionsActivity">
+            <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
         <activity android:name=".RankingsActivity" />
         <activity android:name=".BroadcastActivity" />
         <activity android:name=".CurrentChallengesActivity" />
-        <activity android:name=".TeamsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".TeamsActivity"></activity>
         <activity android:name=".TeamInfoActivity"></activity>
         <activity android:name=".HuntLandingActivity" />
         <activity android:name=".PremadeChallengeListActivity" />
