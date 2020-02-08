@@ -43,11 +43,15 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
 
     public void clickedApprove(View v){
         Intent intent = new Intent(this, SubmissionsActivity.class);
+        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
         startActivity(intent);
     }
 
     public void clickedReject(View v){
         Intent intent = new Intent(this, SubmissionsActivity.class);
+        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
         startActivity(intent);
     }
 

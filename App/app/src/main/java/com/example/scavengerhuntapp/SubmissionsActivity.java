@@ -72,7 +72,7 @@ public class SubmissionsActivity extends AppCompatActivity {
 
     private void loadSubmissions(){
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
-        String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
         title.setText("Submissions for " + huntName);
 
         subs.clear();
@@ -94,7 +94,7 @@ public class SubmissionsActivity extends AppCompatActivity {
                             subs.add(sub);
                         }
 
-                        setAdapter(huntID);
+                        setAdapter(huntID, huntName);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -105,7 +105,7 @@ public class SubmissionsActivity extends AppCompatActivity {
                 });
     }
 
-    public void setAdapter(final String huntID){
+    public void setAdapter(final String huntID, final String huntName){
         submissionList.setAdapter(customAdapter);
 
         submissionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,6 +120,7 @@ public class SubmissionsActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(SubmissionsActivity.this, ProcessSubmissionActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 intent.putExtra(Submission.KEY_SUBMISSION_ID, subID);
                 intent.putExtra(Submission.KEY_DESCRIPTION, description);
                 intent.putExtra(Submission.KEY_TEAM_COMMENTS, teamComments);
