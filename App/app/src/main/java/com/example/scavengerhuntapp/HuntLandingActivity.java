@@ -109,6 +109,5 @@ public class HuntLandingActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
     }
 }

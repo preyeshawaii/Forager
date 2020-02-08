@@ -34,12 +34,9 @@ public class OrganizerLandingActivity extends AppCompatActivity {
     private Button createNewHuntBtn;
     private Button signOutButton;
 
-    private TextView noCurrHuntsView;
-    private TextView noPrevHuntsView;
-    private ListView currentHuntsListView;
-    private ListView previousHuntsListView;
+    private TextView noHuntsView;
+    private ListView huntsListView;
 
-    private List<String> currentHuntList;
     private Map<String, String> previousHunts;
 
 
@@ -53,15 +50,12 @@ public class OrganizerLandingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        currentHuntList = new ArrayList<>();
         previousHunts = new HashMap<>();
 
         createNewHuntBtn = findViewById(R.id.create_new_hunt_btn);
         signOutButton = findViewById(R.id.sign_out);
-        previousHuntsListView = findViewById(R.id.previous_hunts_listView);
-        noPrevHuntsView = findViewById(R.id.no_prev_hunts_view);
-        noCurrHuntsView = findViewById(R.id.no_curr_hunts_view);
-        currentHuntsListView = findViewById(R.id.curr_hunts_listView);
+        huntsListView = findViewById(R.id.hunts_listView);
+        noHuntsView = findViewById(R.id.no_hunts_view);
 
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -98,12 +92,9 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                         Log.w(TAG, mAuth.getCurrentUser().getUid());
                         if (documentSnapshot.exists()){
 
-                            previousHunts = (Map<String, String>)documentSnapshot.get(User.KEY_PREVIOUS_HUNTS);
+                            previousHunts = (Map<String, String>)documentSnapshot.get(User.KEY_HUNTS);
                             Log.w(TAG, previousHunts.toString());
                             createPreviousListView();
-
-                            String currentHunt = (String)documentSnapshot.get(User.KEY_CURRENT_HUNT);
-                            createCurrentListView(currentHunt);
                         } else{
                             Log.w(TAG, "Organizer does not exist");
                         }
@@ -121,10 +112,10 @@ public class OrganizerLandingActivity extends AppCompatActivity {
 
         if (previousHunts.isEmpty()){
             Log.w(TAG, "No hunts found");
-            noPrevHuntsView.setVisibility(View.VISIBLE);
+            noHuntsView.setVisibility(View.VISIBLE);
         } else{
             Log.w(TAG, previousHunts.size() + " hunt(s) found");
-            noPrevHuntsView.setVisibility(View.GONE);
+            noHuntsView.setVisibility(View.GONE);
             setUpPreviousHuntsListView();
         }
     }
@@ -140,9 +131,9 @@ public class OrganizerLandingActivity extends AppCompatActivity {
 
         ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, previousHuntNames);
-        previousHuntsListView.setAdapter(prevHuntNamesArray);
+        huntsListView.setAdapter(prevHuntNamesArray);
 
-        previousHuntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        huntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String huntName = previousHuntNames.get(position);
@@ -157,27 +148,5 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void createCurrentListView(String currentHunt){
-        currentHuntList.clear();
-
-        if (currentHunt == ""){
-            noCurrHuntsView.setVisibility(View.VISIBLE);
-        } else{
-            currentHuntList.add(currentHunt);
-            ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                    android.R.layout.simple_list_item_1, currentHuntList);
-            currentHuntsListView.setAdapter(prevHuntNamesArray);
-
-            currentHuntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(OrganizerLandingActivity.this, HuntLandingActivity.class);
-                    //intent.putExtra("huntID", );
-                    startActivity(intent);
-                }
-            });
-        }
     }
 }
