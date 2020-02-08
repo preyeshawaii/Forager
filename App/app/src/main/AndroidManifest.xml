@@ -15,7 +15,9 @@
         <activity android:name=".CurrentTeamActivity" />
         <activity android:name=".SubmissionsActivity"/>
         <activity android:name=".RankingsActivity" />
+
         <activity android:name=".BroadcastActivity" />
+
         <activity android:name=".CurrentChallengesActivity" />
         <activity android:name=".TeamsActivity"></activity>
         <activity android:name=".TeamInfoActivity"></activity>
