@@ -8,20 +8,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/broadcast"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/broadcast_back_btn"
         android:layout_width="fill_parent"
         android:layout_height="68dp"
         android:text="@string/go_back" />
 
     <EditText
-        android:id="@+id/myText"
+        android:id="@+id/broadcast_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:height="@android:dimen/notification_large_icon_width"
@@ -33,7 +32,7 @@
     </EditText>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/submit" />

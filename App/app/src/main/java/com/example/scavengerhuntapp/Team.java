@@ -2,15 +2,14 @@ package com.example.scavengerhuntapp;
 
 import com.google.firebase.firestore.Exclude;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Team {
     static final String KEY_TEAMS = "teams";
     static final String KEY_TEAM_ID = "teamID";
     static final String KEY_TEAM_NAME = "teamName";
+    static final String KEY_POINTS = "points";
 
     private String teamID;
     private String teamName;

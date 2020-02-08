@@ -44,7 +44,7 @@ public class SubmissionsActivity extends AppCompatActivity {
     private List<Integer> points;
     private List<Submission> subs;
 
-    private  String TAG = "SubmissionsActivity";
+    private String TAG = "SubmissionsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
