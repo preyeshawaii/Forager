@@ -13,7 +13,6 @@ public class User {
     private String fullName;
     private String email;
     private String userType;
-    private String currentHunt;
     private Map<String, String> hunts;
 
     public User(){
@@ -24,7 +23,6 @@ public class User {
         this.fullName = fullName;
         this.email = email;
         this.userType = userType;
-        this.currentHunt = "";
         this.hunts = new HashMap<>();
     }
 
@@ -42,10 +40,6 @@ public class User {
 
     public String getUserType() {
         return userType;
-    }
-
-    public String getCurrentHunt() {
-        return currentHunt;
     }
 
     public Map<String, String> getHunts() {
