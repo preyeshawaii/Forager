@@ -1,20 +1,27 @@
 package com.example.scavengerhuntapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class User {
     static final String KEY_ORGANIZERS = "organizers";
     static final String KEY_PLAYERS = "players";
     static final String KEY_CURRENT_HUNT = "currentHunt";
-    static final String KEY_PREVIOUS_HUNT_IDS = "previousHuntIDs";
+    static final String KEY_PREVIOUS_HUNTS = "previousHunts";
 
     private String userID;
     private String fullName;
     private String email;
     private String userType;
     private String currentHunt;
-    private List<String> previousHuntIDs;
+    private Map<String, String> previousHunts;
 
     public User(){
     }
@@ -25,7 +32,7 @@ public class User {
         this.email = email;
         this.userType = userType;
         this.currentHunt = "";
-        this.previousHuntIDs = new ArrayList<>();
+        this.previousHunts = new HashMap<>();
     }
 
     public String getUserID() {
@@ -48,11 +55,11 @@ public class User {
         return currentHunt;
     }
 
-    public List<String> getPreviousHuntIDs() {
-        return previousHuntIDs;
+    public Map<String, String> getPreviousHunts() {
+        return previousHunts;
     }
 
-    public void addHunt(String newHunt){
-        this.previousHuntIDs.add(newHunt);
+    public void addHunt(String huntID, String huntName){
+        this.previousHunts.put(huntID, huntName);
     }
 }

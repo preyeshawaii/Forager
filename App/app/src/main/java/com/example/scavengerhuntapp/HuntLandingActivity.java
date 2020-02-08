@@ -33,6 +33,7 @@ public class HuntLandingActivity extends AppCompatActivity {
     private Button teamsBtn;
     private Button rankingsBtn;
     private Button challangesBtn;
+    private Button submissionsBtn;
     private Button broadcastBtn;
 
     private  String TAG = "HuntLandingActivity";
@@ -49,6 +50,7 @@ public class HuntLandingActivity extends AppCompatActivity {
         teamsBtn = findViewById(R.id.teams_button);
         rankingsBtn = findViewById(R.id.rankings_button);
         challangesBtn = findViewById(R.id.challenges_button);
+        submissionsBtn = findViewById(R.id.submissions_button);
         broadcastBtn = findViewById(R.id.broadcast_button);
 
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
@@ -61,6 +63,7 @@ public class HuntLandingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HuntLandingActivity.this, TeamsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 startActivity(intent);
             }
         });
@@ -70,6 +73,7 @@ public class HuntLandingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HuntLandingActivity.this, RankingsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 startActivity(intent);
             }
         });
@@ -84,11 +88,22 @@ public class HuntLandingActivity extends AppCompatActivity {
             }
         });
 
+        submissionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HuntLandingActivity.this, SubmissionsActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                startActivity(intent);
+            }
+        });
+
         broadcastBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HuntLandingActivity.this, BroadcastActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 startActivity(intent);
             }
         });

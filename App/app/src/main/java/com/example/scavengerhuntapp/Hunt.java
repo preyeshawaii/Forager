@@ -16,7 +16,6 @@ public class Hunt {
     private String huntID;
     private String huntName;
     private String dateCreated;
-    //private Timestamp dateCreated;
 
     public Hunt(){ }
 

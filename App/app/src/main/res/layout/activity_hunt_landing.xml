@@ -34,6 +34,12 @@
         android:text="Challenges"/>
 
     <Button
+        android:id="@+id/submissions_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submissions"/>
+
+    <Button
         android:id="@+id/broadcast_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

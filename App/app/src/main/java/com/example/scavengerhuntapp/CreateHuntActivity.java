@@ -91,7 +91,7 @@ public class CreateHuntActivity extends AppCompatActivity {
                         if (documentSnapshot.exists()){
                             Log.w(TAG, "Create hunt");
                             User user = documentSnapshot.toObject(User.class);
-                            user.addHunt(huntID);
+                            user.addHunt(huntID, huntName);
                             db.collection(User.KEY_ORGANIZERS).document(userID).set(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

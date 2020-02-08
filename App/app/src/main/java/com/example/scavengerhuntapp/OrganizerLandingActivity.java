@@ -23,7 +23,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizerLandingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -38,10 +40,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
     private ListView previousHuntsListView;
 
     private List<String> currentHuntList;
-    private List<String> previousHuntIDs;
-    private List<Hunt> previousHunts;
-    private List<String> previousHuntNames;
-
+    private Map<String, String> previousHunts;
 
 
     private  String TAG = "OrganizerLandingActivity";
@@ -55,8 +54,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         currentHuntList = new ArrayList<>();
-        previousHunts = new ArrayList<>();
-        previousHuntNames = new ArrayList<>();
+        previousHunts = new HashMap<>();
 
         createNewHuntBtn = findViewById(R.id.create_new_hunt_btn);
         signOutButton = findViewById(R.id.sign_out);
@@ -92,7 +90,6 @@ public class OrganizerLandingActivity extends AppCompatActivity {
 
     private void loadInfo(){
         previousHunts.clear();
-        previousHuntNames.clear();
 
         db.collection(User.KEY_ORGANIZERS).document(mAuth.getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -101,8 +98,8 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                         Log.w(TAG, mAuth.getCurrentUser().getUid());
                         if (documentSnapshot.exists()){
 
-                            previousHuntIDs = (List<String>)documentSnapshot.get(User.KEY_PREVIOUS_HUNT_IDS);
-                            Log.w(TAG, previousHuntIDs.toString());
+                            previousHunts = (Map<String, String>)documentSnapshot.get(User.KEY_PREVIOUS_HUNTS);
+                            Log.w(TAG, previousHunts.toString());
                             createPreviousListView();
 
                             String currentHunt = (String)documentSnapshot.get(User.KEY_CURRENT_HUNT);
@@ -121,24 +118,43 @@ public class OrganizerLandingActivity extends AppCompatActivity {
     }
 
     private void createPreviousListView(){
-        db.collection(Hunt.KEY_HUNTS).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                    if (previousHuntIDs.contains(documentSnapshot.getId())){
-                        Hunt hunt = documentSnapshot.toObject(Hunt.class);
-                        previousHunts.add(hunt);
-                    }
-                }
 
-                if (previousHunts.size() == 0){
-                    Log.w(TAG, "No hunts found");
-                    noPrevHuntsView.setVisibility(View.VISIBLE);
-                } else{
-                    Log.w(TAG, previousHunts.size() + " hunt(s) found");
-                    noPrevHuntsView.setVisibility(View.GONE);
-                    setUpPreviousHuntsListView();
-                }
+        if (previousHunts.isEmpty()){
+            Log.w(TAG, "No hunts found");
+            noPrevHuntsView.setVisibility(View.VISIBLE);
+        } else{
+            Log.w(TAG, previousHunts.size() + " hunt(s) found");
+            noPrevHuntsView.setVisibility(View.GONE);
+            setUpPreviousHuntsListView();
+        }
+    }
+
+    private void setUpPreviousHuntsListView(){
+        final List<String> previousHuntIDs = new ArrayList<>();
+        final List<String> previousHuntNames = new ArrayList<>();
+
+        for (Map.Entry<String, String> entry : previousHunts.entrySet()) {
+            previousHuntIDs.add(entry.getKey());
+            previousHuntNames.add(entry.getValue());
+        }
+
+        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, previousHuntNames);
+        previousHuntsListView.setAdapter(prevHuntNamesArray);
+
+        previousHuntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String huntName = previousHuntNames.get(position);
+                String huntID = previousHuntIDs.get(position);
+
+                Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(OrganizerLandingActivity.this, HuntLandingActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                Log.w(TAG, huntID + ": " + huntName);
+                startActivity(intent);
             }
         });
     }
@@ -162,35 +178,6 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
-    }
-
-    private void setUpPreviousHuntsListView(){
-        getHuntNames();
-
-        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, previousHuntNames);
-        previousHuntsListView.setAdapter(prevHuntNamesArray);
-
-        previousHuntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String huntName = previousHuntNames.get(position);
-
-                Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(OrganizerLandingActivity.this, HuntLandingActivity.class);
-                intent.putExtra("huntID", previousHunts.get(position).getHuntID());
-                intent.putExtra("huntName", huntName);
-                Log.w(TAG, previousHunts.get(position).getHuntID());
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void getHuntNames(){
-        for (Hunt currHunt: previousHunts){
-            previousHuntNames.add(currHunt.getHuntName());
         }
     }
 }
