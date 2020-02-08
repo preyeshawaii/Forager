@@ -1,7 +1,10 @@
+/* used for seeing the list of submissions that need to be */
+
 package com.example.scavengerhuntapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,19 @@ public class SubmissionsActivity extends AppCompatActivity {
         submissionList.setAdapter(customAdapter);
 
     }
+
+    public void clickedSubmissionProcess (View v){
+        Intent intent = new Intent(this, ProcessSubmissionActivity.class);
+
+        // here is where we can transfer data
+        intent.putExtra("teamName",((TextView) v.findViewById(R.id.submission_list_team_name)).getText());
+        intent.putExtra("challengePoints", ((TextView) v.findViewById(R.id.submission_list_points)).getText());
+        intent.putExtra("message", "THIS WAS SO MUCH FUN. OMG. Johnny fell 5 times!!");
+        intent.putExtra("challengeName", (((TextView)v.findViewById(R.id.submission_list_challenge)).getText()));
+        startActivity(intent);
+    }
+
+
 
     class CustomAdapter extends BaseAdapter{
 
