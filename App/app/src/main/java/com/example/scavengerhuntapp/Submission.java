@@ -3,11 +3,15 @@ package com.example.scavengerhuntapp;
 public class Submission {
     static final String KEY_SUBMISSIONS = "submissions";
     static final String KEY_SUBMISSION_ID = "submissionID";
+    static final String KEY_TEAM_COMMENTS = "teamComments";
+    static final String KEY_TEAM_NAME = "teamName";
+    static final String KEY_POINTS = "points";
+    static final String KEY_DESCRIPTION = "description";
 
     private String submissionID;
     private String description;
     private String teamName;
-    private String playerComments;
+    private String teamComments;
     private Integer points;
     private Boolean hasBeenReviewed;
     private Boolean accepted;
@@ -18,7 +22,7 @@ public class Submission {
         this.submissionID = submissionID;
         this.description = "";
         this.teamName = "";
-        this.playerComments = "No Comment";
+        this.teamComments = "No Comment";
         this.points = 0;
         this.hasBeenReviewed = false;
         this.accepted = false;
@@ -36,8 +40,8 @@ public class Submission {
         return teamName;
     }
 
-    public String getPlayerComments() {
-        return playerComments;
+    public String getTeamComments() {
+        return teamComments;
     }
 
     public Integer getPoints() {

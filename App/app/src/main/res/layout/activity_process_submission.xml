@@ -11,14 +11,14 @@
         style="@style/HeadingText"></TextView>
 
     <TextView
-        android:id="@+id/prcess_submission_challenge_description"
+        android:id="@+id/process_submission_challenge_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DESCRIPTION OF CHALLENGE GOES HERE">
     </TextView>
 
     <TextView
-        android:id="@+id/process_submissioon_team_points"
+        android:id="@+id/process_submission_team_points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Points"></TextView>

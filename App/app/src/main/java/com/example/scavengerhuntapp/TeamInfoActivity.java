@@ -84,6 +84,7 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
         teamMemberListview = findViewById(R.id.team_member_list);
     }
 
+    @Override
     protected void onStart(){
         super.onStart();
         loadTeamInfo();

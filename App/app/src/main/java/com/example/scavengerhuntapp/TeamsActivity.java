@@ -60,7 +60,7 @@ public class TeamsActivity extends AppCompatActivity {
         customAdapter = new CustomAdapter();
     }
 
-
+    @Override
     protected void onStart(){
         super.onStart();
         loadTeams();

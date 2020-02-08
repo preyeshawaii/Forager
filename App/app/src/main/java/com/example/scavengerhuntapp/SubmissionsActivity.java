@@ -39,10 +39,10 @@ public class SubmissionsActivity extends AppCompatActivity {
     private ListView submissionList;
     private CustomAdapter customAdapter;
 
-    private List<String> submissionsIDs;
     private List<String> teamNames;
     private List<String> descriptions;
     private List<Integer> points;
+    private List<Submission> subs;
 
     private  String TAG = "SubmissionsActivity";
 
@@ -56,13 +56,14 @@ public class SubmissionsActivity extends AppCompatActivity {
         title = findViewById(R.id.submissionText);
         submissionList = findViewById(R.id.submission_list);
 
-        submissionsIDs = new ArrayList<>();
         teamNames = new ArrayList<>();
         descriptions = new ArrayList<>();
         points = new ArrayList<>();
+        subs = new ArrayList<>();
         customAdapter = new CustomAdapter();
     }
 
+    @Override
     protected void onStart(){
         super.onStart();
 
@@ -74,7 +75,7 @@ public class SubmissionsActivity extends AppCompatActivity {
         String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
         title.setText("Submissions for " + huntName);
 
-        submissionsIDs.clear();
+        subs.clear();
         teamNames.clear();
         descriptions.clear();
         points.clear();
@@ -85,10 +86,12 @@ public class SubmissionsActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Submission sub = documentSnapshot.toObject(Submission.class);
-                            submissionsIDs.add(sub.getSubmissionID());
+                            //submissionsIDs.add(sub.getSubmissionID());
                             teamNames.add(sub.getTeamName());
                             descriptions.add(sub.getDescription());
                             points.add(sub.getPoints());
+
+                            subs.add(sub);
                         }
 
                         setAdapter(huntID);
@@ -109,14 +112,19 @@ public class SubmissionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String teamName = teamNames.get(position);
-                String subID = submissionsIDs.get(position);
+                String subID = subs.get(position).getSubmissionID();
                 String description = descriptions.get(position);
+                String teamComments = subs.get(position).getTeamComments();
 
                 Toast.makeText(getApplicationContext(), teamName, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(SubmissionsActivity.this, ProcessSubmissionActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Submission.KEY_SUBMISSION_ID, subID);
+                intent.putExtra(Submission.KEY_DESCRIPTION, description);
+                intent.putExtra(Submission.KEY_TEAM_COMMENTS, teamComments);
+                intent.putExtra(Submission.KEY_POINTS, Integer.toString(points.get(position)));
+                intent.putExtra(Submission.KEY_TEAM_NAME, teamNames.get(position));
                 Log.w(TAG, subID + ": " + teamName + ", " + description);
                 startActivity(intent);
             }
@@ -150,7 +158,7 @@ public class SubmissionsActivity extends AppCompatActivity {
             challengeName.setText(descriptions.get(position));
 
             TextView pointsAwarded = convertView.findViewById(R.id.submission_list_points);
-            pointsAwarded.setText(String.valueOf(points.get(position)));
+            pointsAwarded.setText(Integer.toString(points.get(position)));
             return convertView;
         }
     }
