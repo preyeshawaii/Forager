@@ -28,6 +28,7 @@
         <activity android:name=".PremadeHuntsActivity" />
         <activity android:name=".PlayerLandingActivity" />
         <activity android:name=".OrganizerLandingActivity" />
+        <activity android:name=".ProcessSubmissionActivity"></activity>
 
         <activity android:name=".MainActivity">
         </activity>
