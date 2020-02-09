@@ -6,7 +6,9 @@ import com.google.firebase.firestore.Exclude;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class Hunt {
     static final String KEY_HUNTS = "hunts";
@@ -16,6 +18,7 @@ public class Hunt {
     private String huntID;
     private String huntName;
     private String dateCreated;
+    private Map<String, String> players;
 
     public Hunt(){ }
 
@@ -23,6 +26,7 @@ public class Hunt {
         this.huntID = huntID;
         this.huntName = huntName;
         this.dateCreated = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
+        this.players = new HashMap<>();
     }
 
     public String getHuntID() {
@@ -35,6 +39,10 @@ public class Hunt {
 
     public String getDateCreated() {
         return dateCreated;
+    }
+
+    public Map<String, String> getPlayers(){
+        return players;
     }
 
 }

@@ -66,7 +66,6 @@ public class SubmissionsActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
         loadSubmissions();
     }
 
@@ -86,7 +85,6 @@ public class SubmissionsActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Submission sub = documentSnapshot.toObject(Submission.class);
-                            //submissionsIDs.add(sub.getSubmissionID());
                             teamNames.add(sub.getTeamName());
                             descriptions.add(sub.getDescription());
                             points.add(sub.getPoints());

@@ -7,25 +7,41 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
+
+import static com.example.scavengerhuntapp.CreatingHuntSingleton.CHALLENGES;
 
 public class CreateHuntActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private EditText huntNameEditText;
+    private ListView challengeList;
     private Button premadeChallButton;
     private Button createHuntButton;
+
+    private CreatingHuntSingleton creatingHuntSingleton;
+    private CustomAdapter pendingChallenges;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -37,8 +53,12 @@ public class CreateHuntActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         huntNameEditText = findViewById(R.id.hunt_name_et);
+        challengeList = findViewById(R.id.challenge_list);
         premadeChallButton = findViewById(R.id.premade_chall_button);
         createHuntButton = findViewById(R.id.create_hunt_button);
+
+        creatingHuntSingleton = creatingHuntSingleton.init();
+        pendingChallenges = new CustomAdapter();
 
         premadeChallButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +80,14 @@ public class CreateHuntActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        challengeList.setChoiceMode(challengeList.CHOICE_MODE_MULTIPLE);
+        challengeList.setAdapter(pendingChallenges);
+
+    }
+
     private void CreateHunt() {
         final String uniqueID = UUID.randomUUID().toString();
         final Hunt hunt = new Hunt(uniqueID, huntNameEditText.getText().toString());
@@ -69,6 +97,7 @@ public class CreateHuntActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         UpdateUserHuntList(uniqueID, hunt.getHuntName());
+                        AddChallengesToHunt(uniqueID);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -112,5 +141,62 @@ public class CreateHuntActivity extends AppCompatActivity {
                         Log.e(TAG, e.toString());
                     }
                 });
+    }
+
+    private void AddChallengesToHunt(String uniqueID){
+        for (Challenge challenge : creatingHuntSingleton.getChallenges()){
+            db.collection(Hunt.KEY_HUNTS).document(uniqueID).collection(Challenge.KEY_CHALLENGES)
+                    .document(challenge.getChallengeID()).set(challenge)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.w(TAG, "Successfully added a challenge");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, e.toString());
+;                        }
+                    });
+        }
+
+    }
+
+    class CustomAdapter extends BaseAdapter {
+        private List<Challenge> challenges = creatingHuntSingleton.getChallenges();
+        @Override
+        public int getCount() {
+            return challenges.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return challenges.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = getLayoutInflater().inflate(R.layout.challenge_custom_view,null);
+
+            // Populate list view
+            ImageView imageView = view.findViewById(R.id.iconImageView);
+            TextView challengeTextView = view.findViewById(R.id.challengeTextView);
+            TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
+            CheckBox checkBox = view.findViewById(R.id.checkBox);
+
+            imageView.setImageResource(challenges.get(i).getIcon());
+            challengeTextView.setText(challenges.get(i).getDescription());
+            challengeLocationTextView.setText(challenges.get(i).getLocation());
+            // TODO Add points view here
+            checkBox.setVisibility(View.GONE);
+
+            return view;
+        }
     }
 }

@@ -23,7 +23,7 @@ public class HuntLandingActivity extends AppCompatActivity {
     private Button broadcastBtn;
     private Button backBtn;
 
-    private  String TAG = "HuntLandingActivity";
+    private String TAG = "HuntLandingActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
