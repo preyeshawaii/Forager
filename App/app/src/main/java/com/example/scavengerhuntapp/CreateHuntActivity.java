@@ -19,13 +19,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
-public class CreateHuntActivity extends AppCompatActivity {
+public class CreateHuntActivity extends AppCompatActivity implements CustomChallengeDialog.CustomChallengeListener {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private EditText huntNameEditText;
     private Button premadeChallButton;
     private Button createHuntButton;
+    private Button customChallButton;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -39,6 +40,7 @@ public class CreateHuntActivity extends AppCompatActivity {
         huntNameEditText = findViewById(R.id.hunt_name_et);
         premadeChallButton = findViewById(R.id.premade_chall_button);
         createHuntButton = findViewById(R.id.create_hunt_button);
+        customChallButton = findViewById(R.id.custom_chall_button);
 
         premadeChallButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +58,13 @@ public class CreateHuntActivity extends AppCompatActivity {
                 }else{
                     CreateHunt();
                 }
+            }
+        });
+
+        customChallButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
             }
         });
     }
@@ -112,5 +121,17 @@ public class CreateHuntActivity extends AppCompatActivity {
                         Log.e(TAG, e.toString());
                     }
                 });
+    }
+
+    public void openDialog() {
+        CustomChallengeDialog customChallenge = new CustomChallengeDialog();
+        customChallenge.show(getSupportFragmentManager(), "custom challenge");
+    }
+
+    @Override
+    public void getTexts(String challenge, String location, Integer points) {
+        // TODO(@Jorge) Access strings here for the database
+        System.out.println("Challenge: " + challenge
+                + ", Location: " + location + ", Points: " + points.toString());
     }
 }
