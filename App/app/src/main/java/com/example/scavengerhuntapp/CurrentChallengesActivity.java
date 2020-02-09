@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +30,10 @@ public class CurrentChallengesActivity extends AppCompatActivity {
 
     private ListView currentChallengesListView;
     private List<Challenge> challengesList;
-    private List<String> challengeNames;
+
+    private CreatingHuntSingleton creatingHuntSingleton;
+
+    private CustomAdapter prevHuntNamesArray;
 
     private  String TAG = "CurrentChallengesActivity";
 
@@ -38,8 +47,9 @@ public class CurrentChallengesActivity extends AppCompatActivity {
 
         currentChallengesListView = findViewById(R.id.curr_challenges_list);
 
+        creatingHuntSingleton = creatingHuntSingleton.init();
         challengesList = new ArrayList<>();
-        challengeNames = new ArrayList<>();
+        prevHuntNamesArray = new CustomAdapter();
     }
 
     @Override
@@ -50,7 +60,6 @@ public class CurrentChallengesActivity extends AppCompatActivity {
 
     private void createCurrChallListView(){
         challengesList.clear();
-        challengeNames.clear();
 
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         Log.w(TAG, "Given huntID: " + huntID);
@@ -64,8 +73,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
                             challengesList.add(documentSnapshot.toObject(Challenge.class));
                             Log.w(TAG, documentSnapshot.getId());
                         }
-
-                        createArrayAdapter();
+                        currentChallengesListView.setAdapter(prevHuntNamesArray);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -76,20 +84,39 @@ public class CurrentChallengesActivity extends AppCompatActivity {
                 });
     }
 
-    private void createArrayAdapter(){
-        getChallengeNames();
+    class CustomAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return challengesList.size();
+        }
 
-        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, challengeNames);
-        currentChallengesListView.setAdapter(prevHuntNamesArray);
+        @Override
+        public Object getItem(int i) {
+            return challengesList.get(i);
+        }
 
-        // Add popup to look at details, not activity
-    }
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
 
-    private void getChallengeNames(){
-        for (Challenge currChallenge: challengesList){
-            challengeNames.add(currChallenge.getDescription());
-            Log.w(TAG, currChallenge.getDescription());
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
+
+            // Populate list view
+            ImageView imageView = view.findViewById(R.id.iconImageView);
+            TextView challengeTextView = view.findViewById(R.id.challengeTextView);
+            TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
+            CheckBox checkBox = view.findViewById(R.id.checkBox);
+
+            imageView.setImageResource(challengesList.get(i).getIcon());
+            challengeTextView.setText(challengesList.get(i).getDescription());
+            challengeLocationTextView.setText(challengesList.get(i).getLocation());
+            // TODO Add points view here
+            checkBox.setVisibility(View.GONE);
+
+            return view;
         }
     }
 }
