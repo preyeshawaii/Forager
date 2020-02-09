@@ -167,6 +167,18 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
     }
 
+    public void openDialog() {
+        CustomChallengeDialog customChallenge = new CustomChallengeDialog();
+        customChallenge.show(getSupportFragmentManager(), "custom challenge");
+    }
+
+
+    public void getTexts(String challengeDes, String location, Integer points) {
+        final String uniqueID = UUID.randomUUID().toString();
+        Challenge challenge = new Challenge(uniqueID, challengeDes, points, location, R.drawable.icecream);
+        creatingHuntSingleton.addChallenge(challenge);
+    }
+
     class CustomAdapter extends BaseAdapter {
         private List<Challenge> challenges = creatingHuntSingleton.getChallenges();
 
@@ -203,17 +215,5 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
             return view;
         }
-    }
-
-    public void openDialog() {
-        CustomChallengeDialog customChallenge = new CustomChallengeDialog();
-        customChallenge.show(getSupportFragmentManager(), "custom challenge");
-    }
-
-
-    public void getTexts(String challenge, String location, Integer points) {
-        // TODO(@Jorge) Access strings here for the database
-        System.out.println("Challenge: " + challenge
-                + ", Location: " + location + ", Points: " + points.toString());
     }
 }
