@@ -20,18 +20,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static com.example.scavengerhuntapp.CreatingHuntSingleton.CHALLENGES;
-
-public class CreateHuntActivity extends AppCompatActivity {
+public class CreateHuntActivity extends AppCompatActivity implements CustomChallengeDialog.CustomChallengeListener{
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -39,6 +34,7 @@ public class CreateHuntActivity extends AppCompatActivity {
     private ListView challengeList;
     private Button premadeChallButton;
     private Button createHuntButton;
+    private Button customChallButton;
 
     private CreatingHuntSingleton creatingHuntSingleton;
     private CustomAdapter pendingChallenges;
@@ -56,6 +52,7 @@ public class CreateHuntActivity extends AppCompatActivity {
         challengeList = findViewById(R.id.challenge_list);
         premadeChallButton = findViewById(R.id.premade_chall_button);
         createHuntButton = findViewById(R.id.create_hunt_button);
+        customChallButton = findViewById(R.id.custom_chall_button);
 
         creatingHuntSingleton = creatingHuntSingleton.init();
         pendingChallenges = new CustomAdapter();
@@ -76,6 +73,13 @@ public class CreateHuntActivity extends AppCompatActivity {
                 }else{
                     CreateHunt();
                 }
+            }
+        });
+
+        customChallButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
             }
         });
     }
@@ -165,6 +169,7 @@ public class CreateHuntActivity extends AppCompatActivity {
 
     class CustomAdapter extends BaseAdapter {
         private List<Challenge> challenges = creatingHuntSingleton.getChallenges();
+
         @Override
         public int getCount() {
             return challenges.size();
@@ -182,7 +187,7 @@ public class CreateHuntActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.challenge_custom_view,null);
+            view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
 
             // Populate list view
             ImageView imageView = view.findViewById(R.id.iconImageView);
@@ -198,5 +203,17 @@ public class CreateHuntActivity extends AppCompatActivity {
 
             return view;
         }
+    }
+
+    public void openDialog() {
+        CustomChallengeDialog customChallenge = new CustomChallengeDialog();
+        customChallenge.show(getSupportFragmentManager(), "custom challenge");
+    }
+
+
+    public void getTexts(String challenge, String location, Integer points) {
+        // TODO(@Jorge) Access strings here for the database
+        System.out.println("Challenge: " + challenge
+                + ", Location: " + location + ", Points: " + points.toString());
     }
 }

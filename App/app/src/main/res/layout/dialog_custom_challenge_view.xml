@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_centerVertical="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="27dp"
+        android:src="@drawable/icecream" />
+
+    <EditText
+        android:id="@+id/pointsEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iconImageView"
+        android:layout_alignLeft="@id/iconImageView"
+        android:layout_marginTop="25dp"
+        android:hint="Points"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/challengeEditTextView"
+        android:hint="Enter challenge description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iconImageView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_toRightOf="@id/iconImageView"
+        style="@style/ParagraphText"/>
+
+    <EditText
+        android:id="@+id/challengeLocationEditTextView"
+        android:hint="Enter challenge location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/challengeEditTextView"
+        android:layout_alignLeft="@id/challengeEditTextView"
+        android:layout_alignStart="@id/challengeEditTextView"
+        style="@style/ParagraphText"
+        android:textStyle="italic"/>
+
+
+</RelativeLayout>
