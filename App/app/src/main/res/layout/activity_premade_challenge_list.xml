@@ -12,7 +12,7 @@
         android:text="@string/challenges_text"
         style="@style/HeadingText"/>
     <ListView
-        android:id="@+id/locations_list"
+        android:id="@+id/premade_challenge_list"
         android:layout_width="wrap_content"
         android:layout_height="386dp" />
     <Button
