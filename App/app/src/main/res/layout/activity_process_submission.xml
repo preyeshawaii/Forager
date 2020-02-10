@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/process_submission_team_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team Name"
+        style="@style/HeadingText"></TextView>
+
+    <TextView
+        android:id="@+id/process_submission_challenge_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION OF CHALLENGE GOES HERE">
+    </TextView>
+
+    <TextView
+        android:id="@+id/process_submission_team_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Points"></TextView>
+
+    <ImageView
+        android:id="@+id/process_submission_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher_background"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/process_submission_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Activity Text"></TextView>
+
+    <LinearLayout
+        android:id="@+id/process_submission_button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/process_submission_approve_button"
+            android:layout_width="wrap_content"
+            android:onClick="clickedApprove"
+            android:layout_height="wrap_content"
+            android:text="Approve"></Button>
+
+        <Button
+            android:id="@+id/process_submission_reject_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:onClick="clickedReject"
+            android:text="Reject">
+        </Button>
+    </LinearLayout>
+
+
+
+</LinearLayout>

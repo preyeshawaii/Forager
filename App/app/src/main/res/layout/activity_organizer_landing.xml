@@ -11,35 +11,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Current Hunt"
-        android:textSize="30dp"/>
-
-    <TextView
-        android:id="@+id/no_curr_hunts_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No Current Hunt"
-        android:textSize="20dp"
-        android:visibility="gone"/>
-
-    <ListView
-        android:id="@+id/curr_hunts_listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Previous Hunts"
+        android:text="Hunts"
         android:textSize="30dp"/>
 
     <ListView
-        android:id="@+id/previous_hunts_listView"
+        android:id="@+id/hunts_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="#000000"/>
 
     <TextView
-        android:id="@+id/no_prev_hunts_view"
+        android:id="@+id/no_hunts_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No Previous Hunts"

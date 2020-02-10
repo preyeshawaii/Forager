@@ -1,81 +1,93 @@
 package com.example.scavengerhuntapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import android.content.Context;
 import android.content.Intent;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
-import android.view.View.OnClickListener;
 
 
-import android.view.KeyEvent;
-import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class BroadcastActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-    Button button;
-    private EditText edittext;
+import java.util.UUID;
+
+public class BroadcastActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
+    private Button backButton;
+    private Button submitBtn;
+    private EditText message;
+
+    private String TAG = "BroadcastActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_broadcast);
-        addListenerOnButton();
-        addKeyListener();
-    }
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-    public void addListenerOnButton() {
+        backButton = findViewById(R.id.broadcast_back_btn);
+        submitBtn = findViewById(R.id.submit_button);
+        message = findViewById(R.id.broadcast_message);
 
-        final Context context = this;
-
-        button = (Button) findViewById(R.id.button1);
-
-        button.setOnClickListener(new OnClickListener() {
-
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
-
-                Intent intent = new Intent(context, MainActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(BroadcastActivity.this, HuntLandingActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                 startActivity(intent);
-
             }
-
         });
 
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(message.getText())){
+                    Toast.makeText(BroadcastActivity.this, "Message Required!", Toast.LENGTH_SHORT).show();
+                }else{
+                    sendBroadcastToPlayers();
+                }
+            }
+        });
     }
 
-    public void addKeyListener() {
+    private void sendBroadcastToPlayers(){
+        String uniqueID = UUID.randomUUID().toString();
+        String broadcastMsg = message.getText().toString();
+        Broadcast broadcast = new Broadcast(uniqueID, broadcastMsg);
+        String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
 
-        // get edittext component
-        edittext = (EditText) findViewById(R.id.myText);
-
-        // add a keylistener to monitor the keaybord avitvity...
-        edittext.setOnKeyListener(new OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                // if the users pressed a button and that button was "0"
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_0)) {
-
-                    // display the input text....
-                    Toast.makeText(BroadcastActivity.this,edittext.getText(), Toast.LENGTH_LONG).show();
-                    return true;
-
-                    // if the users pressed a button and that button was "9"
-                } else if ((event.getAction() == KeyEvent.ACTION_DOWN)  && (keyCode == KeyEvent.KEYCODE_9)) {
-
-                    // display message
-                    Toast.makeText(BroadcastActivity.this, "Number 9 is pressed!", Toast.LENGTH_LONG).show();
-                    return true;
-                }
-
-                return false;
-            }
-        });
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).document(uniqueID).set(broadcast)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(BroadcastActivity.this, HuntLandingActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                        Toast.makeText(BroadcastActivity.this, "Error sending message!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

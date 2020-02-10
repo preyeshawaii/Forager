@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,20 +23,22 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizerLandingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
     private Button createNewHuntBtn;
     private Button signOutButton;
-    private TextView noPrevHuntsView;
-    private TextView noCurrHuntsView;
-    private ListView currentHuntsListView;
 
-    private List<String> previousHuntIDs;
-    private List<String> previousHuntNames;
-    private ListView previousHuntsListView;
+    private TextView noHuntsView;
+    private ListView huntsListView;
+
+    private Map<String, String> previousHunts;
+
 
     private  String TAG = "OrganizerLandingActivity";
 
@@ -46,12 +50,12 @@ public class OrganizerLandingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        previousHunts = new HashMap<>();
+
         createNewHuntBtn = findViewById(R.id.create_new_hunt_btn);
         signOutButton = findViewById(R.id.sign_out);
-        previousHuntsListView = findViewById(R.id.previous_hunts_listView);
-        noPrevHuntsView = findViewById(R.id.no_prev_hunts_view);
-        noCurrHuntsView = findViewById(R.id.no_curr_hunts_view);
-        currentHuntsListView = findViewById(R.id.curr_hunts_listView);
+        huntsListView = findViewById(R.id.hunts_listView);
+        noHuntsView = findViewById(R.id.no_hunts_view);
 
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -70,73 +74,79 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        previousHuntNames = new ArrayList<>();
-
-        db.collection(MainActivity.KEY_ORGANIZER + "s").document(mAuth.getCurrentUser().getUid()).get()
-            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    Log.w(TAG, mAuth.getCurrentUser().getUid());
-                    if (documentSnapshot.exists()){
-                        previousHuntIDs = (List<String>)documentSnapshot.get("previousHunts");
-                        Log.w(TAG, previousHuntIDs.toString());
-                        CreatePreviousListView();
-
-                        String currentHunt = (String)documentSnapshot.get("currentHunt");
-                        CreateCurrentListView(currentHunt);
-                    } else{
-                        Log.w(TAG, "Organizer does not exist");
-                    }
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, e.toString());
-                }
-            });
     }
 
-    private void CreatePreviousListView(){
-        db.collection("hunts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                    if (previousHuntIDs.contains(documentSnapshot.getId())){
-                        Log.w(TAG, documentSnapshot.getId());
-
-
-                        previousHuntNames.add((String)documentSnapshot.get("huntName"));
-                    }
-                }
-
-                if (previousHuntNames.size() == 0){
-                    noPrevHuntsView.setVisibility(View.VISIBLE);
-                } else{
-                    ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<String >(getApplicationContext(),
-                            android.R.layout.simple_list_item_1, previousHuntNames);
-                    previousHuntsListView.setAdapter(prevHuntNamesArray);
-                }
-            }
-        });
-
-
-
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadInfo();
     }
 
-    private void CreateCurrentListView(String currentHunt){
-        List<String> currentHuntList = new ArrayList<String>(){};
+    private void loadInfo(){
+        previousHunts.clear();
 
-        if (currentHunt == ""){
-            noCurrHuntsView.setVisibility(View.VISIBLE);
+        db.collection(User.KEY_ORGANIZERS).document(mAuth.getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.w(TAG, mAuth.getCurrentUser().getUid());
+                        if (documentSnapshot.exists()){
+
+                            previousHunts = (Map<String, String>)documentSnapshot.get(User.KEY_HUNTS);
+                            Log.w(TAG, previousHunts.toString());
+                            createPreviousListView();
+                        } else{
+                            Log.w(TAG, "Organizer does not exist");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
+    }
+
+    private void createPreviousListView(){
+
+        if (previousHunts.isEmpty()){
+            Log.w(TAG, "No hunts found");
+            noHuntsView.setVisibility(View.VISIBLE);
         } else{
-            currentHuntList.add(currentHunt);
-            ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                    android.R.layout.simple_list_item_1, currentHuntList);
-            currentHuntsListView.setAdapter(prevHuntNamesArray);
+            Log.w(TAG, previousHunts.size() + " hunt(s) found");
+            noHuntsView.setVisibility(View.GONE);
+            setUpPreviousHuntsListView();
         }
     }
 
+    private void setUpPreviousHuntsListView(){
+        final List<String> previousHuntIDs = new ArrayList<>();
+        final List<String> previousHuntNames = new ArrayList<>();
 
+        for (Map.Entry<String, String> entry : previousHunts.entrySet()) {
+            previousHuntIDs.add(entry.getKey());
+            previousHuntNames.add(entry.getValue());
+        }
+
+        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, previousHuntNames);
+        huntsListView.setAdapter(prevHuntNamesArray);
+
+        huntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String huntName = previousHuntNames.get(position);
+                String huntID = previousHuntIDs.get(position);
+
+                Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(OrganizerLandingActivity.this, HuntLandingActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                Log.w(TAG, huntID + ": " + huntName);
+                startActivity(intent);
+            }
+        });
+    }
 }
