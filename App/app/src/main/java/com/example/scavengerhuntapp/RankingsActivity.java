@@ -3,6 +3,7 @@ package com.example.scavengerhuntapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.annotation.RequiresApi;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -10,7 +11,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Button;
 import android.view.View;
-
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -23,6 +25,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import android.content.Intent;
+import android.media.Image;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +53,11 @@ public class RankingsActivity extends AppCompatActivity {
 
     private Button backBtn;
     private ListView teamsListView;
-    private ArrayAdapter aAdapter;
+
 
     private List<String> teamNames;
-
+    private List<Integer> points;
+    private CustomAdapter customAdapter;
     private String TAG = "RankingsActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +71,8 @@ public class RankingsActivity extends AppCompatActivity {
         teamsListView = findViewById(R.id.team_list);
 
         teamNames = new ArrayList<>();
-
+        points = new ArrayList<>();
+        customAdapter = new CustomAdapter();
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +83,6 @@ public class RankingsActivity extends AppCompatActivity {
             }
         });
 
-        aAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, teamNames);
     }
 
     @Override
@@ -77,8 +93,8 @@ public class RankingsActivity extends AppCompatActivity {
 
     private void loadRankings(){
         teamNames.clear();
-
-        String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        points.clear();
+        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS)
                 .orderBy(Team.KEY_POINTS, Query.Direction.DESCENDING)
                 .get()
@@ -86,10 +102,13 @@ public class RankingsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                            teamNames.add(documentSnapshot.toObject(Team.class).getTeamName());
+                            Team team = documentSnapshot.toObject(Team.class);
+
+                            teamNames.add(team.getTeamName());
+                            points.add(team.getPoints());
                         }
 
-                        teamsListView.setAdapter(aAdapter);
+                        setAdapter(huntID);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -98,5 +117,57 @@ public class RankingsActivity extends AppCompatActivity {
                         Log.e(TAG, e.toString());
                     }
                 });
+    }
+
+
+    public void setAdapter(final String huntID){
+        teamsListView.setAdapter(customAdapter);
+        teamsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String teamName = teamNames.get(position);
+
+
+                Toast.makeText(getApplicationContext(), teamName, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(RankingsActivity.this, TeamInfoActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
+
+                startActivity(intent);
+            }
+        });
+    }
+    class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return teamNames.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = getLayoutInflater().inflate(R.layout.team_list_custom_view, null);
+            // initialize all of the different types of views
+            TextView teamName = (TextView)convertView.findViewById(R.id.teamview_name);
+            TextView teamPoints = (TextView)convertView.findViewById(R.id.teamview_points);
+
+            // NOTE: in future use getDrawable to connect to our database of images. SET DATABASE objects here
+
+            teamName.setText(teamNames.get(position));
+            teamPoints.setText(points.get(position) + " pts");
+            return convertView;
+        }
     }
 }
