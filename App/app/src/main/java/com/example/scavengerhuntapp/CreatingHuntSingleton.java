@@ -10,9 +10,11 @@ public class CreatingHuntSingleton {
     final static String[] CHALLENGES = {"Eat the Earthquake", "Loudly advertise See's Chocolate", "Walk someone's dog"};
     final static String[] LOCATIONS = {"Ghirardelli Square", "Chinatown", "Golden Gate Park"};
 
+    private String huntTitle;
     private List<Challenge> challenges;
 
     private CreatingHuntSingleton(){
+        this.huntTitle = "";
         challenges = new ArrayList<>();
     }
 
@@ -31,7 +33,16 @@ public class CreatingHuntSingleton {
         challenges.add(challenge);
     }
 
-    public void clearChallengex(){
-        challenges.clear();
+    public void setHuntTitle(String title){
+        this.huntTitle = title;
+    }
+
+    public String getHuntTitle(){
+        return this.huntTitle;
+    }
+
+    public void clearHunt(){
+        this.challenges.clear();
+        this.huntTitle = "";
     }
 }

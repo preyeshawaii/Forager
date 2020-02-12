@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,10 +37,14 @@ public class CustomChallengeDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Add to hunt", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        String checkPoints = pointsEditText.getText().toString();
+                        if (checkPoints.matches("")){
+                            checkPoints = "10";
+                        }
+
                         String challenge = challengeEditText.getText().toString();
                         String location = challengeLocationEditText.getText().toString();
-                        String points = pointsEditText.getText().toString();
-                        Integer pointsInt = Integer.parseInt(points);
+                        Integer pointsInt = Integer.parseInt(checkPoints);
                         listener.getTexts(challenge, location, pointsInt);
                     }
                 });

@@ -57,13 +57,12 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 for (int i = 0; i < premadeChallengesList.getCount(); i++) {
                     CheckBox checkedBox = premadeChallengesList.getChildAt(i).findViewById(R.id.checkBox);
-
-                    Log.w(TAG, "HERE");
+                    
                     if (checkedBox.isChecked() == true){
                         addHunt(i);
                     }
                 }
-                Intent intent = new Intent(PremadeChallengeListActivity.this, PremadeHuntsActivity.class);
+                Intent intent = new Intent(PremadeChallengeListActivity.this, CreateHuntActivity.class);
                 startActivity(intent);
             }
         });
