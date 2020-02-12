@@ -82,6 +82,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                 openDialog();
             }
         });
+
     }
 
     @Override
@@ -178,6 +179,8 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         Challenge challenge = new Challenge(uniqueID, challengeDes, points, location, R.drawable.icecream);
         creatingHuntSingleton.addChallenge(challenge);
     }
+
+ 
 
     class CustomAdapter extends BaseAdapter {
         private List<Challenge> challenges = creatingHuntSingleton.getChallenges();
