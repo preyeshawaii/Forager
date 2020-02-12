@@ -60,6 +60,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         premadeChallButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                creatingHuntSingleton.setHuntTitle(huntNameEditText.getText().toString());
                 Intent intent = new Intent(CreateHuntActivity.this, PremadeHuntsActivity.class);
                 startActivity(intent);
             }
@@ -89,7 +90,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         super.onStart();
         challengeList.setChoiceMode(challengeList.CHOICE_MODE_MULTIPLE);
         challengeList.setAdapter(pendingChallenges);
-
+        huntNameEditText.setText(creatingHuntSingleton.getHuntTitle());
     }
 
     private void CreateHunt() {
@@ -127,6 +128,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
+                                            creatingHuntSingleton.clearHunt();
                                             Intent intent = new Intent(CreateHuntActivity.this, HuntLandingActivity.class);
                                             intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                                             intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
@@ -177,6 +179,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         final String uniqueID = UUID.randomUUID().toString();
         Challenge challenge = new Challenge(uniqueID, challengeDes, points, location, R.drawable.icecream);
         creatingHuntSingleton.addChallenge(challenge);
+        challengeList.setAdapter(pendingChallenges);
     }
 
     class CustomAdapter extends BaseAdapter {
