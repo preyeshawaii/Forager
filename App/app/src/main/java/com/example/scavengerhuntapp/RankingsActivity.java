@@ -38,7 +38,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.Switch;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +59,7 @@ public class RankingsActivity extends AppCompatActivity {
     private List<Integer> points;
     private CustomAdapter customAdapter;
     private String TAG = "RankingsActivity";
+    Switch myValue = CreateHuntActivity.getSwitch();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

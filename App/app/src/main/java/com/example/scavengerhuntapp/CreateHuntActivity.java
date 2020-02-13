@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.Switch;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -183,7 +183,11 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         challengeList.setAdapter(pendingChallenges);
     }
 
- 
+    public Switch getSwitch()    {
+        Switch pointSwitch = (Switch) findViewById(R.id.show_points_switch);
+
+        return pointSwitch;
+    }
 
     class CustomAdapter extends BaseAdapter {
         private List<Challenge> challenges = creatingHuntSingleton.getChallenges();
