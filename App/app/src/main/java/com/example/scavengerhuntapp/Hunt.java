@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Hunt {
+    static final int LENGTH_OF_ID = 12;
     static final String KEY_HUNTS = "hunts";
     static final String KEY_HUNT_ID = "huntID";
     static final String KEY_HUNT_NAME = "huntName";

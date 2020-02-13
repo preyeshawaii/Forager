@@ -16,6 +16,7 @@ public class HuntLandingActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private TextView title;
+    private TextView joinCode;
     private Button teamsBtn;
     private Button rankingsBtn;
     private Button challangesBtn;
@@ -34,6 +35,7 @@ public class HuntLandingActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         title = findViewById(R.id.hunt_landing_title);
+        joinCode = findViewById(R.id.join_code_text);
         teamsBtn = findViewById(R.id.teams_button);
         rankingsBtn = findViewById(R.id.rankings_button);
         challangesBtn = findViewById(R.id.challenges_button);
@@ -45,6 +47,7 @@ public class HuntLandingActivity extends AppCompatActivity {
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
 
         title.setText(huntName);
+        joinCode.setText(huntID);
 
         teamsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

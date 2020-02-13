@@ -18,7 +18,7 @@
         android:id="@+id/hunts_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"/>
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/no_hunts_view"

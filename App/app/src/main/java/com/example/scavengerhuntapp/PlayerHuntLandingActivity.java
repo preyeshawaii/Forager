@@ -1,14 +1,14 @@
 package com.example.scavengerhuntapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,35 +20,79 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentChallengesActivity extends AppCompatActivity {
+public class PlayerHuntLandingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private ListView currentChallengesListView;
+    private TextView title;
+    private Button rankingsButton;
+    private Button announcementsButton;
+    private Button teamsButton;
+    private ListView challengesListView;
+
     private List<Challenge> challengesList;
-
-    private CreatingHuntSingleton creatingHuntSingleton;
-
     private CustomAdapter huntNamesArray;
 
-    private  String TAG = "CurrentChallengesActivity";
+    private String TAG = "PlayerHuntLandingActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_current_challenges);
+        setContentView(R.layout.activity_player_hunt_landing);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        currentChallengesListView = findViewById(R.id.curr_challenges_list);
+        title = findViewById(R.id.hunt_name_text_view);
+        rankingsButton = findViewById(R.id.rankings_button);
+        announcementsButton = findViewById(R.id.announcements_button);
+        teamsButton = findViewById(R.id.teams_button);
+        challengesListView = findViewById(R.id.challenge_list);
 
-        creatingHuntSingleton = creatingHuntSingleton.init();
+        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+        final String teamName = getIntent().getExtras().getString(User.KEY_TEAM_NAME);
+
+        title.setText(huntName);
+
         challengesList = new ArrayList<>();
         huntNamesArray = new CustomAdapter();
+
+        rankingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                startActivity(intent);
+            }
+        });
+
+        teamsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlayerHuntLandingActivity.this, TeamsActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                startActivity(intent);
+            }
+        });
+
+        announcementsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlayerHuntLandingActivity.this, AnnouncementsActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -72,7 +116,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
                             challengesList.add(documentSnapshot.toObject(Challenge.class));
                             Log.w(TAG, documentSnapshot.getId());
                         }
-                        currentChallengesListView.setAdapter(huntNamesArray);
+                        challengesListView.setAdapter(huntNamesArray);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -119,3 +163,4 @@ public class CurrentChallengesActivity extends AppCompatActivity {
         }
     }
 }
+

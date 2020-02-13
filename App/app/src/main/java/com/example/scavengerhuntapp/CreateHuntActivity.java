@@ -23,7 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class CreateHuntActivity extends AppCompatActivity implements CustomChallengeDialog.CustomChallengeListener{
@@ -124,7 +126,9 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                         if (documentSnapshot.exists()){
                             Log.w(TAG, "Create hunt");
                             User user = documentSnapshot.toObject(User.class);
-                            user.addHunt(huntID, huntName);
+                            Map<String, String> huntValues = new HashMap<>();
+                            huntValues.put(Hunt.KEY_HUNT_NAME, huntName);
+                            user.addHunt(huntID, huntValues);
                             db.collection(User.KEY_ORGANIZERS).document(userID).set(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -177,7 +181,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
 
     public void getTexts(String challengeDes, String location, Integer points) {
-        final String uniqueID = UUID.randomUUID().toString();
+        final String uniqueID = Utils.generateHuntID();
         Challenge challenge = new Challenge(uniqueID, challengeDes, points, location, R.drawable.icecream);
         creatingHuntSingleton.addChallenge(challenge);
         challengeList.setAdapter(pendingChallenges);

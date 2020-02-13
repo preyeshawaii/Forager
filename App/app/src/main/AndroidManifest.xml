@@ -15,6 +15,7 @@
         <activity android:name=".CurrentTeamActivity" />
         <activity android:name=".SubmissionsActivity"/>
         <activity android:name=".RankingsActivity" />
+        <activity android:name=".AnnouncementsActivity" />
 
         <activity android:name=".BroadcastActivity" />
 
@@ -25,6 +26,7 @@
         <activity android:name=".PremadeChallengeListActivity" />
         <activity android:name=".PremadeHuntsActivity" />
         <activity android:name=".PlayerLandingActivity" />
+        <activity android:name=".PlayerHuntLandingActivity" />
         <activity android:name=".OrganizerLandingActivity" />
         <activity android:name=".ProcessSubmissionActivity"></activity>
         <activity android:name=".MainActivity">

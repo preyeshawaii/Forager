@@ -19,8 +19,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +35,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
     private TextView noHuntsView;
     private ListView huntsListView;
 
-    private Map<String, String> previousHunts;
+    private Map<String, Map<String, String>> hunts;
 
 
     private  String TAG = "OrganizerLandingActivity";
@@ -50,7 +48,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        previousHunts = new HashMap<>();
+        hunts = new HashMap<>();
 
         createNewHuntBtn = findViewById(R.id.create_new_hunt_btn);
         signOutButton = findViewById(R.id.sign_out);
@@ -83,7 +81,7 @@ public class OrganizerLandingActivity extends AppCompatActivity {
     }
 
     private void loadInfo(){
-        previousHunts.clear();
+        hunts.clear();
 
         db.collection(User.KEY_ORGANIZERS).document(mAuth.getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -92,9 +90,8 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                         Log.w(TAG, mAuth.getCurrentUser().getUid());
                         if (documentSnapshot.exists()){
 
-                            previousHunts = (Map<String, String>)documentSnapshot.get(User.KEY_HUNTS);
-                            Log.w(TAG, previousHunts.toString());
-                            createPreviousListView();
+                            hunts = (Map<String, Map<String, String>>)documentSnapshot.get(User.KEY_HUNTS);
+                            createHuntListView();
                         } else{
                             Log.w(TAG, "Organizer does not exist");
                         }
@@ -108,36 +105,36 @@ public class OrganizerLandingActivity extends AppCompatActivity {
                 });
     }
 
-    private void createPreviousListView(){
+    private void createHuntListView(){
 
-        if (previousHunts.isEmpty()){
+        if (hunts.isEmpty()){
             Log.w(TAG, "No hunts found");
             noHuntsView.setVisibility(View.VISIBLE);
         } else{
-            Log.w(TAG, previousHunts.size() + " hunt(s) found");
+            Log.w(TAG, hunts.size() + " hunt(s) found");
             noHuntsView.setVisibility(View.GONE);
-            setUpPreviousHuntsListView();
+            setUpHuntsListView();
         }
     }
 
-    private void setUpPreviousHuntsListView(){
-        final List<String> previousHuntIDs = new ArrayList<>();
-        final List<String> previousHuntNames = new ArrayList<>();
+    private void setUpHuntsListView(){
+        final List<String> huntIDs = new ArrayList<>();
+        final List<String> huntNames = new ArrayList<>();
 
-        for (Map.Entry<String, String> entry : previousHunts.entrySet()) {
-            previousHuntIDs.add(entry.getKey());
-            previousHuntNames.add(entry.getValue());
+        for (Map.Entry<String, Map<String, String>> entry : hunts.entrySet()) {
+            huntIDs.add(entry.getKey());
+            huntNames.add((entry.getValue()).get(Hunt.KEY_HUNT_NAME));
         }
 
         ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, previousHuntNames);
+                android.R.layout.simple_list_item_1, huntNames);
         huntsListView.setAdapter(prevHuntNamesArray);
 
         huntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String huntName = previousHuntNames.get(position);
-                String huntID = previousHuntIDs.get(position);
+                String huntName = huntNames.get(position);
+                String huntID = huntIDs.get(position);
 
                 Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
 
