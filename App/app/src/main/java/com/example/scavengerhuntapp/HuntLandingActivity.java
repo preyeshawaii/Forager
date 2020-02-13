@@ -65,6 +65,7 @@ public class HuntLandingActivity extends AppCompatActivity {
                 Intent intent = new Intent(HuntLandingActivity.this, RankingsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra("playerType", "organizers");
                 startActivity(intent);
             }
         });

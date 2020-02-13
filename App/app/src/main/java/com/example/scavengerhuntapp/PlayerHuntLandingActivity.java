@@ -70,6 +70,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 Intent intent = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra("playerType", "players");
                 startActivity(intent);
             }
         });

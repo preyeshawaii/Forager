@@ -70,7 +70,8 @@ public class RankingsActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         String player_organizer = getIntent().getExtras().getString("playerType");
-        isPlayer = player_organizer == "player"? true: false;
+        Log.w(TAG, player_organizer);
+        isPlayer = player_organizer.equals("players")? true: false;
         backBtn = findViewById(R.id.rankings_go_back);
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
