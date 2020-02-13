@@ -1,18 +1,36 @@
 package com.example.scavengerhuntapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class PlayerLandingActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class PlayerLandingActivity extends AppCompatActivity implements TeamDialog.TeamDialogListener{
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     private Button signOutButton;
     private Button huntCodeButton;
@@ -21,17 +39,27 @@ public class PlayerLandingActivity extends AppCompatActivity {
     private ListView huntsListView;
     private EditText huntCodeEditText;
 
+    private Map<String, Map<String, String>> hunts;
+    private Hunt hunt;
+
+
+    private String TAG = "PlayerLandingActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_landing);
 
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         signOutButton = findViewById(R.id.sign_out);
         huntCodeButton = findViewById(R.id.hunt_code_button);
         huntsListView = findViewById(R.id.player_hunts_listView);
-        noHuntsView = findViewById(R.id.no_hunts_view);
+        noHuntsView = findViewById(R.id.no_player_hunts_view);
         huntCodeEditText = findViewById(R.id.hunt_code_et);
 
+        hunts = new HashMap<>();
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +73,176 @@ public class PlayerLandingActivity extends AppCompatActivity {
         huntCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String huntCodeResult = huntCodeEditText.getText().toString();
-                // TODO (@Jorge): use hunt code to determine which hunt you need to load
+                checkHuntCode();
+            }
+        });
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadInfo();
+    }
+
+    private void loadInfo(){
+        hunts.clear();
+
+        db.collection(User.KEY_PLAYERS).document(mAuth.getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.w(TAG, mAuth.getCurrentUser().getUid());
+                        if (documentSnapshot.exists()){
+
+                            hunts = (Map<String, Map<String, String>>)documentSnapshot.get(User.KEY_HUNTS);
+                            createHuntListView();
+                        } else{
+                            Log.w(TAG, "Player does not exist");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
+    }
+
+    private void createHuntListView(){
+
+        if (hunts.isEmpty()){
+            Log.w(TAG, "No hunts found");
+            noHuntsView.setVisibility(View.VISIBLE);
+        } else{
+            Log.w(TAG, hunts.size() + " hunt(s) found");
+            noHuntsView.setVisibility(View.GONE);
+            setUpHuntsListView();
+        }
+    }
+
+    private void setUpHuntsListView(){
+        final List<String> huntIDs = new ArrayList<>();
+        final List<String> huntNames = new ArrayList<>();
+        final List<String> teamNames = new ArrayList<>();
+
+        for (Map.Entry<String, Map<String, String>> entry : hunts.entrySet()) {
+            huntIDs.add(entry.getKey());
+            huntNames.add(entry.getValue().get(Hunt.KEY_HUNT_NAME));
+            teamNames.add(entry.getValue().get(User.KEY_TEAM_NAME));
+        }
+
+        ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, huntNames);
+        huntsListView.setAdapter(prevHuntNamesArray);
+
+        huntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String huntName = huntNames.get(position);
+                String huntID = huntIDs.get(position);
+                String teamName = teamNames.get(position);
+
+                Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
+                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra(User.KEY_TEAM_NAME, teamName);
+                Log.w(TAG, huntID + ": " + huntName);
                 startActivity(intent);
             }
         });
     }
 
-    // TODO (@Jorge): load info about current hunts
+    private void checkHuntCode(){
+        final String huntCode = huntCodeEditText.getText().toString();
+
+        db.collection(Hunt.KEY_HUNTS).document(huntCode).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()){
+                            hunt = documentSnapshot.toObject(Hunt.class);
+                            openDialog();
+                        } else {
+                            Toast.makeText(PlayerLandingActivity.this, "Not a valid code!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
+    }
+
+
+
+    public void openDialog () {
+        TeamDialog teamDialog = new TeamDialog();
+        teamDialog.show(getSupportFragmentManager(), "Team dialog");
+    }
+
+    public void getTeamName(String teamName) {
+        updatePlayerHuntList(teamName);
+
+    }
+
+    private void updatePlayerHuntList(final String teamName){
+        final String userID = mAuth.getCurrentUser().getUid();
+
+        db.collection(User.KEY_PLAYERS).document(mAuth.getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.w(TAG, "Adding hunt to player");
+                        User user = documentSnapshot.toObject(User.class);
+                        Map<String, String> huntValues = new HashMap<>();
+                        huntValues.put(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
+                        huntValues.put(User.KEY_TEAM_NAME, teamName);
+                        user.addHunt(hunt.getHuntID(), huntValues);
+                        db.collection(User.KEY_PLAYERS).document(userID).set(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        updateOrganizerTeams(teamName);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, e.toString());
+                                        Toast.makeText(getApplicationContext(), "Could not join hunt. Try again.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
+    }
+
+    private void updateOrganizerTeams(final String teamName){
+        String fullName = GoogleSignIn.getLastSignedInAccount(getApplicationContext()).getDisplayName();
+        String uniqueID = Utils.uniqueID(8);
+        Team team = new Team(uniqueID, teamName, mAuth.getUid(), fullName);
+
+        db.collection(User.KEY_ORGANIZERS).document(hunt.getHuntID()).collection(Team.KEY_TEAMS).document(uniqueID).set(team)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, hunt.getHuntName());
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
+                        intent.putExtra(User.KEY_TEAM_NAME, teamName);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                        Toast.makeText(getApplicationContext(), "Error saving information. Try Again", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }
