@@ -129,7 +129,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
         for (Map.Entry<String, Map<String, String>> entry : hunts.entrySet()) {
             huntIDs.add(entry.getKey());
             huntNames.add(entry.getValue().get(Hunt.KEY_HUNT_NAME));
-            teamNames.add(entry.getValue().get(User.KEY_TEAM_NAME));
+            teamNames.add(entry.getValue().get(Team.KEY_TEAM_NAME));
         }
 
         ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
@@ -148,7 +148,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                 Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                intent.putExtra(User.KEY_TEAM_NAME, teamName);
+                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 Log.w(TAG, huntID + ": " + huntName);
                 startActivity(intent);
             }
@@ -201,7 +201,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                         User user = documentSnapshot.toObject(User.class);
                         Map<String, String> huntValues = new HashMap<>();
                         huntValues.put(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
-                        huntValues.put(User.KEY_TEAM_NAME, teamName);
+                        huntValues.put(Team.KEY_TEAM_NAME, teamName);
                         user.addHunt(hunt.getHuntID(), huntValues);
                         db.collection(User.KEY_PLAYERS).document(userID).set(user)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -234,7 +234,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                         Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
                         intent.putExtra(Hunt.KEY_HUNT_ID, hunt.getHuntID());
                         intent.putExtra(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
-                        intent.putExtra(User.KEY_TEAM_NAME, teamName);
+                        intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                         startActivity(intent);
                     }
                 })

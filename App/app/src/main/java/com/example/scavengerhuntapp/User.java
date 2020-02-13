@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    static final String KEY_ORGANIZERS = "organizers";
+    static final String KEY_PLAYER_TYPE = "playerType";
     static final String KEY_PLAYERS = "players";
+    static final String KEY_ORGANIZERS = "organizers";
+    static final String KEY_ORGANIZER = "organizer";
+    static final String KEY_PLAYER = "player";
     static final String KEY_HUNTS = "hunts";
 
     private String userID;

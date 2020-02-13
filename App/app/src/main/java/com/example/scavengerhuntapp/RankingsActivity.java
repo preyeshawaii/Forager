@@ -26,16 +26,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Switch;
@@ -69,9 +61,9 @@ public class RankingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        String player_organizer = getIntent().getExtras().getString("playerType");
+        String player_organizer = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
         Log.w(TAG, player_organizer);
-        isPlayer = player_organizer.equals("players")? true: false;
+        isPlayer = player_organizer.equals(User.KEY_PLAYER)? true: false;
         backBtn = findViewById(R.id.rankings_go_back);
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
