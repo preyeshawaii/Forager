@@ -224,14 +224,15 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
     private void updateOrganizerTeams(final String teamName){
         String fullName = GoogleSignIn.getLastSignedInAccount(getApplicationContext()).getDisplayName();
         String uniqueID = Utils.uniqueID(8);
-        Team team = new Team(uniqueID, teamName, mAuth.getUid(), fullName);
+        String userID = mAuth.getUid();
+        Team team = new Team(uniqueID, teamName, userID, fullName);
 
-        db.collection(User.KEY_ORGANIZERS).document(hunt.getHuntID()).collection(Team.KEY_TEAMS).document(uniqueID).set(team)
+        db.collection(Hunt.KEY_HUNTS).document(hunt.getHuntID()).collection(Team.KEY_TEAMS).document(uniqueID).set(team)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
-                        intent.putExtra(Hunt.KEY_HUNT_ID, hunt.getHuntName());
+                        intent.putExtra(Hunt.KEY_HUNT_ID, hunt.getHuntID());
                         intent.putExtra(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
                         intent.putExtra(User.KEY_TEAM_NAME, teamName);
                         startActivity(intent);
