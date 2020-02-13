@@ -71,6 +71,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
+                intent.putExtra("playerType", "players");
                 startActivity(intent);
             }
         });
