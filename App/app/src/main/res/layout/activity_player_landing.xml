@@ -24,7 +24,7 @@
     <ListView
         android:id="@+id/player_hunts_listView"
         android:layout_width="match_parent"
-        android:layout_height="478dp"
+        android:layout_height="wrap_content"
         android:textColor="#000000" />
 
     <TextView
