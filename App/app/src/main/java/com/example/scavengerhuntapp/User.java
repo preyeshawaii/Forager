@@ -8,7 +8,6 @@ public class User {
     static final String KEY_ORGANIZERS = "organizers";
     static final String KEY_PLAYERS = "players";
     static final String KEY_HUNTS = "hunts";
-    static final String KEY_TEAM_NAME = "teamName";
 
     private String userID;
     private String fullName;

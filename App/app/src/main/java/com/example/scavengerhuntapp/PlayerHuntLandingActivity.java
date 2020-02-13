@@ -57,7 +57,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
 
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
-        final String teamName = getIntent().getExtras().getString(User.KEY_TEAM_NAME);
+        final String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
 
         title.setText(huntName);
 
@@ -70,6 +70,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 Intent intent = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 startActivity(intent);
             }
         });
@@ -80,6 +81,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 Intent intent = new Intent(PlayerHuntLandingActivity.this, TeamsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 startActivity(intent);
             }
         });
@@ -90,6 +92,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 Intent intent = new Intent(PlayerHuntLandingActivity.this, AnnouncementsActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 startActivity(intent);
             }
         });
