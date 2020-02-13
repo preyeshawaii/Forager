@@ -3,6 +3,7 @@
     package="com.example.scavengerhuntapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -25,17 +26,16 @@
         <activity android:name=".PremadeChallengeListActivity" />
         <activity android:name=".PremadeHuntsActivity" />
         <activity android:name=".PlayerLandingActivity" />
-        <activity android:name=".PlayersViewMembersActivity">
+        <activity android:name=".PlayersViewMembersActivity"></activity>
+        <activity android:name=".SubmitChallengeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".OrganizerLandingActivity" />
         <activity android:name=".ProcessSubmissionActivity"></activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 

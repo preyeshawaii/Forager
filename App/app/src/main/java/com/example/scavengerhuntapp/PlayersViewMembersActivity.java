@@ -51,7 +51,7 @@ public class PlayersViewMembersActivity extends AppCompatActivity {
         customAdapter = new CustomAdapter();
 
 
-        // here is where we can identify which team is which 
+        // here is where we can identify which team is which
         loadTeamInfo(1);
 
     }
