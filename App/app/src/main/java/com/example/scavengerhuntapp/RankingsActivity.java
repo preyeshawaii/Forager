@@ -53,13 +53,15 @@ public class RankingsActivity extends AppCompatActivity {
 
     private Button backBtn;
     private ListView teamsListView;
-
+    private Switch viewPointSwitch;
 
     private List<String> teamNames;
     private List<Integer> points;
     private CustomAdapter customAdapter;
     private String TAG = "RankingsActivity";
-    Switch myValue = CreateHuntActivity.getSwitch();
+
+    Boolean isPlayer;
+    Boolean viewPointSwitchState;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +69,15 @@ public class RankingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-
+        String player_organizer = getIntent().getExtras().getString("playerType");
+        isPlayer = player_organizer == "player"? true: false;
         backBtn = findViewById(R.id.rankings_go_back);
         teamsListView = findViewById(R.id.team_list);
+        viewPointSwitch = findViewById(R.id.show_points_switch);
+        viewPointSwitchState = viewPointSwitch.isChecked();
+        if (isPlayer == true)   {
+            viewPointSwitch.setVisibility(View.GONE);
+        }
 
         teamNames = new ArrayList<>();
         points = new ArrayList<>();
@@ -77,12 +85,15 @@ public class RankingsActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RankingsActivity.this, HuntLandingActivity.class);
+
+                Intent intent = isPlayer? new Intent(RankingsActivity.this, PlayerHuntLandingActivity.class) : new Intent(RankingsActivity.this, HuntLandingActivity.class);
+
                 intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                 intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                 startActivity(intent);
             }
         });
+
 
     }
 
@@ -163,7 +174,9 @@ public class RankingsActivity extends AppCompatActivity {
             // initialize all of the different types of views
             TextView teamName = (TextView)convertView.findViewById(R.id.teamview_name);
             TextView teamPoints = (TextView)convertView.findViewById(R.id.teamview_points);
-
+            if (viewPointSwitchState == true)   {
+                teamPoints.setVisibility(View.GONE);
+            }
             // NOTE: in future use getDrawable to connect to our database of images. SET DATABASE objects here
 
             teamName.setText(teamNames.get(position));
