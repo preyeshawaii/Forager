@@ -19,9 +19,9 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_process_submission);
 
         teamName = findViewById(R.id.process_submission_team_name);
-        challengePoints = findViewById(R.id.process_submission_team_points);
-        message = findViewById(R.id.process_submission_text);
-        description = findViewById(R.id.process_submission_challenge_description);
+        challengePoints = findViewById(R.id.challengePoints);
+        message = findViewById(R.id.process_submission_challenge_description);
+        description = findViewById(R.id.challengeTextView);
     }
 
     @Override
