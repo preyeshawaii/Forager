@@ -97,7 +97,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
     }
 
     private void CreateHunt() {
-        final String uniqueID = UUID.randomUUID().toString();
+        final String uniqueID = Utils.generateHuntID();
         final Hunt hunt = new Hunt(uniqueID, huntNameEditText.getText().toString());
 
         db.collection(Hunt.KEY_HUNTS).document(uniqueID).set(hunt)
@@ -187,12 +187,6 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         challengeList.setAdapter(pendingChallenges);
     }
 
-    public Switch getSwitch()    {
-        Switch pointSwitch = (Switch) findViewById(R.id.show_points_switch);
-
-        return pointSwitch;
-    }
-
     class CustomAdapter extends BaseAdapter {
         private List<Challenge> challenges = creatingHuntSingleton.getChallenges();
 
@@ -219,6 +213,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
             ImageView imageView = view.findViewById(R.id.iconImageView);
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
+            TextView pointsView = view.findViewById(R.id.challengePoints);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
 
             imageView.setImageResource(challenges.get(i).getIcon());

@@ -45,13 +45,18 @@
         style="@style/ParagraphText"
         android:textStyle="italic"
         android:text="Location" />
+
     <TextView
         android:id="@+id/challengePoints"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Points: 10"
-        android:layout_below="@+id/challengeLocationTextView">
+        android:layout_below="@id/iconImageView"
+        android:layout_alignLeft="@id/iconImageView"
+        android:layout_marginTop="25dp"
+        android:hint="Points"
+        android:inputType="numberSigned"
+        android:gravity="center_horizontal"
+        android:text="Points: 10">
 
     </TextView>
 

@@ -39,6 +39,11 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
     private List<Challenge> challengesList;
     private CustomAdapter huntNamesArray;
 
+    private String huntID;
+    private String huntName;
+    private String teamName;
+    private String teamID;
+
     private String TAG = "PlayerHuntLandingActivity";
 
     @Override
@@ -55,9 +60,10 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         teamsButton = findViewById(R.id.teams_button);
         challengesListView = findViewById(R.id.challenge_list);
 
-        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
-        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
-        final String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
+        huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+        teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
+        teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
 
         title.setText(huntName);
 
@@ -148,7 +154,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
 
             // Populate list view
@@ -156,11 +162,29 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
+            Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
+            TextView points = view.findViewById(R.id.challengePoints);
+
+            submitChallenge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(PlayerHuntLandingActivity.this, SubmitChallengeActivity.class);
+                    intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                    intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                    intent.putExtra(Team.KEY_TEAM_NAME, teamName);
+                    intent.putExtra(Team.KEY_TEAM_ID, teamID);
+                    intent.putExtra(Submission.KEY_ICON, String.valueOf(challengesList.get(i).getIcon()));
+                    intent.putExtra(Submission.KEY_DESCRIPTION, challengesList.get(i).getDescription());
+                    intent.putExtra(Submission.KEY_LOCATION, challengesList.get(i).getLocation());
+                    //intent.putExtra(Submission.KEY_POINTS, challengesList.get(i).getPoints());
+                    startActivity(intent);
+                }
+            });
 
             imageView.setImageResource(challengesList.get(i).getIcon());
             challengeTextView.setText(challengesList.get(i).getDescription());
             challengeLocationTextView.setText(challengesList.get(i).getLocation());
-            // TODO Add points view here
+            //points.setText(challengesList.get(i).getPoints());
             checkBox.setVisibility(View.GONE);
 
             return view;
