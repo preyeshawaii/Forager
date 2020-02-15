@@ -66,7 +66,11 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         challengePoints.setText(points + " points");
         message.setText(teamComments);
 
-        Picasso.with(this).load(Uri.parse(imageURI)).into(imageView);
+        //Glide.with(this /* context */)
+        //        .using(new FirebaseImageLoader())
+          //      .load(Uri.parse(imageURI))
+           //
+        //Picasso.with(this).load().into(imageView);
     }
 
     public void clickedApprove(View v){

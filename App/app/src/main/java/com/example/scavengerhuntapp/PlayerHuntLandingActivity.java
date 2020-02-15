@@ -33,7 +33,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
     private TextView title;
     private Button rankingsButton;
     private Button announcementsButton;
-    private Button teamsButton;
     private ListView challengesListView;
 
     private List<Challenge> challengesList;
@@ -57,7 +56,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         title = findViewById(R.id.hunt_name_text_view);
         rankingsButton = findViewById(R.id.rankings_button);
         announcementsButton = findViewById(R.id.announcements_button);
-        teamsButton = findViewById(R.id.teams_button);
         challengesListView = findViewById(R.id.challenge_list);
 
         huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
@@ -78,17 +76,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 intent.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
-                startActivity(intent);
-            }
-        });
-
-        teamsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PlayerHuntLandingActivity.this, TeamsActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 startActivity(intent);
             }
         });
