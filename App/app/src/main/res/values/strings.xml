@@ -13,5 +13,6 @@
     <string name="go_back">Go Back</string>
     <string name="ranking">Ranking</string>
     <string name="submit">Submit</string>
+    <string name="submitChallengeDescriptionPrompt">Write a note about this challenge for the reviewers!</string>
 
 </resources>

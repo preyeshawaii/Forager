@@ -19,11 +19,15 @@ public class Team {
 
     public Team(){ }
 
-    public Team(String teamID, String teamName) {
+    public Team(String teamID, String teamName, String userID, String playerName) {
         this.teamID = teamID;
         this.teamName = teamName;
         this.points = 0;
-        members = new HashMap<>();
+        this.members = new HashMap<>();
+
+        Map<String, String> newPlayer = new HashMap<>();
+        newPlayer.put(playerName, "");
+        this.members.put(userID, newPlayer);
     }
 
     public String getTeamID() {

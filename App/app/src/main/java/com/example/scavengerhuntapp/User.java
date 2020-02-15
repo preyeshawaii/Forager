@@ -5,15 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    static final String KEY_ORGANIZERS = "organizers";
+    static final String KEY_PLAYER_TYPE = "playerType";
     static final String KEY_PLAYERS = "players";
+    static final String KEY_ORGANIZERS = "organizers";
+    static final String KEY_ORGANIZER = "organizer";
+    static final String KEY_PLAYER = "player";
     static final String KEY_HUNTS = "hunts";
 
     private String userID;
     private String fullName;
     private String email;
     private String userType;
-    private Map<String, String> hunts;
+    private Map<String, Map<String, String>> hunts;
 
     public User(){
     }
@@ -42,11 +45,11 @@ public class User {
         return userType;
     }
 
-    public Map<String, String> getHunts() {
+    public Map<String, Map<String, String>> getHunts() {
         return hunts;
     }
 
-    public void addHunt(String huntID, String huntName){
-        this.hunts.put(huntID, huntName);
+    public void addHunt(String huntID, Map<String, String> huntValues){
+        this.hunts.put(huntID, huntValues);
     }
 }

@@ -10,6 +10,10 @@
         android:text="Team Name"
         style="@style/HeadingText"></TextView>
 
+    <include layout="@layout/challenge_custom_view"
+        android:id="@+id/processSubmissionChallengeView">
+    </include>
+
     <TextView
         android:id="@+id/process_submission_challenge_description"
         android:layout_width="wrap_content"
@@ -25,11 +29,12 @@
 
     <ImageView
         android:id="@+id/process_submission_photo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher_background"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true">
+        android:adjustViewBounds="true"
+        android:layout_gravity="center">
     </ImageView>
 
     <TextView

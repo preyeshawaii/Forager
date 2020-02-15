@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -33,7 +32,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
 
     private CreatingHuntSingleton creatingHuntSingleton;
 
-    private CustomAdapter prevHuntNamesArray;
+    private CustomAdapter huntNamesArray;
 
     private  String TAG = "CurrentChallengesActivity";
 
@@ -49,7 +48,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
 
         creatingHuntSingleton = creatingHuntSingleton.init();
         challengesList = new ArrayList<>();
-        prevHuntNamesArray = new CustomAdapter();
+        huntNamesArray = new CustomAdapter();
     }
 
     @Override
@@ -73,7 +72,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
                             challengesList.add(documentSnapshot.toObject(Challenge.class));
                             Log.w(TAG, documentSnapshot.getId());
                         }
-                        currentChallengesListView.setAdapter(prevHuntNamesArray);
+                        currentChallengesListView.setAdapter(huntNamesArray);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
