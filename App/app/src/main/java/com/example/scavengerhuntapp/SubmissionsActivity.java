@@ -115,7 +115,7 @@ public class SubmissionsActivity extends AppCompatActivity {
                 String subID = subs.get(position).getSubmissionID();
                 String description = descriptions.get(position);
                 String teamComments = subs.get(position).getTeamComments();
-                String imageUri = subs.get(position).getmImageUrl();
+                String imageUri = subs.get(position).getImageURL();
 
                 Toast.makeText(getApplicationContext(), teamName, Toast.LENGTH_SHORT).show();
 
@@ -126,7 +126,7 @@ public class SubmissionsActivity extends AppCompatActivity {
                 intent.putExtra(Submission.KEY_DESCRIPTION, description);
                 intent.putExtra(Submission.KEY_TEAM_COMMENTS, teamComments);
                 intent.putExtra(Submission.KEY_POINTS, Integer.toString(points.get(position)));
-                intent.putExtra(Submission.KEY_TEAM_NAME, teamNames.get(position));
+                intent.putExtra(Team.KEY_TEAM_NAME, teamNames.get(position));
                 intent.putExtra(Submission.KEY_IMAGE_URI, imageUri);
                 Log.w(TAG, subID + ": " + teamName + ", " + description);
                 startActivity(intent);

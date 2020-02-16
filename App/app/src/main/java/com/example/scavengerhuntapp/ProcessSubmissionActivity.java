@@ -59,7 +59,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         String description = getIntent().getExtras().getString(Submission.KEY_DESCRIPTION);
         String teamComments = getIntent().getExtras().getString(Submission.KEY_TEAM_COMMENTS);
         String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
-        String teamName = getIntent().getExtras().getString(Submission.KEY_TEAM_NAME);
+        String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         String imageURI = getIntent().getExtras().getString(Submission.KEY_IMAGE_URI);
 
         Log.w(TAG, "URI" + imageURI);

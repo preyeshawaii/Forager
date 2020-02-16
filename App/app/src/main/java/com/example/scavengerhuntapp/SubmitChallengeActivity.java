@@ -118,7 +118,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Uri downloadUrl = uri;
-                                    submission.setmImageUrl(downloadUrl.toString());
+                                    submission.setImageURL(downloadUrl.toString());
                                     submission.setTeamComments(submissionComment.getText().toString());
 
                                     db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Submission.KEY_SUBMISSIONS).document(submission.getSubmissionID()).set(submission)
@@ -173,7 +173,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         String location = getIntent().getExtras().getString(Submission.KEY_LOCATION);
         //String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
 
-        submission = new Submission(id, teamID, teamName, description, icon, location, "10");
+        submission = new Submission(id, teamID, teamName, description, location, 10, Integer.parseInt(icon));
     }
 
     private String getFileExtension(Uri uri) {

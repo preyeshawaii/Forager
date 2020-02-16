@@ -1,9 +1,13 @@
 package com.example.scavengerhuntapp;
 
-import java.util.ArrayList;
+import com.google.firebase.firestore.Exclude;
 
 public class Challenge {
     static final String KEY_CHALLENGES = "challenges";
+    static final String KEY_DESCRIPTION = "description";
+    static final String KEY_LOCATION = "location";
+    static final String KEY_POINTS = "points";
+    static final String KEY_ICON = "icon";
 
     private String challengeID;
     private String description;
@@ -14,12 +18,16 @@ public class Challenge {
     public Challenge(){
     }
 
-    public Challenge(String challengeID, String description, int points, String location, int icon){
+    public Challenge(String challengeID, String description, String location, int points, int icon){
         this.challengeID = challengeID;
         this.description = description;
-        this.points = points;
         this.location = location;
+        this.points = points;
         this.icon = icon;
+    }
+
+    public Challenge(String description, String location, int points, int icon){
+        this("", description, location, points, icon);
     }
 
     public String getChallengeID() {
@@ -42,3 +50,4 @@ public class Challenge {
         return icon;
     }
 }
+
