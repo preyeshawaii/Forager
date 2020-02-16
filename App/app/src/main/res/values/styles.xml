@@ -12,18 +12,40 @@
         <item name="android:textColor">@color/colorTextDefault</item>
         <item name="android:textSize">40dp</item>
         <item name="android:fontFamily">@font/crimsontextregular</item>
+        <item name="android:paddingLeft">5dp</item>
     </style>
 
     <style name="HeadingText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">30dp</item>
         <item name="android:fontFamily">@font/oswald</item>
+        <item name="android:paddingLeft">5dp</item>
     </style>
 
     <style name="ParagraphText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorTextDefault</item>
         <item name="android:textSize">18dp</item>
         <item name="android:fontFamily">@font/sourcesansproregular</item>
+    </style>
+
+    <style name="RegularButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/custom_button_regular</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/sourcesansproregular</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="EmphasisButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/custom_button_emphasis</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/sourcesansproregular</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
 
