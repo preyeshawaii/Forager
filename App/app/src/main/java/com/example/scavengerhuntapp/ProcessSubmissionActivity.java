@@ -1,7 +1,6 @@
 package com.example.scavengerhuntapp;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -72,12 +70,6 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         message.setText(teamComments);
 
         Picasso.get().load(Uri.parse(imageURI)).into(imageView);
-
-        //Glide.with(getApplicationContext()).load(Uri.parse(imageURI)).into(imageView);
-        //StorageReference httpsReference = storage.child(imageURI);
-        //Glide.with(this /* context */)
-        //        .load(httpsReference)
-        //       .into(imageView);
     }
 
     public void clickedApprove(View v){
