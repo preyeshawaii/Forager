@@ -13,13 +13,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class ProcessSubmissionActivity  extends AppCompatActivity {
+    private StorageReference storage;
     private FirebaseFirestore db;
 
     private TextView teamName;
@@ -38,6 +42,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_submission);
 
+        storage = FirebaseStorage.getInstance().getReference();
         db = FirebaseFirestore.getInstance();
 
         teamName = findViewById(R.id.process_submission_team_name);
@@ -66,11 +71,13 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         challengePoints.setText(points + " points");
         message.setText(teamComments);
 
+        Picasso.get().load(Uri.parse(imageURI)).into(imageView);
+
+        //Glide.with(getApplicationContext()).load(Uri.parse(imageURI)).into(imageView);
+        //StorageReference httpsReference = storage.child(imageURI);
         //Glide.with(this /* context */)
-        //        .using(new FirebaseImageLoader())
-          //      .load(Uri.parse(imageURI))
-           //
-        //Picasso.with(this).load().into(imageView);
+        //        .load(httpsReference)
+        //       .into(imageView);
     }
 
     public void clickedApprove(View v){

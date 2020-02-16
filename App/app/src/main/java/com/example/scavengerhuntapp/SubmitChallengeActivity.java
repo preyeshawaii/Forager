@@ -101,7 +101,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
 
         if (mImageUri != null) {
             initializeSubmission();
-            StorageReference fileReference = mStorageRef.child(huntID + "/" + submission.getTeamName() + "/" + System.currentTimeMillis() + "." + getFileExtension(mImageUri));
+            final StorageReference fileReference = mStorageRef.child(huntID + "/" + submission.getTeamName() + "/" + System.currentTimeMillis() + "." + getFileExtension(mImageUri));
 
             mUploadTask = fileReference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -115,28 +115,35 @@ public class SubmitChallengeActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            submission.setmImageUrl(taskSnapshot.getUploadSessionUri().toString());
-                            submission.setTeamComments(submissionComment.getText().toString());
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri downloadUrl = uri;
+                                    submission.setmImageUrl(downloadUrl.toString());
+                                    submission.setTeamComments(submissionComment.getText().toString());
 
-                            db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Submission.KEY_SUBMISSIONS).document(submission.getSubmissionID()).set(submission)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(SubmitChallengeActivity.this, "Submission successful", Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(SubmitChallengeActivity.this, PlayerHuntLandingActivity.class);
-                                            intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                                            intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                                            intent.putExtra(Team.KEY_TEAM_NAME, submission.getTeamName());
-                                            intent.putExtra(Team.KEY_TEAM_ID, submission.getTeamID());
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, e.toString());
-                                        }
-                                    });
+                                    db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Submission.KEY_SUBMISSIONS).document(submission.getSubmissionID()).set(submission)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(SubmitChallengeActivity.this, "Submission successful", Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(SubmitChallengeActivity.this, PlayerHuntLandingActivity.class);
+                                                    intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                                                    intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                                                    intent.putExtra(Team.KEY_TEAM_NAME, submission.getTeamName());
+                                                    intent.putExtra(Team.KEY_TEAM_ID, submission.getTeamID());
+                                                    startActivity(intent);
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, e.toString());
+                                                }
+                                            });
+                                }
+                            });
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -184,7 +191,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImageUri = data.getData();
 
-            Picasso.with(this).load(mImageUri).into(imageView);
+            Picasso.get().load(mImageUri).into(imageView);
         }
     }
 }
