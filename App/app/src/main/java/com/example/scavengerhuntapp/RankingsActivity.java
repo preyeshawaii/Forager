@@ -195,6 +195,7 @@ public class RankingsActivity extends AppCompatActivity {
 
                 String playerType = isPlayer ? User.KEY_PLAYER : User.KEY_ORGANIZER;
                 intent.putExtra(User.KEY_PLAYER_TYPE, playerType);
+
                 startActivity(intent);
             }
         });

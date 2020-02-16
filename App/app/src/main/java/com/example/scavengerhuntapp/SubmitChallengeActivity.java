@@ -101,8 +101,8 @@ public class SubmitChallengeActivity extends AppCompatActivity {
 
         if (mImageUri != null) {
             initializeSubmission();
-            final StorageReference fileReference = mStorageRef.child(huntID + "/" + submission.getTeamName() + "/" + System.currentTimeMillis() + "." + getFileExtension(mImageUri));
 
+            final StorageReference fileReference = mStorageRef.child(huntID + "/" + submission.getTeamName() + "/" + System.currentTimeMillis() + "." + getFileExtension(mImageUri));
             mUploadTask = fileReference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -114,7 +114,6 @@ public class SubmitChallengeActivity extends AppCompatActivity {
                                     mProgressBar.setProgress(0);
                                 }
                             }, 500);
-
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -143,7 +142,6 @@ public class SubmitChallengeActivity extends AppCompatActivity {
                                             });
                                 }
                             });
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

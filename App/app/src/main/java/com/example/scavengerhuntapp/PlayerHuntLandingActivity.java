@@ -33,6 +33,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
     private TextView title;
     private Button rankingsButton;
     private Button announcementsButton;
+
     private ListView challengesListView;
 
     private List<Challenge> challengesList;
@@ -76,6 +77,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 intent.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
+
                 startActivity(intent);
             }
         });

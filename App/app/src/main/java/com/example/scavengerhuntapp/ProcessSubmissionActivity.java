@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProcessSubmissionActivity  extends AppCompatActivity {
     private StorageReference storage;
+
     private FirebaseFirestore db;
 
     private TextView teamName;
@@ -40,7 +41,6 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_submission);
 
-        storage = FirebaseStorage.getInstance().getReference();
         db = FirebaseFirestore.getInstance();
 
         teamName = findViewById(R.id.process_submission_team_name);
