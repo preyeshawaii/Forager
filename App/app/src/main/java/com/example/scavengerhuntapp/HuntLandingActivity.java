@@ -17,7 +17,6 @@ public class HuntLandingActivity extends AppCompatActivity {
 
     private TextView title;
     private TextView joinCode;
-    private Button teamsBtn;
     private Button rankingsBtn;
     private Button challangesBtn;
     private Button submissionsBtn;
@@ -36,7 +35,6 @@ public class HuntLandingActivity extends AppCompatActivity {
 
         title = findViewById(R.id.hunt_landing_title);
         joinCode = findViewById(R.id.join_code_text);
-        teamsBtn = findViewById(R.id.teams_button);
         rankingsBtn = findViewById(R.id.rankings_button);
         challangesBtn = findViewById(R.id.challenges_button);
         submissionsBtn = findViewById(R.id.submissions_button);
@@ -48,16 +46,6 @@ public class HuntLandingActivity extends AppCompatActivity {
 
         title.setText(huntName);
         joinCode.setText(huntID);
-
-        teamsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HuntLandingActivity.this, TeamsActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                startActivity(intent);
-            }
-        });
 
         rankingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

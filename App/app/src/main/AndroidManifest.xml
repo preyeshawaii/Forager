@@ -21,7 +21,6 @@
         <activity android:name=".BroadcastActivity" />
 
         <activity android:name=".CurrentChallengesActivity" />
-        <activity android:name=".TeamsActivity"></activity>
         <activity android:name=".TeamInfoActivity"></activity>
         <activity android:name=".HuntLandingActivity" />
         <activity android:name=".PremadeChallengeListActivity" />

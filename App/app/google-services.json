@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "359570561912-jv36q29op1bquoga58u2g408ih7d1f5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.scavengerhuntapp",
+            "certificate_hash": "df45b9bc6862204028d90ec584aa27802228dea5"
+          }
+        },
+        {
           "client_id": "359570561912-aqoctpk6l89vle6brc8oo1ihgado32qa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

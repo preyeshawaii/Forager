@@ -1,7 +1,6 @@
 package com.example.scavengerhuntapp;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +16,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class ProcessSubmissionActivity  extends AppCompatActivity {
+    private StorageReference storage;
+
     private FirebaseFirestore db;
 
     private TextView teamName;
@@ -66,7 +69,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         challengePoints.setText(points + " points");
         message.setText(teamComments);
 
-        Picasso.with(this).load(Uri.parse(imageURI)).into(imageView);
+        Picasso.get().load(Uri.parse(imageURI)).into(imageView);
     }
 
     public void clickedApprove(View v){

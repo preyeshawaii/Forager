@@ -40,7 +40,7 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
     private ListView teamMemberListview;
 
     private Team team;
-    private List<String> teamMembers;
+    private Boolean isPlayer;
 
     private  String TAG = "TeamInfoActivity";
 
@@ -94,6 +94,10 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         String teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
         String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
+        String playerType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
+
+        isPlayer = playerType.matches(User.KEY_PLAYER) ? true : false;
+
 
         teamNameView.setText(teamName);
 
@@ -144,9 +148,13 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
 
             convertView = getLayoutInflater().inflate(R.layout.team_members_list_custom_view, null);
             // initialize all of the different types of views
-            TextView teamMemberName = (TextView)convertView.findViewById(R.id.team_member_view_name);
+            TextView teamMemberName = convertView.findViewById(R.id.team_member_view_name);
             TextView teamMemberPhoneNum = convertView.findViewById(R.id.team_member_view_phone);
-            //TextView teamMemberPhone = (TextView)convertView.findViewById(R.id.team_member_view_phone);
+
+            if (isPlayer){
+                teamMemberPhoneNum.setVisibility(View.GONE);
+            }
+
 
             // NOTE: in future use getDrawable to connect to our database of images. SET DATABASE objects here
             teamMemberName.setText(teamNames.get(position));

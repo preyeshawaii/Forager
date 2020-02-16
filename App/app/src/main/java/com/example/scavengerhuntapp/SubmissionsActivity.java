@@ -85,11 +85,13 @@ public class SubmissionsActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Submission sub = documentSnapshot.toObject(Submission.class);
-                            teamNames.add(sub.getTeamName());
-                            descriptions.add(sub.getDescription());
-                            points.add(sub.getPoints());
+                            if (sub.getHasBeenReviewed() == false){
+                                teamNames.add(sub.getTeamName());
+                                descriptions.add(sub.getDescription());
+                                points.add(sub.getPoints());
 
-                            subs.add(sub);
+                                subs.add(sub);
+                            }
                         }
 
                         setAdapter(huntID, huntName);
