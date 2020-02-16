@@ -4,16 +4,23 @@ import com.google.firebase.firestore.Exclude;
 
 public class Challenge {
     static final String KEY_CHALLENGES = "challenges";
+    static final String KEY_CHALLENGE_ID = "challengeID";
     static final String KEY_DESCRIPTION = "description";
     static final String KEY_LOCATION = "location";
     static final String KEY_POINTS = "points";
     static final String KEY_ICON = "icon";
+
+    static final String KEY_UNATTEMPTED = "unattempted";
+    static final String KEY_IN_REVIEW = "inReview";
+    static final String KEY_ACCEPTED = "accepted";
+    static final String KEY_REJECTED = "rejected";
 
     private String challengeID;
     private String description;
     private int points;
     private String location;
     private int icon;
+    private String state;
 
     public Challenge(){
     }
@@ -24,18 +31,15 @@ public class Challenge {
         this.location = location;
         this.points = points;
         this.icon = icon;
-    }
-
-    public Challenge(String description, String location, int points, int icon){
-        this("", description, location, points, icon);
+        this.state = KEY_UNATTEMPTED;
     }
 
     public String getChallengeID() {
-        return challengeID;
+        return this.challengeID;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public int getPoints() {
@@ -43,11 +47,19 @@ public class Challenge {
     }
 
     public String getLocation() {
-        return location;
+        return this.location;
     }
 
     public int getIcon() {
-        return icon;
+        return this.icon;
+    }
+
+    public String getState(){
+        return this.state;
+    }
+
+    public void setState(String state){
+        this.state = state;
     }
 }
 

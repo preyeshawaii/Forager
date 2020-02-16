@@ -15,22 +15,17 @@ public class Submission extends Challenge {
     private String teamName;
     private String teamComments;
     private String imageURL;
-    private Boolean hasBeenReviewed;
-    private Boolean accepted;
 
     public Submission(){ }
 
-    public Submission(String submissionID, String teamID, String teamName, String description, String location, int points, int icon){
-        super(description, location, points, icon);
+    public Submission(String challengeID, String submissionID, String teamID, String teamName, String description, String location, int points, int icon){
+        super(challengeID, description, location, points, icon);
         this.submissionID = submissionID;
         this.teamID = teamID;
         this.teamName = teamName;
 
         this.teamComments = "No Comments";
         this.imageURL = "";
-
-        this.hasBeenReviewed = false;
-        this.accepted = false;
     }
 
     public String getDescription() {
@@ -69,12 +64,9 @@ public class Submission extends Challenge {
         return teamComments;
     }
 
-    public Boolean getHasBeenReviewed() {
-        return hasBeenReviewed;
-    }
 
-    public Boolean getAccepted() {
-        return accepted;
+    public String getState() {
+        return super.getState();
     }
 
     public void setImageURL(String imageURL) {
@@ -85,24 +77,19 @@ public class Submission extends Challenge {
         this.teamComments = teamComments;
     }
 
-    public void setHasBeenReviewed(Boolean hasBeenReviewed) {
-        this.hasBeenReviewed = hasBeenReviewed;
-    }
-
-    public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
-    }
-
     @Exclude
     public void submissionAccepted(){
-        setAccepted(true);
-        setHasBeenReviewed(true);
+        super.setState(Challenge.KEY_ACCEPTED);
     }
 
     @Exclude
     public void submissionRejected(){
-        setAccepted(false);
-        setHasBeenReviewed(true);
+        super.setState(Challenge.KEY_REJECTED);
+    }
+
+    @Exclude
+    public void submissionInReview(){
+        super.setState(Challenge.KEY_IN_REVIEW);
     }
 
 }
