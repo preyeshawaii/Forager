@@ -26,37 +26,50 @@
         android:layout_width="wrap_content"
         android:layout_height="386dp" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
+
         <Button
             android:id="@+id/custom_chall_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="@color/colorTextDefault"
-            android:text="@string/custom_chall_button" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginRight="21dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/premade_chall_button"
+            android:layout_toLeftOf="@+id/premade_chall_button"
+            style="@style/RegularButton"
+            android:text="@string/custom_chall_button"/>
+
         <Button
             android:id="@+id/premade_chall_button"
+            style="@style/RegularButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="5dp"
             android:text="@string/premade_chall_button" />
-    </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-        <EditText
-            android:id="@+id/custom_chall_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/custom_chall_et" />
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/create_hunt_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_hunt_button" />
+        <Button
+            android:id="@+id/create_hunt_button"
+            style="@style/EmphasisButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custom_chall_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/create_hunt_button" />
+
+    </RelativeLayout>
+
 </LinearLayout>
