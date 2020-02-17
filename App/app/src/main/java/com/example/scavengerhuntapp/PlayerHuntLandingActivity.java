@@ -35,8 +35,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private TextView title;
-    private Button rankingsButton;
-    private Button announcementsButton;
 
     private ListView challengesListView;
 

@@ -66,10 +66,14 @@ public class RankingsActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.rankings_go_back);
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         String userType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
         isPlayer = userType.equals(User.KEY_PLAYER)? true : false;
+        BottomNavigationView bottomNavigationView = isPlayer ?
+                (BottomNavigationView)findViewById(R.id.bottom_navigation) :
+                (BottomNavigationView)findViewById(R.id.organizer_bottom_navigation);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
 
         teams = new ArrayList<>();
         customAdapter = new CustomAdapter();

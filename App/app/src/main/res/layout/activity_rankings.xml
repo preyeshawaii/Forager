@@ -51,7 +51,20 @@
             app:itemRippleColor="@color/colorAccent"
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@color/bottom_nav_highlight"
-            app:itemTextColor="@color/bottom_nav_highlight" />
+            app:itemTextColor="@color/bottom_nav_highlight"
+            android:visibility="gone"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@id/organizer_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/organizer_bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemRippleColor="@color/colorAccent"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@color/bottom_nav_highlight"
+            app:itemTextColor="@color/bottom_nav_highlight"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>
