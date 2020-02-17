@@ -100,8 +100,12 @@ public class BroadcastActivity extends AppCompatActivity {
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(BroadcastActivity.this, HuntLandingActivity.class);
 
+                        intent3.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent3.putExtra(Hunt.KEY_HUNT_NAME, huntName);
 
                         startActivity(intent3);
+
+
                         break;
                 }
 
