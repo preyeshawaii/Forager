@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ranking"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/HeadingText"/>
     <Switch
         android:id="@+id/show_points_switch"
         android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
         android:id="@+id/team_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:divider="#f00"
+        android:divider="#A6A6A6"
         android:dividerHeight="1dp" />
 
     <Button
@@ -34,6 +35,7 @@
         android:layout_height="47dp"
         android:clickable="false"
         android:fadingEdge="horizontal|vertical"
-        android:text="@string/go_back" />
+        android:text="@string/go_back"
+        style="@style/RegularButton"/>
 
 </LinearLayout>

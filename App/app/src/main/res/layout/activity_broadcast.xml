@@ -11,18 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/broadcast"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/HeadingText"/>
 
-    <Button
-        android:id="@+id/broadcast_back_btn"
-        android:layout_width="fill_parent"
-        android:layout_height="68dp"
-        android:text="@string/go_back" />
 
     <EditText
         android:id="@+id/broadcast_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
         android:height="@android:dimen/notification_large_icon_width"
         android:autofillHints=""
         android:inputType="textShortMessage">
@@ -32,9 +29,18 @@
     </EditText>
 
     <Button
+        android:layout_marginTop="50dp"
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit" />
+        android:text="@string/submit"
+        style="@style/RegularButton"/>
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/broadcast_back_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/go_back"
+        style="@style/RegularButton"/>
 
 </LinearLayout>
