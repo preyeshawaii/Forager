@@ -74,7 +74,7 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
         String location = creatingHuntSingleton.LOCATIONS[i];
         int icon = creatingHuntSingleton.ICONS[i];
         Integer points = 10;
-        Challenge challenge = new Challenge(uniqueID, description, points, location, icon);
+        Challenge challenge = new Challenge(uniqueID, description, location, points, icon);
         creatingHuntSingleton.addChallenge(challenge);
     }
 

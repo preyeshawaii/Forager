@@ -85,7 +85,7 @@ public class SubmissionsActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Submission sub = documentSnapshot.toObject(Submission.class);
-                            if (sub.getHasBeenReviewed() == false){
+                            if (sub.getState().equals(Challenge.KEY_IN_REVIEW)) {
                                 teamNames.add(sub.getTeamName());
                                 descriptions.add(sub.getDescription());
                                 points.add(sub.getPoints());
@@ -112,21 +112,28 @@ public class SubmissionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String teamName = teamNames.get(position);
+                String challengeID = subs.get(position).getChallengeID();
                 String subID = subs.get(position).getSubmissionID();
                 String description = descriptions.get(position);
+                String location = subs.get(position).getLocation();
+                String pointsElem = String.valueOf(points.get(position));
+                String icon = String.valueOf(subs.get(position).getIcon());
                 String teamComments = subs.get(position).getTeamComments();
-                String imageUri = subs.get(position).getmImageUrl();
+                String imageUri = subs.get(position).getImageURL();
 
                 Toast.makeText(getApplicationContext(), teamName, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(SubmissionsActivity.this, ProcessSubmissionActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                intent.putExtra(Team.KEY_TEAM_NAME, teamNames.get(position));
+                intent.putExtra(Challenge.KEY_CHALLENGE_ID, challengeID);
                 intent.putExtra(Submission.KEY_SUBMISSION_ID, subID);
                 intent.putExtra(Submission.KEY_DESCRIPTION, description);
+                intent.putExtra(Submission.KEY_LOCATION, location);
+                intent.putExtra(Submission.KEY_POINTS, pointsElem);
+                intent.putExtra(Submission.KEY_ICON, icon);
                 intent.putExtra(Submission.KEY_TEAM_COMMENTS, teamComments);
-                intent.putExtra(Submission.KEY_POINTS, Integer.toString(points.get(position)));
-                intent.putExtra(Submission.KEY_TEAM_NAME, teamNames.get(position));
                 intent.putExtra(Submission.KEY_IMAGE_URI, imageUri);
                 Log.w(TAG, subID + ": " + teamName + ", " + description);
                 startActivity(intent);

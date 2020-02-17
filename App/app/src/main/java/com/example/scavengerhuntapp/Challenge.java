@@ -1,33 +1,45 @@
 package com.example.scavengerhuntapp;
 
-import java.util.ArrayList;
+import com.google.firebase.firestore.Exclude;
 
 public class Challenge {
     static final String KEY_CHALLENGES = "challenges";
+    static final String KEY_CHALLENGE_ID = "challengeID";
+    static final String KEY_DESCRIPTION = "description";
+    static final String KEY_LOCATION = "location";
+    static final String KEY_POINTS = "points";
+    static final String KEY_ICON = "icon";
+
+    static final String KEY_UNATTEMPTED = "unattempted";
+    static final String KEY_IN_REVIEW = "inReview";
+    static final String KEY_ACCEPTED = "accepted";
+    static final String KEY_REJECTED = "rejected";
 
     private String challengeID;
     private String description;
     private int points;
     private String location;
     private int icon;
+    private String state;
 
     public Challenge(){
     }
 
-    public Challenge(String challengeID, String description, int points, String location, int icon){
+    public Challenge(String challengeID, String description, String location, int points, int icon){
         this.challengeID = challengeID;
         this.description = description;
-        this.points = points;
         this.location = location;
+        this.points = points;
         this.icon = icon;
+        this.state = KEY_UNATTEMPTED;
     }
 
     public String getChallengeID() {
-        return challengeID;
+        return this.challengeID;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public int getPoints() {
@@ -35,10 +47,19 @@ public class Challenge {
     }
 
     public String getLocation() {
-        return location;
+        return this.location;
     }
 
     public int getIcon() {
-        return icon;
+        return this.icon;
+    }
+
+    public String getState(){
+        return this.state;
+    }
+
+    public void setState(String state){
+        this.state = state;
     }
 }
+

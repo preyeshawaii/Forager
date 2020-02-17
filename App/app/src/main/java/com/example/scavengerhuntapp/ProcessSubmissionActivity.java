@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +32,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
 
     private String huntID;
     private String submissionID;
+    private Challenge challenge;
 
     private String TAG = "ProcessSubmissionActivity";
 
@@ -56,11 +56,16 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
 
         huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         submissionID = getIntent().getExtras().getString(Submission.KEY_SUBMISSION_ID);
+        String challengeID = getIntent().getExtras().getString(Challenge.KEY_CHALLENGE_ID);
+        String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         String description = getIntent().getExtras().getString(Submission.KEY_DESCRIPTION);
-        String teamComments = getIntent().getExtras().getString(Submission.KEY_TEAM_COMMENTS);
+        String location = getIntent().getExtras().getString(Submission.KEY_LOCATION);
+        String icon = getIntent().getExtras().getString(Submission.KEY_ICON);
         String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
-        String teamName = getIntent().getExtras().getString(Submission.KEY_TEAM_NAME);
+        String teamComments = getIntent().getExtras().getString(Submission.KEY_TEAM_COMMENTS);
         String imageURI = getIntent().getExtras().getString(Submission.KEY_IMAGE_URI);
+
+        challenge = new Challenge(challengeID, description, location, Integer.parseInt(points), Integer.parseInt(icon));
 
         Log.w(TAG, "URI" + imageURI);
 
@@ -88,26 +93,15 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Submission sub = documentSnapshot.toObject(Submission.class);
                         if (isAccepted){
-                            sub.submissionAccepted();
-                        } else{
-                            sub.submissionRejected();
+                            sub.setState(Challenge.KEY_ACCEPTED);
+                        } else {
+                            sub.setState(Challenge.KEY_REJECTED);
                         }
-
-
                         db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Submission.KEY_SUBMISSIONS).document(submissionID).set(sub)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        if (isAccepted){
-                                            Toast.makeText(ProcessSubmissionActivity.this, "Accepted Submission", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(ProcessSubmissionActivity.this, "Rejected Submission", Toast.LENGTH_SHORT).show();
-                                        }
-
-                                        Intent intent = new Intent(getApplicationContext(), SubmissionsActivity.class);
-                                        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                                        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                                        startActivity(intent);
+                                        updateChallenge(isAccepted);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -126,5 +120,30 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
                 });
     }
 
+    private void updateChallenge(Boolean isAccepted) {
+        if (isAccepted){
+            challenge.setState(Challenge.KEY_ACCEPTED);
+            Toast.makeText(ProcessSubmissionActivity.this, "Accepted Submission", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ProcessSubmissionActivity.this, "Rejected Submission", Toast.LENGTH_SHORT).show();
+            challenge.setState(Challenge.KEY_REJECTED);
+        }
 
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).document(challenge.getChallengeID()).set(challenge)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(getApplicationContext(), SubmissionsActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
+    }
 }

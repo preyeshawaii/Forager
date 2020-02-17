@@ -1,6 +1,7 @@
 package com.example.scavengerhuntapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -161,6 +162,15 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
 
+            // TODO Need to make rejected/accepted/pending colors more appealing
+            if (challengesList.get(i).getState().equals(Challenge.KEY_IN_REVIEW)){
+                view.setBackgroundColor(Color.YELLOW);
+            } else if (challengesList.get(i).getState().equals(Challenge.KEY_REJECTED)){
+                view.setBackgroundColor(Color.RED);
+            } else if (challengesList.get(i).getState().equals(Challenge.KEY_ACCEPTED)){
+                view.setBackgroundColor(Color.GREEN);
+            }
+
             // Populate list view
             ImageView imageView = view.findViewById(R.id.iconImageView);
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
@@ -177,10 +187,11 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                     intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                     intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                     intent.putExtra(Team.KEY_TEAM_ID, teamID);
-                    intent.putExtra(Submission.KEY_ICON, String.valueOf(challengesList.get(i).getIcon()));
+                    intent.putExtra(Challenge.KEY_CHALLENGE_ID, challengesList.get(i).getChallengeID());
                     intent.putExtra(Submission.KEY_DESCRIPTION, challengesList.get(i).getDescription());
                     intent.putExtra(Submission.KEY_LOCATION, challengesList.get(i).getLocation());
                     //intent.putExtra(Submission.KEY_POINTS, challengesList.get(i).getPoints());
+                    intent.putExtra(Submission.KEY_ICON, String.valueOf(challengesList.get(i).getIcon()));
                     startActivity(intent);
                 }
             });

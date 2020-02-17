@@ -118,20 +118,16 @@ public class SubmitChallengeActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     Uri downloadUrl = uri;
-                                    submission.setmImageUrl(downloadUrl.toString());
+                                    submission.setImageURL(downloadUrl.toString());
                                     submission.setTeamComments(submissionComment.getText().toString());
+                                    submission.submissionInReview();
 
                                     db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Submission.KEY_SUBMISSIONS).document(submission.getSubmissionID()).set(submission)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(SubmitChallengeActivity.this, "Submission successful", Toast.LENGTH_LONG).show();
-                                                    Intent intent = new Intent(SubmitChallengeActivity.this, PlayerHuntLandingActivity.class);
-                                                    intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                                                    intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                                                    intent.putExtra(Team.KEY_TEAM_NAME, submission.getTeamName());
-                                                    intent.putExtra(Team.KEY_TEAM_ID, submission.getTeamID());
-                                                    startActivity(intent);
+
+                                                    updateChallenge();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -168,12 +164,38 @@ public class SubmitChallengeActivity extends AppCompatActivity {
 
         String teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
         String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
-        String icon = getIntent().getExtras().getString(Submission.KEY_ICON);
+        String challengeID = getIntent().getExtras().getString(Challenge.KEY_CHALLENGE_ID);
         String description = getIntent().getExtras().getString(Submission.KEY_DESCRIPTION);
         String location = getIntent().getExtras().getString(Submission.KEY_LOCATION);
         //String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
+        String icon = getIntent().getExtras().getString(Submission.KEY_ICON);
 
-        submission = new Submission(id, teamID, teamName, description, icon, location, "10");
+        submission = new Submission(challengeID, id, teamID, teamName, description, location, 10, Integer.parseInt(icon));
+    }
+
+    private void updateChallenge() {
+
+        Challenge challenge = submission;
+
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).document(submission.getChallengeID()).set(challenge)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(SubmitChallengeActivity.this, "Submission successful", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(SubmitChallengeActivity.this, PlayerHuntLandingActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent.putExtra(Team.KEY_TEAM_NAME, submission.getTeamName());
+                        intent.putExtra(Team.KEY_TEAM_ID, submission.getTeamID());
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
     }
 
     private String getFileExtension(Uri uri) {
