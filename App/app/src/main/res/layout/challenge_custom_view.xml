@@ -1,71 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/singleChallenge"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/singleChallenge">
+    android:background="@color/colorAccentLight"
+    android:orientation="vertical">
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false" />
 
-    <ImageView
-        android:id="@+id/iconImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/iconAndPointsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="27dp"
-        app:srcCompat="@drawable/icecream" />
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/icecream" />
+        <TextView
+            android:id="@+id/challengePoints"
+            style="@style/ParagraphText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="10 Pts">
+
+        </TextView>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/challengeTextView"
+        style="@style/ParagraphText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iconImageView"
-        android:layout_marginLeft="20dp"
+        android:layout_alignTop="@+id/iconAndPointsLayout"
         android:layout_marginStart="20dp"
-        android:layout_toRightOf="@+id/iconImageView"
-        style="@style/ParagraphText"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/iconAndPointsLayout"
         android:text="Challenge" />
 
     <TextView
         android:id="@+id/challengeLocationTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/iconImageView"
-        android:layout_alignLeft="@+id/challengeTextView"
-        android:layout_alignStart="@+id/challengeTextView"
         style="@style/ParagraphText"
-        android:textStyle="italic"
-        android:text="Location" />
-
-    <TextView
-        android:id="@+id/challengePoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iconImageView"
-        android:layout_alignLeft="@id/iconImageView"
-        android:layout_marginTop="25dp"
-        android:hint="Points"
-        android:inputType="numberSigned"
-        android:gravity="center_horizontal"
-        android:text="Points: 10">
+        android:layout_below="@id/challengeTextView"
+        android:layout_alignStart="@id/challengeTextView"
+        android:layout_alignLeft="@id/challengeTextView"
+        android:layout_marginRight="20dp"
+        android:text="Location"
+        android:textStyle="italic" />
 
-    </TextView>
 
     <Button
         android:id="@+id/submitButtonChallenge"
-        android:text="Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true">
-    </Button>
+        android:layout_below="@id/challengeLocationTextView"
+        style="@style/RegularButton"
+        android:text="Submit"></Button>
 </RelativeLayout>

@@ -11,20 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/broadcast"
+        style="@style/HeadingText"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/broadcast_back_btn"
-        android:layout_width="fill_parent"
-        android:layout_height="68dp"
-        android:text="@string/go_back" />
 
     <EditText
         android:id="@+id/broadcast_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:height="@android:dimen/notification_large_icon_width"
-        android:autofillHints=""
+        android:hint="Write a message to all teams here!"
         android:inputType="textShortMessage">
 
         <requestFocus />
@@ -35,6 +31,15 @@
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/EmphasisButton"
+        android:layout_margin="5dp"
         android:text="@string/submit" />
+    <Button
+        android:id="@+id/broadcast_back_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        style="@style/RegularButton"
+        android:text="@string/go_back" />
 
 </LinearLayout>

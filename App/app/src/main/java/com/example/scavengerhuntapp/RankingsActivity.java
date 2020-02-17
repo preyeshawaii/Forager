@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.content.Intent;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -63,6 +66,7 @@ public class RankingsActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.rankings_go_back);
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         String userType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
         isPlayer = userType.equals(User.KEY_PLAYER)? true : false;
@@ -88,6 +92,38 @@ public class RankingsActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                 intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                 startActivity(intent);
+            }
+        });
+
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_alerts:
+                        Intent intent = new Intent(RankingsActivity.this, AnnouncementsActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
+                        intent.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+                        startActivity(intent);
+                        break;
+                    case R.id.action_challenges:
+                        Intent intent2 = new Intent(RankingsActivity.this, PlayerHuntLandingActivity.class);
+                        intent2.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                        intent2.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
+                        intent2.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+                        startActivity(intent2);
+                        break;
+                    case R.id.action_team:
+                        break;
+                    case R.id.action_rankings:
+                        break;
+                }
+
+                return false;
             }
         });
 

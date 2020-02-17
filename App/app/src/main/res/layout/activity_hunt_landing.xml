@@ -11,8 +11,9 @@
         android:id="@+id/hunt_landing_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Hunt Name"
         android:textSize="30dp"
+        style="@style/HeadingText"
         android:gravity="center"/>
 
     <LinearLayout
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hunt Join Code: "
+            style="@style/ParagraphText"
             android:textSize="20dp"/>
 
         <TextView
