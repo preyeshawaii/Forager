@@ -16,6 +16,8 @@ public class Submission extends Challenge {
     private String teamComments;
     private String imageURL;
 
+
+
     public Submission(){ }
 
     public Submission(String challengeID, String submissionID, String teamID, String teamName, String description, String location, int points, int icon){

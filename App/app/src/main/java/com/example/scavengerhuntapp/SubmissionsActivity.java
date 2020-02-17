@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -61,6 +64,50 @@ public class SubmissionsActivity extends AppCompatActivity {
         points = new ArrayList<>();
         subs = new ArrayList<>();
         customAdapter = new CustomAdapter();
+
+        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_challenges:
+                        Intent intent = new Intent(SubmissionsActivity.this, CurrentChallengesActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_submissions:
+                        Intent intent1 = new Intent(SubmissionsActivity.this, SubmissionsActivity.class);
+                        intent1.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent1.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        startActivity(intent1);
+                        break;
+                    case R.id.action_broadcast:
+                        Intent intent2 = new Intent(SubmissionsActivity.this, BroadcastActivity.class);
+                        intent2.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent2.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        startActivity(intent2);
+                        break;
+                    case R.id.action_rankings:
+                        Intent intent3 = new Intent(SubmissionsActivity.this, HuntLandingActivity.class);
+
+
+                        startActivity(intent3);
+                        break;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override

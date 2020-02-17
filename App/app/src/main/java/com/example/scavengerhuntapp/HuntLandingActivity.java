@@ -63,19 +63,23 @@ public class HuntLandingActivity extends AppCompatActivity {
 
         title = findViewById(R.id.hunt_landing_title);
         joinCode = findViewById(R.id.join_code_text);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
+
 
 
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
-
+        teams = new ArrayList<>();
+        customAdapter = new CustomAdapter();
 
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
 
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -100,18 +104,14 @@ public class HuntLandingActivity extends AppCompatActivity {
                         startActivity(intent2);
                         break;
                     case R.id.action_rankings:
-                        Intent intent3 = new Intent(HuntLandingActivity.this, HuntLandingActivity.class);
 
-
-                        startActivity(intent3);
                         break;
                 }
 
                 return false;
             }
         });
-        teams = new ArrayList<>();
-        customAdapter = new CustomAdapter();
+
 
         viewPointSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -134,6 +134,8 @@ public class HuntLandingActivity extends AppCompatActivity {
         loadRankings();
     }
 
+
+
     private void updateDB(final Boolean isChecked){
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         db.collection(Hunt.KEY_HUNTS).document(huntID).get()
@@ -149,7 +151,9 @@ public class HuntLandingActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         canViewPoints  = isChecked;
 
-
+                                    //    if (isPlayer == true) {
+                                    //        viewPointSwitch.setVisibility(View.GONE);
+                                    //    }
 
                                         teamsListView.setAdapter(customAdapter);
                                     }
@@ -176,7 +180,9 @@ public class HuntLandingActivity extends AppCompatActivity {
                         viewPointSwitch.setChecked(hunt.getViewPoints());
                         canViewPoints  = hunt.getViewPoints();
 
-
+                       // if (isPlayer == true) {
+                       //     viewPointSwitch.setVisibility(View.GONE);
+                      //  }
 
                         rankTeams(huntID);
                     }
@@ -223,6 +229,9 @@ public class HuntLandingActivity extends AppCompatActivity {
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 intent.putExtra(Team.KEY_TEAM_ID, teams.get(position).getTeamID());
 
+               // String playerType = isPlayer ? User.KEY_PLAYER : User.KEY_ORGANIZER;
+                intent.putExtra(User.KEY_PLAYER_TYPE, User.KEY_ORGANIZER);
+
                 startActivity(intent);
             }
         });
@@ -261,5 +270,4 @@ public class HuntLandingActivity extends AppCompatActivity {
             return convertView;
         }
     }
-
 }
