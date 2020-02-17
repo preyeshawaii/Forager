@@ -48,7 +48,13 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         message = findViewById(R.id.process_submission_challenge_description);
         description = findViewById(R.id.challengeTextView);
         imageView = findViewById(R.id.process_submission_photo);
+
+        View submitButton = findViewById(R.id.submitButtonChallenge);
+        submitButton.setVisibility(View.GONE);
+        View checkMarkBox = findViewById(R.id.checkBox);
+        checkMarkBox.setVisibility(View.GONE);
     }
+
 
     @Override
     protected void onStart(){
