@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,10 +40,7 @@ public class HuntLandingActivity extends AppCompatActivity {
 
     private TextView title;
     private TextView joinCode;
-    private Button challangesBtn;
-    private Button submissionsBtn;
-    private Button broadcastBtn;
-    private Button backBtn;
+
 
 
     private ListView teamsListView;
@@ -48,7 +48,7 @@ public class HuntLandingActivity extends AppCompatActivity {
 
     private List<Team> teams;
     private CustomAdapter customAdapter;
-    private Boolean isPlayer;
+
     private Boolean canViewPoints;
 
     private String TAG = "HuntLandingActivity";
@@ -63,18 +63,53 @@ public class HuntLandingActivity extends AppCompatActivity {
 
         title = findViewById(R.id.hunt_landing_title);
         joinCode = findViewById(R.id.join_code_text);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
 
-        challangesBtn = findViewById(R.id.challenges_button);
-        submissionsBtn = findViewById(R.id.submissions_button);
-        broadcastBtn = findViewById(R.id.broadcast_button);
-        backBtn = findViewById(R.id.hunt_landing_back_btn);
 
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
 
-       // String userType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
-       // isPlayer = userType.equals(User.KEY_PLAYER)? true : false;
 
+        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_challenges:
+                        Intent intent = new Intent(HuntLandingActivity.this, CurrentChallengesActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_submissions:
+                        Intent intent1 = new Intent(HuntLandingActivity.this, SubmissionsActivity.class);
+                        intent1.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent1.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        startActivity(intent1);
+                        break;
+                    case R.id.action_broadcast:
+                        Intent intent2 = new Intent(HuntLandingActivity.this, BroadcastActivity.class);
+                        intent2.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent2.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        startActivity(intent2);
+                        break;
+                    case R.id.action_rankings:
+                        Intent intent3 = new Intent(HuntLandingActivity.this, HuntLandingActivity.class);
+
+
+                        startActivity(intent3);
+                        break;
+                }
+
+                return false;
+            }
+        });
         teams = new ArrayList<>();
         customAdapter = new CustomAdapter();
 
@@ -85,51 +120,11 @@ public class HuntLandingActivity extends AppCompatActivity {
             }
         });
 
-        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
-        final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+
 
         title.setText(huntName);
         joinCode.setText(huntID);
 
-
-
-        challangesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HuntLandingActivity.this, CurrentChallengesActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                startActivity(intent);
-            }
-        });
-
-        submissionsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HuntLandingActivity.this, SubmissionsActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                startActivity(intent);
-            }
-        });
-
-        broadcastBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HuntLandingActivity.this, BroadcastActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                startActivity(intent);
-            }
-        });
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HuntLandingActivity.this, OrganizerLandingActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -154,9 +149,7 @@ public class HuntLandingActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         canViewPoints  = isChecked;
 
-                                     //   if (isPlayer) {
-                                      //      viewPointSwitch.setVisibility(View.GONE);
-                                      //  }
+
 
                                         teamsListView.setAdapter(customAdapter);
                                     }
@@ -183,9 +176,7 @@ public class HuntLandingActivity extends AppCompatActivity {
                         viewPointSwitch.setChecked(hunt.getViewPoints());
                         canViewPoints  = hunt.getViewPoints();
 
-                    //   if (isPlayer == true) {
-                     //       viewPointSwitch.setVisibility(View.GONE);
-                      //  }
+
 
                         rankTeams(huntID);
                     }
@@ -231,9 +222,6 @@ public class HuntLandingActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 intent.putExtra(Team.KEY_TEAM_ID, teams.get(position).getTeamID());
-
-                String playerType = isPlayer ? User.KEY_PLAYER : User.KEY_ORGANIZER;
-                intent.putExtra(User.KEY_PLAYER_TYPE, playerType);
 
                 startActivity(intent);
             }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_broadcast"
+        android:enabled="true"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="Broadcast" />
+
+    <item
+        android:id="@+id/action_challenges"
+        android:enabled="true"
+        android:icon="@drawable/ic_list_black_24dp"
+        android:title="Challenges" />
+
+    <item
+        android:id="@+id/action_submissions"
+        android:enabled="true"
+        android:icon="@drawable/ic_group_black_24dp"
+        android:title="Submissions" />
+
+    <item
+        android:id="@+id/action_rankings"
+        android:enabled="true"
+        android:icon="@drawable/cup"
+        android:title="Rankings" />
+</menu>

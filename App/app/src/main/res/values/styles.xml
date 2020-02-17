@@ -36,6 +36,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/sourcesansproregular</item>
         <item name="android:textSize">15dp</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="EmphasisButton" parent="Widget.AppCompat.Button">
@@ -46,6 +47,7 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/sourcesansproregular</item>
         <item name="android:textSize">15dp</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
 

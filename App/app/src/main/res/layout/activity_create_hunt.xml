@@ -8,14 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hunt_name_et" />
-    <Switch
-        android:id="@+id/show_points_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="Show Points"
-        android:textOff="Off"
-        android:textOn="On"/>
     <TextView android:id="@+id/challenges_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

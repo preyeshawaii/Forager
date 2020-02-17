@@ -11,7 +11,7 @@
         android:id="@+id/hunt_landing_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Hunt Name"
         android:textSize="30dp"
         android:gravity="center"
         android:textColor="@color/colorTextDefault"
@@ -25,6 +25,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         style="@style/HeadingText"/>
 
+        android:gravity="center"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hunt Join Code: "
+            style="@style/ParagraphText"
             android:textSize="20dp"/>
 
         <TextView
@@ -61,38 +65,25 @@
         android:divider="#A6A6A6"
         android:dividerHeight="1dp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
-
-
-
-        <Button
-            android:id="@+id/challenges_button"
-            android:layout_width="wrap_content"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/organizer_bottom_navigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Challenges"/>
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/organizer_bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemRippleColor="@color/colorAccent"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@color/bottom_nav_highlight"
+            app:itemTextColor="@color/bottom_nav_highlight" />
+    </RelativeLayout>
 
-        <Button
-            android:id="@+id/submissions_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submissions"/>
 
-        <Button
-            android:id="@+id/broadcast_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Broadcast"/>
 
-        <Button
-            android:id="@+id/hunt_landing_back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"/>
 
-    </LinearLayout>
 </LinearLayout>
