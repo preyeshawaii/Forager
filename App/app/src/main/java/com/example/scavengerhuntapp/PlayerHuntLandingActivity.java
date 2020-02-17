@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -32,8 +35,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private TextView title;
-    private Button rankingsButton;
-    private Button announcementsButton;
 
     private ListView challengesListView;
 
@@ -56,9 +57,9 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         title = findViewById(R.id.hunt_name_text_view);
-        rankingsButton = findViewById(R.id.rankings_button);
-        announcementsButton = findViewById(R.id.announcements_button);
         challengesListView = findViewById(R.id.challenge_list);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
 
         huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
@@ -70,29 +71,41 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         challengesList = new ArrayList<>();
         huntNamesArray = new CustomAdapter();
 
-        rankingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
-                intent.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
 
-                startActivity(intent);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_alerts:
+                        Intent intent = new Intent(PlayerHuntLandingActivity.this, AnnouncementsActivity.class);
+                        intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        startActivity(intent);
+                        break;
+                    case R.id.action_challenges:
+                        break;
+                    case R.id.action_team:
+                        break;
+                    case R.id.action_rankings:
+                        Intent intent3 = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
+                        intent3.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent3.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent3.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        intent3.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
+
+                        startActivity(intent3);
+                        break;
+                }
+
+                return false;
             }
         });
 
-        announcementsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PlayerHuntLandingActivity.this, AnnouncementsActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
-                intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
-                intent.putExtra(Team.KEY_TEAM_NAME, teamName);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
