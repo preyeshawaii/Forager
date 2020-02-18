@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
@@ -129,5 +130,28 @@ public class BroadcastActivity extends AppCompatActivity {
                         Toast.makeText(BroadcastActivity.this, "Error sending message!", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_all_hunts:
+                Intent intent = new Intent(BroadcastActivity.this, OrganizerLandingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent2 = new Intent(BroadcastActivity.this, MainActivity.class);
+                startActivity(intent2);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
