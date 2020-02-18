@@ -160,6 +160,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
             ImageView imageView = view.findViewById(R.id.iconImageView);
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
+            TextView points = view.findViewById(R.id.challengePoints);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
 
             // remove submit button here
@@ -169,7 +170,7 @@ public class CurrentChallengesActivity extends AppCompatActivity {
             imageView.setImageResource(challengesList.get(i).getIcon());
             challengeTextView.setText(challengesList.get(i).getDescription());
             challengeLocationTextView.setText(challengesList.get(i).getLocation());
-            // TODO Add points view here
+            points.setText(challengesList.get(i).getPoints() + " Pts");
             checkBox.setVisibility(View.GONE);
 
             return view;

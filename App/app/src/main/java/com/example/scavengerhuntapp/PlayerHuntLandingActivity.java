@@ -90,6 +90,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                         intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                         intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                         intent.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        intent.putExtra(Team.KEY_TEAM_ID, teamID);
                         startActivity(intent);
                         break;
                     case R.id.action_challenges:
@@ -102,7 +103,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                         intent3.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                         intent3.putExtra(Team.KEY_TEAM_NAME, teamName);
                         intent3.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
-
+                        intent3.putExtra(Team.KEY_TEAM_ID, teamID);
                         startActivity(intent3);
                         break;
                 }
@@ -122,8 +123,13 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
     private void createCurrChallListView(){
         challengesList.clear();
 
-        String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
+        teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
+        teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
+
         Log.w(TAG, "Given huntID: " + huntID);
+        Log.w(TAG, "Given teamID: " + teamID);
 
         db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).collection(Challenge.KEY_CHALLENGES).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

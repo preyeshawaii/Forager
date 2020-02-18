@@ -220,7 +220,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
             imageView.setImageResource(challenges.get(i).getIcon());
             challengeTextView.setText(challenges.get(i).getDescription());
             challengeLocationTextView.setText(challenges.get(i).getLocation());
-            // TODO Add points view here
+            pointsView.setText(String.valueOf(challenges.get(i).getPoints()) + " pts");
             checkBox.setVisibility(View.GONE);
 
             return view;
