@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +48,7 @@ public class HuntLandingActivity extends AppCompatActivity {
 
     private ListView teamsListView;
     private Switch viewPointSwitch;
+    private Button copyButton;
 
     private List<Team> teams;
     private CustomAdapter customAdapter;
@@ -63,7 +67,7 @@ public class HuntLandingActivity extends AppCompatActivity {
 
         title = findViewById(R.id.hunt_landing_title);
         joinCode = findViewById(R.id.join_code_text);
-
+        copyButton = findViewById(R.id.copy_button);
 
 
         teamsListView = findViewById(R.id.team_list);
@@ -74,7 +78,15 @@ public class HuntLandingActivity extends AppCompatActivity {
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
 
-
+        copyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText(Hunt.KEY_HUNT_ID, joinCode.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();
@@ -151,10 +163,6 @@ public class HuntLandingActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         canViewPoints  = isChecked;
 
-                                    //    if (isPlayer == true) {
-                                    //        viewPointSwitch.setVisibility(View.GONE);
-                                    //    }
-
                                         teamsListView.setAdapter(customAdapter);
                                     }
                                 })
@@ -179,10 +187,6 @@ public class HuntLandingActivity extends AppCompatActivity {
                         Hunt hunt = documentSnapshot.toObject(Hunt.class);
                         viewPointSwitch.setChecked(hunt.getViewPoints());
                         canViewPoints  = hunt.getViewPoints();
-
-                       // if (isPlayer == true) {
-                       //     viewPointSwitch.setVisibility(View.GONE);
-                      //  }
 
                         rankTeams(huntID);
                     }
