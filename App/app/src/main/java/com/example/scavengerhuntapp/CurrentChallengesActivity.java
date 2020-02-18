@@ -17,7 +17,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.view.MenuInflater;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -174,5 +174,28 @@ public class CurrentChallengesActivity extends AppCompatActivity {
 
             return view;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_all_hunts:
+                Intent intent = new Intent(CurrentChallengesActivity.this, OrganizerLandingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent2 = new Intent(CurrentChallengesActivity.this, MainActivity.class);
+                startActivity(intent2);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

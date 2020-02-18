@@ -119,7 +119,8 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
-
+            Button submitButton = view.findViewById(R.id.submitButtonChallenge);
+            submitButton.setVisibility(View.GONE);
             imageView.setImageResource(creatingHuntSingleton.ICONS[i]);
             challengeTextView.setText(creatingHuntSingleton.CHALLENGES[i]);
             challengeLocationTextView.setText(creatingHuntSingleton.LOCATIONS[i]);

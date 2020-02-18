@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -221,5 +222,28 @@ public class SubmissionsActivity extends AppCompatActivity {
             pointsAwarded.setText(Integer.toString(points.get(position)));
             return convertView;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_all_hunts:
+                Intent intent = new Intent(SubmissionsActivity.this, OrganizerLandingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent2 = new Intent(SubmissionsActivity.this, MainActivity.class);
+                startActivity(intent2);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

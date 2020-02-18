@@ -12,13 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hunts"
-        android:textSize="30dp"/>
+        android:textSize="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/HeadingText"/>
 
     <ListView
         android:id="@+id/hunts_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:divider="#A6A6A6"/>
 
     <TextView
         android:id="@+id/no_hunts_view"
@@ -26,13 +29,16 @@
         android:layout_height="wrap_content"
         android:text="No Previous Hunts"
         android:textSize="20dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        style = "@style/ParagraphText"/>
 
     <Button
         android:id="@+id/create_new_hunt_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create New Hunt" />
+        android:text="Create New Hunt"
+        android:layout_margin="5dp"
+        style="@style/RegularButton"/>
 
 
 
@@ -40,6 +46,8 @@
         android:id="@+id/sign_out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Organizer Sign Out" />
+        android:layout_margin="5dp"
+        android:text="Organizer Sign Out"
+        style="@style/RegularButton"/>
 
 </LinearLayout>
