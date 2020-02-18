@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -86,6 +87,12 @@ public class SubmitChallengeActivity extends AppCompatActivity {
 
             }
         });
+
+        // remove submit button here and checkbox
+        Button submitButton = findViewById(R.id.submitButtonChallenge);
+        submitButton.setVisibility(View.GONE);
+        CheckBox box = findViewById(R.id.checkBox);
+        box.setVisibility(View.GONE);
 
     }
 

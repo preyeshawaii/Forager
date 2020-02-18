@@ -159,14 +159,23 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
+            Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
+
+
 
             // TODO Need to make rejected/accepted/pending colors more appealing
             if (challengesList.get(i).getState().equals(Challenge.KEY_IN_REVIEW)){
+                submitChallenge.setVisibility(View.INVISIBLE);
                 view.setBackgroundColor(Color.YELLOW);
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_REJECTED)){
+                submitChallenge.setVisibility(View.VISIBLE);
                 view.setBackgroundColor(Color.RED);
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_ACCEPTED)){
-                view.setBackgroundColor(Color.GREEN);
+                submitChallenge.setVisibility(View.INVISIBLE);
+            } else {
+                submitChallenge.setVisibility(View.VISIBLE);
+                //(view.findViewById(R.id.singleChallenge)).setBackgroundColor(Color.GR);
+
             }
 
             // Populate list view
@@ -174,7 +183,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
-            Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
             TextView points = view.findViewById(R.id.challengePoints);
 
             submitChallenge.setOnClickListener(new View.OnClickListener() {
