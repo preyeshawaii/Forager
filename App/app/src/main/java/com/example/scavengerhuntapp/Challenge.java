@@ -10,7 +10,7 @@ public class Challenge {
     static final String KEY_POINTS = "points";
     static final String KEY_ICON = "icon";
 
-    static final String KEY_UNATTEMPTED = "unattempted";
+    static final String KEY_UNATTEMPTED = "unAttempted";
     static final String KEY_IN_REVIEW = "inReview";
     static final String KEY_ACCEPTED = "accepted";
     static final String KEY_REJECTED = "rejected";

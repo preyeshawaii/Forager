@@ -1,5 +1,7 @@
 package com.example.scavengerhuntapp;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +29,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +125,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         Log.w(TAG, "Given huntID: " + huntID);
 
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).get()
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).collection(Challenge.KEY_CHALLENGES).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots){
@@ -157,17 +161,26 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             return i;
         }
 
+        @SuppressLint("ResourceAsColor")
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
+            Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
+
 
             // TODO Need to make rejected/accepted/pending colors more appealing
             if (challengesList.get(i).getState().equals(Challenge.KEY_IN_REVIEW)){
+                submitChallenge.setVisibility(View.INVISIBLE);
                 view.setBackgroundColor(Color.YELLOW);
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_REJECTED)){
+                submitChallenge.setVisibility(View.VISIBLE);
                 view.setBackgroundColor(Color.RED);
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_ACCEPTED)){
-                view.setBackgroundColor(Color.GREEN);
+                submitChallenge.setVisibility(View.INVISIBLE);
+            } else {
+                submitChallenge.setVisibility(View.VISIBLE);
+                //(view.findViewById(R.id.singleChallenge)).setBackgroundColor(Color.GR);
+
             }
 
             // Populate list view
@@ -175,7 +188,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
-            Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
             TextView points = view.findViewById(R.id.challengePoints);
 
             submitChallenge.setOnClickListener(new View.OnClickListener() {
