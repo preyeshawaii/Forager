@@ -1,5 +1,7 @@
 package com.example.scavengerhuntapp;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,11 +160,11 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             return i;
         }
 
+        @SuppressLint("ResourceAsColor")
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
             Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
-
 
 
             // TODO Need to make rejected/accepted/pending colors more appealing
