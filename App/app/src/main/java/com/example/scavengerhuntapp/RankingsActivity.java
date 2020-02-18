@@ -67,10 +67,7 @@ public class RankingsActivity extends AppCompatActivity {
 
         String userType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
         isPlayer = userType.equals(User.KEY_PLAYER)? true : false;
-        BottomNavigationView bottomNavigationView = isPlayer ?
-                (BottomNavigationView)findViewById(R.id.bottom_navigation) :
-                (BottomNavigationView)findViewById(R.id.organizer_bottom_navigation);
-        bottomNavigationView.setVisibility(View.VISIBLE);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
         teams = new ArrayList<>();
@@ -99,6 +96,7 @@ public class RankingsActivity extends AppCompatActivity {
                         intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                         intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+                        intent.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
                         startActivity(intent);
                         break;
                     case R.id.action_challenges:
@@ -106,6 +104,7 @@ public class RankingsActivity extends AppCompatActivity {
                         intent2.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                         intent2.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent2.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+                        intent2.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
                         startActivity(intent2);
                         break;
                     case R.id.action_team:
