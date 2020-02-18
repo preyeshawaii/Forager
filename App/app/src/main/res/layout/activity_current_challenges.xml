@@ -23,7 +23,8 @@
         <ListView
             android:id="@+id/curr_challenges_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@id/organizer_bottom_navigation"/>
 
 
 
