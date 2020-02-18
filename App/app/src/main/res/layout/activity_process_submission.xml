@@ -15,17 +15,14 @@
     </include>
 
     <TextView
+        style="@style/ParagraphText"
         android:id="@+id/process_submission_challenge_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DESCRIPTION OF CHALLENGE GOES HERE">
     </TextView>
 
-    <TextView
-        android:id="@+id/process_submission_team_points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Points"></TextView>
+
 
     <ImageView
         android:id="@+id/process_submission_photo"
@@ -37,11 +34,6 @@
         android:layout_gravity="center">
     </ImageView>
 
-    <TextView
-        android:id="@+id/process_submission_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Activity Text"></TextView>
 
     <LinearLayout
         android:id="@+id/process_submission_button_container"
@@ -55,9 +47,11 @@
             android:layout_width="wrap_content"
             android:onClick="clickedApprove"
             android:layout_height="wrap_content"
+            style="@style/RegularButton"
             android:text="Approve"></Button>
 
         <Button
+            style="@style/EmphasisButton"
             android:id="@+id/process_submission_reject_button"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

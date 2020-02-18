@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,14 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         message = findViewById(R.id.process_submission_challenge_description);
         description = findViewById(R.id.challengeTextView);
         imageView = findViewById(R.id.process_submission_photo);
+
+        Button submitButton = findViewById(R.id.submitButtonChallenge);
+        submitButton.setVisibility(View.GONE);
+
+        View checkMarkBox = findViewById(R.id.checkBox);
+        checkMarkBox.setVisibility(View.GONE);
     }
+
 
     @Override
     protected void onStart(){
