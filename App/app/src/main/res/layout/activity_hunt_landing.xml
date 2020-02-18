@@ -48,6 +48,13 @@
             android:textSize="20dp"
             android:text="" />
 
+        <Button
+            android:id="@+id/copy_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RegularButton"
+            android:text="Copy" />
+
     </LinearLayout>
 
     <Switch
