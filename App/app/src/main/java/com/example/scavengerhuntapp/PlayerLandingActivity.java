@@ -19,8 +19,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -228,6 +231,8 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                                 });
                     }
                 });
+
+
     }
 
     private void updateOrganizerTeams(final String teamName, final String uniqueID){
@@ -254,6 +259,30 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                     public void onFailure(@NonNull Exception e) {
                         Log.e(TAG, e.toString());
                         Toast.makeText(getApplicationContext(), "Error saving information. Try Again", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        db.collection(Hunt.KEY_HUNTS).document(hunt.getHuntID()).collection(Challenge.KEY_CHALLENGES).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            Challenge challenge = documentSnapshot.toObject(Challenge.class);
+                            db.collection(Hunt.KEY_HUNTS).document(hunt.getHuntID()).collection(Team.KEY_TEAMS)
+                                    .document(uniqueID).collection(Challenge.KEY_CHALLENGES).add(challenge)
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e(TAG, e.toString());
+                                        }
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
                     }
                 });
     }

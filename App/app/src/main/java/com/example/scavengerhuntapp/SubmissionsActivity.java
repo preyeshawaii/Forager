@@ -160,6 +160,7 @@ public class SubmissionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String teamName = teamNames.get(position);
+                String teamID = subs.get(position).getTeamID();
                 String challengeID = subs.get(position).getChallengeID();
                 String subID = subs.get(position).getSubmissionID();
                 String description = descriptions.get(position);
@@ -175,6 +176,7 @@ public class SubmissionsActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamNames.get(position));
+                intent.putExtra(Team.KEY_TEAM_ID, teamID);
                 intent.putExtra(Challenge.KEY_CHALLENGE_ID, challengeID);
                 intent.putExtra(Submission.KEY_SUBMISSION_ID, subID);
                 intent.putExtra(Submission.KEY_DESCRIPTION, description);
