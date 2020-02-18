@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,5 +204,27 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             return view;
         }
     }
-}
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_all_hunts:
+                Intent intent = new Intent(PlayerHuntLandingActivity.this, PlayerLandingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent2 = new Intent(PlayerHuntLandingActivity.this, MainActivity.class);
+                startActivity(intent2);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
