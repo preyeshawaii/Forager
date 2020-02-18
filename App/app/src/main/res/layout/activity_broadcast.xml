@@ -11,14 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/broadcast"
-        style="@style/HeadingText"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/HeadingText"/>
+
 
 
     <EditText
         android:id="@+id/broadcast_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
         android:height="@android:dimen/notification_large_icon_width"
         android:hint="Write a message to all teams here!"
         android:inputType="textShortMessage">
@@ -28,18 +31,39 @@
     </EditText>
 
     <Button
+        android:layout_marginTop="50dp"
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/submit"
         style="@style/EmphasisButton"
-        android:layout_margin="5dp"
-        android:text="@string/submit" />
+        android:layout_margin="5dp"/>
     <Button
+        android:layout_margin="5dp"
         android:id="@+id/broadcast_back_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        style="@style/RegularButton"
-        android:text="@string/go_back" />
+        android:text="@string/go_back"
+        style="@style/RegularButton"/>
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/organizer_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/organizer_bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemRippleColor="@color/colorAccent"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@color/bottom_nav_highlight"
+            app:itemTextColor="@color/bottom_nav_highlight" />
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_broadcast"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_comment_24px"
         android:title="Broadcast" />
 
     <item
@@ -16,7 +16,7 @@
     <item
         android:id="@+id/action_submissions"
         android:enabled="true"
-        android:icon="@drawable/ic_group_black_24dp"
+        android:icon="@drawable/ic_vertical_align_bottom_24px"
         android:title="Submissions" />
 
     <item

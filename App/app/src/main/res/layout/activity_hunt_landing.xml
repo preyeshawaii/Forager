@@ -13,8 +13,20 @@
         android:layout_height="wrap_content"
         android:text="Hunt Name"
         android:textSize="30dp"
-        style="@style/HeadingText"
+        android:gravity="center"
+        android:textColor="@color/colorTextDefault"
+        style="@style/HeadingText"/>
+
+    <TextView
+        android:id="@+id/title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ranking"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/HeadingText"/>
+
         android:gravity="center"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,37 +48,29 @@
             android:textSize="20dp"
             android:text="" />
 
+        <Button
+            android:id="@+id/copy_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RegularButton"
+            android:text="Copy" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/rankings_button"
-        android:layout_width="match_parent"
+    <Switch
+        android:id="@+id/show_points_switch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rankings"/>
-
-    <Button
-        android:id="@+id/challenges_button"
-        android:layout_width="match_parent"
+        android:checked="false"
+        android:text="Show Points"
+        android:textOff="Off"
+        android:textOn="On"/>
+    <ListView
+        android:id="@+id/team_list"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Challenges"/>
-
-    <Button
-        android:id="@+id/submissions_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submissions"/>
-
-    <Button
-        android:id="@+id/broadcast_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Broadcast"/>
-
-    <Button
-        android:id="@+id/hunt_landing_back_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back"/>
+        android:divider="#A6A6A6"
+        android:dividerHeight="1dp" />
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -85,6 +89,8 @@
             app:itemIconTint="@color/bottom_nav_highlight"
             app:itemTextColor="@color/bottom_nav_highlight" />
     </RelativeLayout>
+
+
 
 
 </LinearLayout>
