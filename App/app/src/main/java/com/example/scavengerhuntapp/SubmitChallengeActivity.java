@@ -46,6 +46,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
 
     private String huntID;
     private String huntName;
+    private String teamID;
     private Submission submission;
 
     private Uri mImageUri;
@@ -162,7 +163,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
     private void initializeSubmission(){
         String id = Utils.uniqueID(Submission.SUBMISSION_ID_LENGTH);
 
-        String teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
+        teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
         String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         String challengeID = getIntent().getExtras().getString(Challenge.KEY_CHALLENGE_ID);
         String description = getIntent().getExtras().getString(Submission.KEY_DESCRIPTION);
@@ -177,7 +178,8 @@ public class SubmitChallengeActivity extends AppCompatActivity {
 
         Challenge challenge = submission;
 
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).document(submission.getChallengeID()).set(challenge)
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID)
+                .collection(Challenge.KEY_CHALLENGES).document(submission.getChallengeID()).set(challenge)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

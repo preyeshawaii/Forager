@@ -32,6 +32,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
 
     private String huntID;
     private String submissionID;
+    private String teamID;
     private Challenge challenge;
 
     private String TAG = "ProcessSubmissionActivity";
@@ -58,6 +59,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         submissionID = getIntent().getExtras().getString(Submission.KEY_SUBMISSION_ID);
         String challengeID = getIntent().getExtras().getString(Challenge.KEY_CHALLENGE_ID);
         String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
+        teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
         String description = getIntent().getExtras().getString(Submission.KEY_DESCRIPTION);
         String location = getIntent().getExtras().getString(Submission.KEY_LOCATION);
         String icon = getIntent().getExtras().getString(Submission.KEY_ICON);
@@ -129,7 +131,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
             challenge.setState(Challenge.KEY_REJECTED);
         }
 
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).document(challenge.getChallengeID()).set(challenge)
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).collection(Challenge.KEY_CHALLENGES).document(challenge.getChallengeID()).set(challenge)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

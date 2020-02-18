@@ -120,7 +120,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         Log.w(TAG, "Given huntID: " + huntID);
 
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Challenge.KEY_CHALLENGES).get()
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).collection(Challenge.KEY_CHALLENGES).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots){
