@@ -217,6 +217,9 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: COPY THIS TO ALL PAGES THAT ARE PAST THE LANDING
+    // Note: No xml changes are required
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -239,4 +242,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // End of top menu code
 }
