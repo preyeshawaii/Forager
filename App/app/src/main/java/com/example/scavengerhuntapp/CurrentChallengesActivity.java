@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -91,7 +92,8 @@ public class CurrentChallengesActivity extends AppCompatActivity {
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(CurrentChallengesActivity.this, HuntLandingActivity.class);
-
+                        intent3.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent3.putExtra(Hunt.KEY_HUNT_NAME, huntName);
 
                         startActivity(intent3);
                         break;
@@ -159,6 +161,10 @@ public class CurrentChallengesActivity extends AppCompatActivity {
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
+
+            // remove submit button here
+            Button submitButton = view.findViewById(R.id.submitButtonChallenge);
+            submitButton.setVisibility(View.GONE);
 
             imageView.setImageResource(challengesList.get(i).getIcon());
             challengeTextView.setText(challengesList.get(i).getDescription());

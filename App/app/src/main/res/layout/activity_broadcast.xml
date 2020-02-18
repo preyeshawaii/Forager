@@ -38,13 +38,7 @@
         android:text="@string/submit"
         style="@style/EmphasisButton"
         android:layout_margin="5dp"/>
-    <Button
-        android:layout_margin="5dp"
-        android:id="@+id/broadcast_back_btn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/go_back"
-        style="@style/RegularButton"/>
+
 
 
     <RelativeLayout
