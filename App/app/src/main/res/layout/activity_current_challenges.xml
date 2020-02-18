@@ -27,7 +27,6 @@
             android:layout_above="@id/organizer_bottom_navigation"/>
 
 
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/organizer_bottom_navigation"
             android:layout_width="match_parent"
