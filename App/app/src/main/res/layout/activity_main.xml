@@ -7,21 +7,37 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".MainActivity"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorWhite">
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/logo" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <RadioGroup
         android:id="@+id/radioGroup_userType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="30dp"
-        android:paddingHorizontal="40dp">
+        android:paddingHorizontal="40dp"
+        android:layout_centerHorizontal="true">
+
         <RadioButton android:id="@+id/radio_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player"
             android:onClick="onRadioButtonClicked"
             android:layout_weight="1"/>
+
+
+
         <RadioButton android:id="@+id/radio_organizer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,15 +46,13 @@
             android:layout_weight="1" />
 
     </RadioGroup>
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup_userType"
+            />
+    </RelativeLayout>
 
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </LinearLayout>

@@ -30,7 +30,7 @@ public class BroadcastActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private Button backButton;
+
     private Button submitBtn;
     private EditText message;
 
@@ -43,19 +43,11 @@ public class BroadcastActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        backButton = findViewById(R.id.broadcast_back_btn);
+
         submitBtn = findViewById(R.id.submit_button);
         message = findViewById(R.id.broadcast_message);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BroadcastActivity.this, HuntLandingActivity.class);
-                intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                startActivity(intent);
-            }
-        });
+
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +92,12 @@ public class BroadcastActivity extends AppCompatActivity {
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(BroadcastActivity.this, HuntLandingActivity.class);
 
+                        intent3.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent3.putExtra(Hunt.KEY_HUNT_NAME, huntName);
 
                         startActivity(intent3);
+
+
                         break;
                 }
 
