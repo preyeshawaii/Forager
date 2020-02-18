@@ -46,7 +46,6 @@ public class RankingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private Button backBtn;
     private ListView teamsListView;
     private Switch viewPointSwitch;
 
@@ -63,7 +62,6 @@ public class RankingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        backBtn = findViewById(R.id.rankings_go_back);
         teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
 
@@ -87,17 +85,6 @@ public class RankingsActivity extends AppCompatActivity {
 
 
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = isPlayer ? new Intent(RankingsActivity.this, PlayerHuntLandingActivity.class) : new Intent(RankingsActivity.this, HuntLandingActivity.class);
-
-                intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                startActivity(intent);
-            }
-        });
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(3);
