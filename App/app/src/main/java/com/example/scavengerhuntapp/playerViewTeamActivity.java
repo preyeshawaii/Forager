@@ -67,12 +67,13 @@ public class playerViewTeamActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        teamNameTV.setText(teamName);
 
         huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
         teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
+
+        teamNameTV.setText(teamName);
 
         loadTeam();
         teamMemberListview.setAdapter(customAdapter);

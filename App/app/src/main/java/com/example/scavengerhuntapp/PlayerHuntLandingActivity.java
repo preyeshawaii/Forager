@@ -63,7 +63,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
 
         title = findViewById(R.id.hunt_name_text_view);
         challengesListView = findViewById(R.id.challenge_list);
-        title.setText(huntName);
 
         challengesList = new ArrayList<>();
         huntNamesArray = new CustomAdapter();
@@ -75,6 +74,8 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
         teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
+
+        title.setText(huntName);
 
 
 
