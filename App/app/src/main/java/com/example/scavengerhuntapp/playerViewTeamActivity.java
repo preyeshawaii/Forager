@@ -46,12 +46,15 @@ public class playerViewTeamActivity extends AppCompatActivity {
         ListView teamMemberListview = findViewById(R.id.team_member_list);
         customAdapter = new CustomAdapter();
         teamMemberListview.setAdapter(customAdapter);
+        /*
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(2);
-        menuItem.setChecked(true);
+        menuItem.setChecked(true); */
+
+        /*
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -88,6 +91,8 @@ public class playerViewTeamActivity extends AppCompatActivity {
                 return false;
             }
         });
+        */
+
     }
 
     public void clickedAddMember (View v){
