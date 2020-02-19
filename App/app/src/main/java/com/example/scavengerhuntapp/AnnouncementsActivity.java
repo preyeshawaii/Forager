@@ -3,12 +3,14 @@ package com.example.scavengerhuntapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +47,8 @@ public class AnnouncementsActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.action_team:
+                        Intent newIntent = new Intent (AnnouncementsActivity.this, playerViewTeamActivity.class);
+                        startActivity(newIntent);
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(AnnouncementsActivity.this, RankingsActivity.class);
@@ -62,5 +66,28 @@ public class AnnouncementsActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_all_hunts:
+                Intent intent = new Intent(AnnouncementsActivity.this, PlayerLandingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_sign_out:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent2 = new Intent(AnnouncementsActivity.this, MainActivity.class);
+                startActivity(intent2);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
