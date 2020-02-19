@@ -213,10 +213,20 @@ public class SubmissionsActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.submission_list_custom_view, null);
             TextView teamName = convertView.findViewById(R.id.submission_list_team_name);
-            teamName.setText(teamNames.get(position));
-
             TextView challengeName = convertView.findViewById(R.id.submission_list_challenge);
-            challengeName.setText(descriptions.get(position));
+
+            String teamNameStr = teamNames.get(position);
+            if (teamNameStr.length() >= 10){
+                teamNameStr = teamNameStr.substring(0, 8) + "...";
+            }
+            teamName.setText(teamNameStr);
+
+
+            String description = descriptions.get(position);
+            if (description.length() >= 10){
+                description = description.substring(0, 8) + "...";
+            }
+            challengeName.setText(description);
 
             TextView pointsAwarded = convertView.findViewById(R.id.submission_list_points);
             pointsAwarded.setText(Integer.toString(points.get(position)));
