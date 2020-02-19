@@ -269,7 +269,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                         for (QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
                             Challenge challenge = documentSnapshot.toObject(Challenge.class);
                             db.collection(Hunt.KEY_HUNTS).document(hunt.getHuntID()).collection(Team.KEY_TEAMS)
-                                    .document(uniqueID).collection(Challenge.KEY_CHALLENGES).add(challenge)
+                                    .document(uniqueID).collection(Challenge.KEY_CHALLENGES).document(challenge.getChallengeID()).set(challenge)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {

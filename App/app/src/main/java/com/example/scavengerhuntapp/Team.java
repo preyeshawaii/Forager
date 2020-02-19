@@ -46,6 +46,10 @@ public class Team {
         return members;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     @Exclude
     public Map<String, String> getNamesAndPhoneNums(){
         if (memberNamesAndPhoneNum == null){

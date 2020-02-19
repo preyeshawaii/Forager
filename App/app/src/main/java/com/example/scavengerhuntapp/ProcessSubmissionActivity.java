@@ -29,6 +29,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
     private TextView challengePoints;
     private TextView message;
     private TextView description;
+    private TextView location;
     private ImageView imageView;
 
     private String huntID;
@@ -47,6 +48,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
 
         teamName = findViewById(R.id.process_submission_team_name);
         challengePoints = findViewById(R.id.challengePoints);
+        location = findViewById(R.id.challengeLocationTextView);
         message = findViewById(R.id.process_submission_challenge_description);
         description = findViewById(R.id.challengeTextView);
         imageView = findViewById(R.id.process_submission_photo);
@@ -81,8 +83,10 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
 
         this.teamName.setText(teamName);
         this.description.setText(description);
-        challengePoints.setText(points + " points");
-        message.setText(teamComments);
+
+        this.challengePoints.setText(points + " Pts");
+        this.location.setText(location);
+        this.message.setText(teamComments);
 
         Picasso.get().load(Uri.parse(imageURI)).into(imageView);
     }
@@ -101,7 +105,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Submission sub = documentSnapshot.toObject(Submission.class);
+                        final Submission sub = documentSnapshot.toObject(Submission.class);
                         if (isAccepted){
                             sub.setState(Challenge.KEY_ACCEPTED);
                         } else {
@@ -120,6 +124,30 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
                                         Log.e(TAG, e.toString());
                                     }
                                 });
+
+                        if (isAccepted){
+                            db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Team team = documentSnapshot.toObject(Team.class);
+                                            team.setPoints(team.getPoints() + sub.getPoints());
+                                            db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).set(team)
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, e.toString());
+                                                        }
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e(TAG, e.toString());
+                                        }
+                                    });
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

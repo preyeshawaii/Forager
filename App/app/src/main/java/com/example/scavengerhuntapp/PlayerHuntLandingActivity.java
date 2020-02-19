@@ -208,7 +208,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                     intent.putExtra(Challenge.KEY_CHALLENGE_ID, challengesList.get(i).getChallengeID());
                     intent.putExtra(Submission.KEY_DESCRIPTION, challengesList.get(i).getDescription());
                     intent.putExtra(Submission.KEY_LOCATION, challengesList.get(i).getLocation());
-                    //intent.putExtra(Submission.KEY_POINTS, challengesList.get(i).getPoints());
+                    intent.putExtra(Submission.KEY_POINTS, String.valueOf((challengesList.get(i).getPoints())));
                     intent.putExtra(Submission.KEY_ICON, String.valueOf(challengesList.get(i).getIcon()));
                     startActivity(intent);
                 }
@@ -217,7 +217,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             imageView.setImageResource(challengesList.get(i).getIcon());
             challengeTextView.setText(challengesList.get(i).getDescription());
             challengeLocationTextView.setText(challengesList.get(i).getLocation());
-            //points.setText(challengesList.get(i).getPoints());
+            points.setText(challengesList.get(i).getPoints() + " Pts");
             checkBox.setVisibility(View.GONE);
 
             return view;
