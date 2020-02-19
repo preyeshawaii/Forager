@@ -9,6 +9,7 @@
 
     <TextView
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:textSize="30dp"
         style="@style/HeadingText"
@@ -23,8 +24,9 @@
         <ListView
             android:id="@+id/curr_challenges_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/organizer_bottom_navigation"/>
+            android:layout_height="match_parent"
+            android:layout_above="@id/organizer_bottom_navigation"
+            />
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,7 +39,8 @@
             app:itemRippleColor="@color/colorAccent"
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@color/bottom_nav_highlight"
-            app:itemTextColor="@color/bottom_nav_highlight" />
+            app:itemTextColor="@color/bottom_nav_highlight"
+            />
     </RelativeLayout>
 
 </LinearLayout>
