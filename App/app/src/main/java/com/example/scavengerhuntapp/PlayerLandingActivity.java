@@ -138,7 +138,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
         }
 
         ArrayAdapter<String> prevHuntNamesArray = new ArrayAdapter<>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, huntNames);
+                R.layout.hunt_list_custom_view, R.id.hunt_name_content, huntNames);
         huntsListView.setAdapter(prevHuntNamesArray);
 
         huntsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
