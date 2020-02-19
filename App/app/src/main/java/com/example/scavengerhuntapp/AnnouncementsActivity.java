@@ -47,8 +47,13 @@ public class AnnouncementsActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.action_team:
-                        Intent newIntent = new Intent (AnnouncementsActivity.this, playerViewTeamActivity.class);
-                        startActivity(newIntent);
+                        Intent intent1 = new Intent (AnnouncementsActivity.this, playerViewTeamActivity.class);
+                        intent1.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                        intent1.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
+                        intent1.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+                        intent1.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+                        intent1.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
+                        startActivity(intent1);
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(AnnouncementsActivity.this, RankingsActivity.class);

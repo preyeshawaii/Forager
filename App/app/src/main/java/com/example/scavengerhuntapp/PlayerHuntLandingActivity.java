@@ -63,6 +63,11 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
 
         title = findViewById(R.id.hunt_name_text_view);
         challengesListView = findViewById(R.id.challenge_list);
+        title.setText(huntName);
+
+        challengesList = new ArrayList<>();
+        huntNamesArray = new CustomAdapter();
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
@@ -71,10 +76,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
 
-        title.setText(huntName);
 
-        challengesList = new ArrayList<>();
-        huntNamesArray = new CustomAdapter();
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -96,8 +98,13 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                     case R.id.action_challenges:
                         break;
                     case R.id.action_team:
-                        Intent newIntent = new Intent (PlayerHuntLandingActivity.this, playerViewTeamActivity.class);
-                        startActivity(newIntent);
+                        Intent intent1 = new Intent (PlayerHuntLandingActivity.this, playerViewTeamActivity.class);
+                        intent1.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
+                        intent1.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
+                        intent1.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+                        intent1.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+                        intent1.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
+                        startActivity(intent1);
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
