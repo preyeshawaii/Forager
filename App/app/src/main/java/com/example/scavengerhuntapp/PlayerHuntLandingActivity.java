@@ -96,8 +96,12 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                     case R.id.action_challenges:
                         break;
                     case R.id.action_team:
-                        Intent newIntent = new Intent (PlayerHuntLandingActivity.this, playerViewTeamActivity.class);
-                        startActivity(newIntent);
+                        Intent intent2 = new Intent (PlayerHuntLandingActivity.this, playerViewTeamActivity.class);
+                        intent2.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent2.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent2.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        intent2.putExtra(Team.KEY_TEAM_ID, teamID);
+                        startActivity(intent2);
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);

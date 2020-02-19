@@ -50,6 +50,12 @@ public class Team {
         this.points = points;
     }
 
+    public void addMember(String name, String number){
+        Map<String, String> newPlayer = new HashMap<>();
+        newPlayer.put(name, number);
+        this.members.put("NULL: " + name, newPlayer);
+    }
+
     @Exclude
     public Map<String, String> getNamesAndPhoneNums(){
         if (memberNamesAndPhoneNum == null){
