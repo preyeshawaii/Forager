@@ -7,61 +7,69 @@
         android:id="@+id/hunt_name_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/ParagraphText"
+        android:textSize="30dp"
         android:hint="@string/hunt_name_et" />
     <TextView android:id="@+id/challenges_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/challenges_text"
         style="@style/HeadingText"/>
-    <ListView
-        android:id="@+id/challenge_list"
-        android:layout_width="match_parent"
-        android:layout_height="386dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/challenge_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/buttons_relative_layout"/>
 
-        <Button
-            android:id="@+id/custom_chall_button"
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:id="@+id/buttons_relative_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginEnd="21dp"
-            android:layout_marginRight="21dp"
-            android:layout_marginTop="5dp"
-            android:layout_toStartOf="@+id/premade_chall_button"
-            android:layout_toLeftOf="@+id/premade_chall_button"
-            style="@style/RegularButton"
-            android:text="@string/custom_chall_button"/>
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/premade_chall_button"
-            style="@style/RegularButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/premade_chall_button" />
+            <LinearLayout
+                android:id="@+id/challenges_buttons_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/create_hunt_button"
-            style="@style/EmphasisButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/custom_chall_button"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="@string/create_hunt_button" />
+                <Button
+                    android:id="@+id/custom_chall_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    style="@style/RegularButton"
+                    android:text="@string/custom_chall_button"/>
 
+                <Button
+                    android:id="@+id/premade_chall_button"
+                    style="@style/RegularButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/premade_chall_button" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/create_hunt_button"
+                style="@style/EmphasisButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/challenges_buttons_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/create_hunt_button" />
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>

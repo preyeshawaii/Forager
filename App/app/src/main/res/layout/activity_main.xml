@@ -14,7 +14,7 @@
         android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/tree" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,6 +22,7 @@
         >
     <RadioGroup
         android:id="@+id/radioGroup_userType"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -30,11 +31,12 @@
         android:layout_centerHorizontal="true">
 
         <RadioButton android:id="@+id/radio_player"
+            android:paddingRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player"
             android:onClick="onRadioButtonClicked"
-            android:layout_weight="1"/>
+            android:layout_weight="0.5"/>
 
 
 
@@ -43,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="Organizer"
             android:onClick="onRadioButtonClicked"
-            android:layout_weight="1" />
+            android:layout_weight="0.5" />
 
     </RadioGroup>
         <com.google.android.gms.common.SignInButton

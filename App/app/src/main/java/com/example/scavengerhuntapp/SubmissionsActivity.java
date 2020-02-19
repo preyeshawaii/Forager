@@ -121,7 +121,7 @@ public class SubmissionsActivity extends AppCompatActivity {
     private void loadSubmissions(){
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
-        title.setText("Submissions for " + huntName);
+        title.setText("Submissions"); //for " + huntName);
 
         subs.clear();
         teamNames.clear();

@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hunts"
+        android:text="Available Hunts"
         android:textSize="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         style="@style/HeadingText"/>

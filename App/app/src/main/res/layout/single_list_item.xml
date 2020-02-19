@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="10dip"
         android:textSize="16dip"
-        style="@style/ParagraphText"
-        android:textStyle="bold"/>
+        android:text="San Francisco"
+        style="@style/ParagraphText"/>
 </LinearLayout>
