@@ -186,15 +186,29 @@ public class HuntLandingActivity extends AppCompatActivity {
         teams.clear();
 
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        Log.e(TAG, "COULD NOT FIND: " + huntID);
         db.collection(Hunt.KEY_HUNTS).document(huntID).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Hunt hunt = documentSnapshot.toObject(Hunt.class);
-                        viewPointSwitch.setChecked(hunt.getViewPoints());
-                        canViewPoints  = hunt.getViewPoints();
+                        if (documentSnapshot.exists()){
+                            Hunt hunt = documentSnapshot.toObject(Hunt.class);
 
-                        rankTeams(huntID);
+                            viewPointSwitch.setChecked(hunt.getViewPoints());
+                            canViewPoints  = hunt.getViewPoints();
+
+                            rankTeams(huntID);
+                        } else{
+                            Log.e(TAG, "COULD NOT FIND");
+                        }
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, e.toString());
                     }
                 });
     }
