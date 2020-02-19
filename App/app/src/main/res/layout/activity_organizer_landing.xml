@@ -16,38 +16,44 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         style="@style/HeadingText"/>
 
-    <ListView
-        android:id="@+id/hunts_listView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:divider="#A6A6A6"/>
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/hunts_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/create_new_hunt_btn"
+            android:divider="#A6A6A6"/>
 
-    <TextView
-        android:id="@+id/no_hunts_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No Previous Hunts"
-        android:textSize="20dp"
-        android:visibility="gone"
-        style = "@style/ParagraphText"/>
+        <TextView
+            android:id="@+id/no_hunts_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Previous Hunts"
+            android:textSize="20dp"
+            android:visibility="gone"
+            style = "@style/ParagraphText"/>
 
-    <Button
-        android:id="@+id/create_new_hunt_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create New Hunt"
-        android:layout_margin="5dp"
-        style="@style/RegularButton"/>
+        <Button
+            android:id="@+id/create_new_hunt_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create New Hunt"
+            android:layout_above="@id/sign_out"
+            android:layout_margin="5dp"
+            style="@style/EmphasisButton"/>
 
 
 
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Organizer Sign Out"
-        style="@style/RegularButton"/>
+        <Button
+            android:id="@+id/sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_alignParentBottom="true"
+            android:text="Organizer Sign Out"
+            style="@style/RegularButton"/>
+    </RelativeLayout>
 
 </LinearLayout>
