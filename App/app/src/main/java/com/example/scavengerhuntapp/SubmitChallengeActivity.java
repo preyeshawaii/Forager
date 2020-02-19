@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,12 @@ public class SubmitChallengeActivity extends AppCompatActivity {
     private Submission submission;
 
     private Uri mImageUri;
+
+    TextView teamNameTextView;
+    TextView challengeTextView;
+    TextView locationTextView;
+    TextView pointsTextView;
+    ImageView iconView;
 
     private String TAG = "SubmitChallengeActivity";
     @Override
@@ -94,6 +101,19 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         submitButton.setVisibility(View.GONE);
         CheckBox box = findViewById(R.id.checkBox);
         box.setVisibility(View.GONE);
+
+        teamNameTextView = findViewById(R.id.teamName);
+        teamNameTextView.setText(getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+        challengeTextView = findViewById(R.id.challengeTextView);
+        challengeTextView.setText(getIntent().getExtras().getString(Submission.KEY_DESCRIPTION));
+        pointsTextView = findViewById(R.id.challengePoints);
+        pointsTextView.setText(getIntent().getExtras().getString(Submission.KEY_POINTS) + " Points");
+        locationTextView = findViewById(R.id.challengeLocationTextView);
+        locationTextView.setText(getIntent().getExtras().getString(Submission.KEY_LOCATION));
+
+        // need to add ability to change icon here.
+
+
 
     }
 
