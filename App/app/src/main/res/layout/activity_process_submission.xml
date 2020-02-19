@@ -14,51 +14,74 @@
         android:id="@+id/processSubmissionChallengeView">
     </include>
 
-    <TextView
-        style="@style/ParagraphText"
-        android:id="@+id/process_submission_challenge_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DESCRIPTION OF CHALLENGE GOES HERE">
-    </TextView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/ParagraphText"
+                    android:id="@+id/process_submission_challenge_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="DESCRIPTION OF CHALLENGE GOES HERE">
+                </TextView>
 
 
 
-    <ImageView
-        android:id="@+id/process_submission_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_background"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:layout_gravity="center">
-    </ImageView>
+                <ImageView
+                    android:id="@+id/process_submission_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher_background"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="center">
+                </ImageView>
+            </LinearLayout>
+        </ScrollView>
 
 
     <LinearLayout
         android:id="@+id/process_submission_button_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
+
+
+        <Button
+            style="@style/RegularButton"
+            android:id="@+id/process_submission_reject_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:onClick="clickedReject"
+            android:layout_margin="5dp"
+            android:text="Reject">
+        </Button>
 
         <Button
             android:id="@+id/process_submission_approve_button"
             android:layout_width="wrap_content"
             android:onClick="clickedApprove"
             android:layout_height="wrap_content"
-            style="@style/RegularButton"
+            style="@style/EmphasisButton"
+            android:layout_margin="5dp"
             android:text="Approve"></Button>
 
-        <Button
-            style="@style/EmphasisButton"
-            android:id="@+id/process_submission_reject_button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="clickedReject"
-            android:text="Reject">
-        </Button>
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 
