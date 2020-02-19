@@ -9,7 +9,10 @@
         android:id="@+id/ownTeamListContainer"
         layout="@layout/activity_team_info"
         android:layout_width="match_parent"
-        android:layout_height="500dp"></include>
+        android:layout_height="500dp"
+        ></include>
+
+
 
 
 
@@ -18,7 +21,9 @@
         android:id="@+id/inputTeamMemberContainer"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+
+        >
 
         <EditText
             android:id="@+id/inputMemberNameText"
@@ -37,14 +42,37 @@
             ></EditText>
 
     </LinearLayout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <Button
         android:layout_width="wrap_content"
-        android:layout_below="@+id/inputTeamMemberContainer"
+
         android:layout_height="wrap_content"
         style="@style/RegularButton"
         android:onClick="clickedAddMember"
-        android:text="Add Member">
+        android:text="Add Member"
+        android:layout_above="@id/bottom_navigation">
     </Button>
 
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemRippleColor="@color/colorAccent"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@color/bottom_nav_highlight"
+            app:itemTextColor="@color/bottom_nav_highlight" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>
