@@ -96,6 +96,8 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                     case R.id.action_challenges:
                         break;
                     case R.id.action_team:
+                        Intent newIntent = new Intent (PlayerHuntLandingActivity.this, playerViewTeamActivity.class);
+                        startActivity(newIntent);
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(PlayerHuntLandingActivity.this, RankingsActivity.class);
@@ -177,16 +179,15 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             // TODO Need to make rejected/accepted/pending colors more appealing
             if (challengesList.get(i).getState().equals(Challenge.KEY_IN_REVIEW)){
                 submitChallenge.setVisibility(View.INVISIBLE);
-                view.setBackgroundColor(Color.YELLOW);
+                view.setBackgroundColor(Color.parseColor("#8Ceaab00")); // yellow color
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_REJECTED)){
                 submitChallenge.setVisibility(View.VISIBLE);
-                view.setBackgroundColor(Color.RED);
+                view.setBackgroundColor(Color.parseColor("#8CB1040E"));
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_ACCEPTED)){
                 submitChallenge.setVisibility(View.INVISIBLE);
+                view.setBackgroundColor(Color.parseColor("#8C009b76")); // green color
             } else {
                 submitChallenge.setVisibility(View.VISIBLE);
-                //(view.findViewById(R.id.singleChallenge)).setBackgroundColor(Color.GR);
-
             }
 
             // Populate list view
@@ -207,7 +208,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
                     intent.putExtra(Challenge.KEY_CHALLENGE_ID, challengesList.get(i).getChallengeID());
                     intent.putExtra(Submission.KEY_DESCRIPTION, challengesList.get(i).getDescription());
                     intent.putExtra(Submission.KEY_LOCATION, challengesList.get(i).getLocation());
-                    //intent.putExtra(Submission.KEY_POINTS, challengesList.get(i).getPoints());
+                    intent.putExtra(Submission.KEY_POINTS, String.valueOf((challengesList.get(i).getPoints())));
                     intent.putExtra(Submission.KEY_ICON, String.valueOf(challengesList.get(i).getIcon()));
                     startActivity(intent);
                 }
@@ -216,7 +217,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             imageView.setImageResource(challengesList.get(i).getIcon());
             challengeTextView.setText(challengesList.get(i).getDescription());
             challengeLocationTextView.setText(challengesList.get(i).getLocation());
-            //points.setText(challengesList.get(i).getPoints());
+            points.setText(challengesList.get(i).getPoints() + " Pts");
             checkBox.setVisibility(View.GONE);
 
             return view;

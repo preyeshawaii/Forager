@@ -175,10 +175,12 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         String challengeID = getIntent().getExtras().getString(Challenge.KEY_CHALLENGE_ID);
         String description = getIntent().getExtras().getString(Submission.KEY_DESCRIPTION);
         String location = getIntent().getExtras().getString(Submission.KEY_LOCATION);
-        //String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
+        String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
         String icon = getIntent().getExtras().getString(Submission.KEY_ICON);
 
-        submission = new Submission(challengeID, id, teamID, teamName, description, location, 10, Integer.parseInt(icon));
+        Log.w(TAG, "WOW: " + points);
+
+        submission = new Submission(challengeID, id, teamID, teamName, description, location, Integer.parseInt(points), Integer.parseInt(icon));
     }
 
     private void updateChallenge() {

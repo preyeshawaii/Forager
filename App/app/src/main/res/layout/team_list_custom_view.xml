@@ -15,17 +15,16 @@
             android:id="@+id/teamview_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ParagraphText"
             android:text="Team Name"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textSize="30dp">
+            android:layout_centerVertical="true">
         </TextView>
 
         <TextView
             android:id="@+id/teamview_points"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textSize="30dp"
+            style="@style/ParagraphText"
             android:text="10 points"
             android:layout_centerVertical="true"
             android:textStyle="bold"
