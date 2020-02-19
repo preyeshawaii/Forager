@@ -111,6 +111,7 @@ public class playerViewTeamActivity extends AppCompatActivity {
                         intent3.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent3.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
                         intent3.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+                        intent3.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
                         startActivity(intent3);
                         break;
                 }

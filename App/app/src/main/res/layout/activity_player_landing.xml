@@ -48,20 +48,21 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/sign_out"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="80dp"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/hunt_code_et"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.60"
                 android:layout_height="wrap_content"
                 android:paddingRight="20dp"
                 android:hint="Enter hunt code here"/>
 
             <Button
                 android:id="@+id/hunt_code_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.40"
                 android:layout_height="wrap_content"
                 style="@style/EmphasisButton"
                 android:text="Add New Hunt"/>
