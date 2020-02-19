@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:text="TEAM INFO"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textSize="50dp"></TextView>
+        style="@style/HeadingText"
+        android:layout_gravity="center"></TextView>
 
     <ListView
         android:id="@+id/team_member_list"

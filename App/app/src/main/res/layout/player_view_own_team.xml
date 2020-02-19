@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <include
+        android:id="@+id/ownTeamListContainer"
+        layout="@layout/activity_team_info"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"></include>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/inputTeamMemberContainer"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/inputMemberNameText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/ParagraphText"
+            android:hint="First + last name">
+        </EditText>
+
+        <EditText
+            android:id="@+id/inputPhoneNumberText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/ParagraphText"
+            android:hint="Phone number: "
+            ></EditText>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/inputTeamMemberContainer"
+        android:layout_height="wrap_content"
+        style="@style/RegularButton"
+        android:onClick="clickedAddMember"
+        android:text="Add Member">
+    </Button>
+
+
+</LinearLayout>
