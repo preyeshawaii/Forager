@@ -217,14 +217,14 @@ public class SubmissionsActivity extends AppCompatActivity {
 
             String teamNameStr = teamNames.get(position);
             if (teamNameStr.length() >= 10){
-                teamNameStr = teamNameStr.substring(0, 8) + "...";
+                teamNameStr = teamNameStr.substring(0, 14) + "...";
             }
             teamName.setText(teamNameStr);
 
 
             String description = descriptions.get(position);
-            if (description.length() >= 10){
-                description = description.substring(0, 8) + "...";
+            if (description.length() >= 15){
+                description = description.substring(0, 14) + "...";
             }
             challengeName.setText(description);
 
