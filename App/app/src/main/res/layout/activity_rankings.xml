@@ -32,7 +32,7 @@
         <ListView
             android:id="@+id/team_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:divider="#A6A6A6"
             android:layout_above="@id/bottom_navigation"/>
 
