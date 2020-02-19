@@ -179,16 +179,15 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             // TODO Need to make rejected/accepted/pending colors more appealing
             if (challengesList.get(i).getState().equals(Challenge.KEY_IN_REVIEW)){
                 submitChallenge.setVisibility(View.INVISIBLE);
-                view.setBackgroundColor(Color.YELLOW);
+                view.setBackgroundColor(Color.parseColor("#8Ceaab00")); // yellow color
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_REJECTED)){
                 submitChallenge.setVisibility(View.VISIBLE);
-                view.setBackgroundColor(Color.RED);
+                view.setBackgroundColor(Color.parseColor("#8CB1040E"));
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_ACCEPTED)){
                 submitChallenge.setVisibility(View.INVISIBLE);
+                view.setBackgroundColor(Color.parseColor("#8C009b76")); // green color
             } else {
                 submitChallenge.setVisibility(View.VISIBLE);
-                //(view.findViewById(R.id.singleChallenge)).setBackgroundColor(Color.GR);
-
             }
 
             // Populate list view
