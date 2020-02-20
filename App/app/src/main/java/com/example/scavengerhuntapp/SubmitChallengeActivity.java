@@ -194,7 +194,6 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
         String icon = getIntent().getExtras().getString(Submission.KEY_ICON);
 
-        Log.w(TAG, "WOW: " + points);
 
         submission = new Submission(challengeID, id, teamID, teamName, description, location, Integer.parseInt(points), Integer.parseInt(icon));
     }
