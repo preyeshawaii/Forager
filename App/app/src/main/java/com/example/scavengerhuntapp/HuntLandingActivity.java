@@ -186,7 +186,7 @@ public class HuntLandingActivity extends AppCompatActivity {
         teams.clear();
 
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
-        Log.e(TAG, "COULD NOT FIND: " + huntID);
+        Log.e(TAG, "HUNT ID: " + huntID);
         db.collection(Hunt.KEY_HUNTS).document(huntID).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -201,8 +201,6 @@ public class HuntLandingActivity extends AppCompatActivity {
                         } else{
                             Log.e(TAG, "COULD NOT FIND");
                         }
-
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
