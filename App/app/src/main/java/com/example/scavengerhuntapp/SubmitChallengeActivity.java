@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,12 @@ public class SubmitChallengeActivity extends AppCompatActivity {
     private Submission submission;
 
     private Uri mImageUri;
+
+    private TextView teamNameTextView;
+    private TextView challengeTextView;
+    private TextView locationTextView;
+    private TextView pointsTextView;
+    private ImageView iconView;
 
     private String TAG = "SubmitChallengeActivity";
     @Override
@@ -94,6 +101,15 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         submitButton.setVisibility(View.GONE);
         CheckBox box = findViewById(R.id.checkBox);
         box.setVisibility(View.GONE);
+
+        teamNameTextView = findViewById(R.id.teamName);
+        teamNameTextView.setText(getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
+        challengeTextView = findViewById(R.id.challengeTextView);
+        challengeTextView.setText(getIntent().getExtras().getString(Submission.KEY_DESCRIPTION));
+        pointsTextView = findViewById(R.id.challengePoints);
+        pointsTextView.setText(getIntent().getExtras().getString(Submission.KEY_POINTS) + " Pts");
+        locationTextView = findViewById(R.id.challengeLocationTextView);
+        locationTextView.setText(getIntent().getExtras().getString(Submission.KEY_LOCATION));
 
     }
 
