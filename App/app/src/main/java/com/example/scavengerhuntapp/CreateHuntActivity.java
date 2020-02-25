@@ -72,6 +72,8 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
             public void onClick(View v) {
                 if (huntNameEditText.getText().toString().length() == 0){
                     Toast.makeText(CreateHuntActivity.this, "The hunt needs a name!", Toast.LENGTH_SHORT).show();
+                } else if(creatingHuntSingleton.getChallenges().isEmpty()){
+                    Toast.makeText(CreateHuntActivity.this, "You need to add challenge(s) to the hunt", Toast.LENGTH_SHORT).show();
                 }else{
                     CreateHunt();
                 }
