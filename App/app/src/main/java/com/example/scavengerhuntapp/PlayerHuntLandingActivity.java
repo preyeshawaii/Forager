@@ -31,17 +31,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerHuntLandingActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private TextView title;
-
     private ListView challengesListView;
+    private SwipeRefreshLayout swipeContainer;
 
     private List<Challenge> challengesList;
     private CustomAdapter huntNamesArray;
@@ -58,11 +58,11 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_hunt_landing);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         title = findViewById(R.id.hunt_name_text_view);
         challengesListView = findViewById(R.id.challenge_list);
+        swipeContainer = findViewById(R.id.swipe_container_challenges);
 
         challengesList = new ArrayList<>();
         huntNamesArray = new CustomAdapter();
@@ -77,7 +77,16 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
 
         title.setText(huntName);
 
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                createCurrChallListView();
+                swipeContainer.setRefreshing(false);
+            }
+        });
 
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_red_dark);
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
