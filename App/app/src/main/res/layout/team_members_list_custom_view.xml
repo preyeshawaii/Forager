@@ -13,14 +13,14 @@
             android:id="@+id/team_member_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Name"
-            android:textSize="30dp">
+            style="@style/ParagraphText"
+            android:text="Name">
         </TextView>
 
         <TextView
             android:id="@+id/team_member_view_phone"
             android:layout_width="wrap_content"
+            style="@style/ParagraphText"
             android:layout_height="wrap_content"
             android:text="(203) 500-7839"
             android:layout_alignParentRight="true"
