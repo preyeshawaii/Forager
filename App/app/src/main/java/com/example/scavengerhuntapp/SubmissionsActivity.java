@@ -4,6 +4,7 @@ package com.example.scavengerhuntapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class SubmissionsActivity extends AppCompatActivity {
 
     private TextView title;
     private ListView submissionList;
+    private SwipeRefreshLayout swipeContainer;
+
     private CustomAdapter customAdapter;
 
     private List<String> teamNames;
@@ -59,6 +62,7 @@ public class SubmissionsActivity extends AppCompatActivity {
 
         title = findViewById(R.id.submissionText);
         submissionList = findViewById(R.id.submission_list);
+        swipeContainer = findViewById(R.id.swipe_container_subs);
 
         teamNames = new ArrayList<>();
         descriptions = new ArrayList<>();
@@ -69,7 +73,16 @@ public class SubmissionsActivity extends AppCompatActivity {
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
 
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadSubmissions();
+                swipeContainer.setRefreshing(false);
+            }
+        });
 
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_red_dark);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();

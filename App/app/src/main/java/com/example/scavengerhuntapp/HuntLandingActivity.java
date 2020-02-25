@@ -3,6 +3,7 @@ package com.example.scavengerhuntapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -45,12 +46,10 @@ public class HuntLandingActivity extends AppCompatActivity {
 
     private TextView title;
     private TextView joinCode;
-
-
-
-    private ListView teamsListView;
     private Switch viewPointSwitch;
     private Button copyButton;
+    private SwipeRefreshLayout swipeContainer;
+    private ListView teamsListView;
 
     private List<Team> teams;
     private CustomAdapter customAdapter;
@@ -70,10 +69,10 @@ public class HuntLandingActivity extends AppCompatActivity {
         title = findViewById(R.id.hunt_landing_title);
         joinCode = findViewById(R.id.join_code_text);
         copyButton = findViewById(R.id.copy_button);
-
-
-        teamsListView = findViewById(R.id.team_list);
         viewPointSwitch = findViewById(R.id.show_points_switch);
+        swipeContainer = findViewById(R.id.swipe_container);
+        teamsListView = findViewById(R.id.team_list);
+
         teams = new ArrayList<>();
         customAdapter = new CustomAdapter();
 
@@ -89,6 +88,17 @@ public class HuntLandingActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
             }
         });
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadRankings();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_red_dark);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.organizer_bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();
@@ -199,7 +209,7 @@ public class HuntLandingActivity extends AppCompatActivity {
 
                             rankTeams(huntID);
                         } else{
-                            Log.e(TAG, "COULD NOT FIND");
+                            Log.e(TAG, "COULD NOT FINDt");
                         }
                     }
                 })

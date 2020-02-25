@@ -88,21 +88,28 @@
 
 
 
-
-
-    <ListView
-        android:id="@+id/team_list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:divider="#A6A6A6"
-        android:dividerHeight="1dp"
-        style="@style/ParagraphText" />
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/organizer_bottom_navigation">
+
+            <ListView
+                android:id="@+id/team_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:divider="#A6A6A6"
+                android:dividerHeight="1dp"
+                style="@style/ParagraphText" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/organizer_bottom_navigation"
             android:layout_width="match_parent"
