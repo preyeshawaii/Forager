@@ -85,6 +85,15 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/noTeamsJoinedMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ParagraphText"
+        android:text="@string/noTeamsMessage"
+        android:layout_marginLeft="5dp">
+    </TextView>
+
 
 
 

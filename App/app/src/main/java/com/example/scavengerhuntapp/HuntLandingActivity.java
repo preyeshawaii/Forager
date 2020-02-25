@@ -159,6 +159,8 @@ public class HuntLandingActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        TextView noTeamsMessage = findViewById(R.id.noTeamsJoinedMessage);
+        noTeamsMessage.setVisibility(View.GONE); // initially don't display message while data is loading
         loadRankings();
     }
 
@@ -232,6 +234,8 @@ public class HuntLandingActivity extends AppCompatActivity {
                             Team team = documentSnapshot.toObject(Team.class);
                             teams.add(team);
                         }
+                        TextView noTeamsMessage = findViewById(R.id.noTeamsJoinedMessage);
+                        noTeamsMessage.setVisibility(teams.isEmpty() ? View.VISIBLE : View.GONE);
 
                         setAdapter(huntID);
                     }
