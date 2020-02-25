@@ -128,6 +128,8 @@ public class SubmissionsActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        TextView noSubmissionsMessage= findViewById(R.id.noSubmissionsText);
+        noSubmissionsMessage.setVisibility(View.GONE); // initially don't display message while data is loading
         loadSubmissions();
     }
 
@@ -155,6 +157,8 @@ public class SubmissionsActivity extends AppCompatActivity {
                                 subs.add(sub);
                             }
                         }
+                        TextView noSubmissionsMessage= findViewById(R.id.noSubmissionsText);
+                        noSubmissionsMessage.setVisibility(teamNames.isEmpty() ? View.VISIBLE: View.GONE); // add or remove no submissions message
 
                         setAdapter(huntID, huntName);
                     }

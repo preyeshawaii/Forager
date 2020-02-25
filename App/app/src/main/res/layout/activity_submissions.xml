@@ -48,6 +48,18 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/noSubmissionsText"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:paddingTop="10dp"
+        android:layout_height="wrap_content"
+        style="@style/ParagraphText"
+        android:text="@string/noSubmissionsMessage"
+        android:layout_below="@+id/list_titles">
+    </TextView>
+
 
 
     <RelativeLayout
