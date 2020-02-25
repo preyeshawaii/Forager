@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.RequiresApi;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -12,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -40,19 +41,13 @@ import java.util.List;
 
 
 public class RankingsActivity extends AppCompatActivity {
-    /**String[] teamArray = {"Team1","Team2","Team3","Team4",
-     "Team5"};
-     int[] teamScores = {4,3,40,20,1}; **/
-
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private ListView teamsListView;
-    private Switch viewPointSwitch;
+    private SwipeRefreshLayout swipeContainer;
 
     private List<Team> teams;
     private CustomAdapter customAdapter;
-    private Boolean isPlayer;
     private Boolean canViewPoints;
 
     private String TAG = "RankingsActivity";
@@ -60,29 +55,27 @@ public class RankingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rankings);
-        mAuth = FirebaseAuth.getInstance();
+
         db = FirebaseFirestore.getInstance();
 
         teamsListView = findViewById(R.id.team_list);
-        viewPointSwitch = findViewById(R.id.show_points_switch);
+        swipeContainer = findViewById(R.id.swipe_container_rankings);
 
-        String userType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
-        isPlayer = userType.equals(User.KEY_PLAYER)? true : false;
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
 
         teams = new ArrayList<>();
         customAdapter = new CustomAdapter();
 
-        viewPointSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateDB(isChecked);
+            public void onRefresh() {
+                loadRankings();
+                swipeContainer.setRefreshing(false);
             }
         });
 
-
-
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_red_dark);
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(3);
@@ -134,38 +127,6 @@ public class RankingsActivity extends AppCompatActivity {
         loadRankings();
     }
 
-    private void updateDB(final Boolean isChecked){
-        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
-        db.collection(Hunt.KEY_HUNTS).document(huntID).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Hunt hunt = documentSnapshot.toObject(Hunt.class);
-                        hunt.setViewPoints(isChecked);
-
-                        db.collection(Hunt.KEY_HUNTS).document(huntID).set(hunt)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        canViewPoints  = isChecked;
-
-                                        if (isPlayer == true) {
-                                            viewPointSwitch.setVisibility(View.GONE);
-                                        }
-
-                                        teamsListView.setAdapter(customAdapter);
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        e.toString();
-                                    }
-                                });
-                    }
-                });
-    }
-
     private void loadRankings(){
         teams.clear();
 
@@ -175,16 +136,11 @@ public class RankingsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Hunt hunt = documentSnapshot.toObject(Hunt.class);
-                        viewPointSwitch.setChecked(hunt.getViewPoints());
                         canViewPoints  = hunt.getViewPoints();
-
-                        if (isPlayer == true) {
-                            viewPointSwitch.setVisibility(View.GONE);
-                        }
-
-                        rankTeams(huntID);
                     }
                 });
+
+        rankTeams(huntID);
     }
 
     private void rankTeams(final String huntID){
@@ -226,9 +182,6 @@ public class RankingsActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 intent.putExtra(Team.KEY_TEAM_ID, teams.get(position).getTeamID());
-
-                String playerType = isPlayer ? User.KEY_PLAYER : User.KEY_ORGANIZER;
-                intent.putExtra(User.KEY_PLAYER_TYPE, playerType);
 
                 startActivity(intent);
             }
