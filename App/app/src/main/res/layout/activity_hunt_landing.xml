@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Hunt Name"
         android:textSize="30dp"
-        android:gravity="center"
+
         android:textColor="@color/colorTextDefault"
         style="@style/HeadingText"/>
 
@@ -66,7 +66,7 @@
                 android:id="@+id/title_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ranking"
+                android:text="@string/Home"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 style="@style/HeadingText"/>
             <Switch
@@ -84,6 +84,15 @@
                 android:textOn="On"/>
         </RelativeLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/noTeamsJoinedMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ParagraphText"
+        android:text="@string/noTeamsMessage"
+        android:layout_marginLeft="5dp">
+    </TextView>
 
 
 

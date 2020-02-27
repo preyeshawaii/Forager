@@ -40,6 +40,15 @@
             android:text="10 Pts">
 
         </TextView>
+        <TextView
+            android:id="@+id/challengeStateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            style="@style/ParagraphText"
+            android:textStyle="italic"
+            android:text="status"
+            android:visibility="gone"></TextView>
     </LinearLayout>
 
     <TextView

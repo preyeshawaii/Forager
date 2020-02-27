@@ -192,19 +192,24 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
             view = getLayoutInflater().inflate(R.layout.challenge_custom_view, null);
             Button submitChallenge = view.findViewById(R.id.submitButtonChallenge);
 
+            TextView challengeText = view.findViewById(R.id.challengeStateText);
+            challengeText.setVisibility(View.VISIBLE);
 
-            // TODO Need to make rejected/accepted/pending colors more appealing
             if (challengesList.get(i).getState().equals(Challenge.KEY_IN_REVIEW)){
                 submitChallenge.setVisibility(View.INVISIBLE);
+                challengeText.setText("In review.");
                 view.setBackgroundColor(Color.parseColor("#8Ceaab00")); // yellow color
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_REJECTED)){
                 submitChallenge.setVisibility(View.VISIBLE);
+                challengeText.setText("Rejected.");
                 view.setBackgroundColor(Color.parseColor("#8CB1040E"));
             } else if (challengesList.get(i).getState().equals(Challenge.KEY_ACCEPTED)){
                 submitChallenge.setVisibility(View.INVISIBLE);
+                challengeText.setText("Approved!");
                 view.setBackgroundColor(Color.parseColor("#8C009b76")); // green color
             } else {
                 submitChallenge.setVisibility(View.VISIBLE);
+                challengeText.setVisibility(View.GONE);
             }
 
             // Populate list view

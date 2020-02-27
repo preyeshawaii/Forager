@@ -14,5 +14,8 @@
     <string name="ranking">Rankings</string>
     <string name="submit">Submit</string>
     <string name="submitChallengeDescriptionPrompt">Write a note about this challenge for the reviewers!</string>
+    <string name="noTeamsMessage">No teams have joined the hunt yet.</string>
+    <string name="noSubmissionsMessage">There are currently no pending submissions</string>
+    <string name="Home">Home</string>
 
 </resources>
