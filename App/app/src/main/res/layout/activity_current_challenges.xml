@@ -7,14 +7,6 @@
     android:orientation="vertical"
     tools:context=".CurrentChallengesActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        style="@style/HeadingText"
-        android:text="Challenges:"/>
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

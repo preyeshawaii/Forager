@@ -9,27 +9,39 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Scavvy :)"
+        android:label="Forager"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CreateHuntActivity"></activity>
+        <activity android:name=".CreateHuntActivity"
+            android:label="Create Hunt"></activity>
         <activity android:name=".CurrentTeamActivity" />
-        <activity android:name=".SubmissionsActivity"/>
-        <activity android:name=".RankingsActivity" />
-        <activity android:name=".AnnouncementsActivity" />
+        <activity android:name=".SubmissionsActivity"
+            android:label="Submissions"/>
+        <activity android:name=".RankingsActivity"
+            android:label="Rankings"/>
+        <activity android:name=".AnnouncementsActivity"
+            android:label="Announcements"/>
 
-        <activity android:name=".BroadcastActivity" />
+        <activity android:name=".BroadcastActivity"
+            android:label="Broadcast"/>
 
-        <activity android:name=".CurrentChallengesActivity" />
+        <activity android:name=".CurrentChallengesActivity"
+            android:label="Challenges"/>
         <activity android:name=".TeamInfoActivity"></activity>
-        <activity android:name=".HuntLandingActivity" />
-        <activity android:name=".PremadeChallengeListActivity" />
-        <activity android:name=".PremadeHuntsActivity" />
-        <activity android:name=".PlayerLandingActivity" />
-        <activity android:name=".PlayerHuntLandingActivity" />
-        <activity android:name=".OrganizerLandingActivity" />
+        <activity android:name=".HuntLandingActivity"
+            android:label="Hunt Home"/>
+        <activity android:name=".PremadeChallengeListActivity"
+            android:label="Pre-made Challenges"/>
+        <activity android:name=".PremadeHuntsActivity"
+            android:label="Pre-made Hunt Locations"/>
+        <activity android:name=".PlayerLandingActivity"
+            android:label="All Hunts"/>
+        <activity android:name=".PlayerHuntLandingActivity"
+            android:label="Hunt Name"/>
+        <activity android:name=".OrganizerLandingActivity"
+            android:label="All Hunts"/>
         <activity android:name=".ProcessSubmissionActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -37,11 +49,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".playerViewTeamActivity">
+        <activity android:name=".playerViewTeamActivity"
+            android:label="My Team">
         </activity>
         <activity android:name=".PlayersViewMembersActivity"></activity>
         <activity android:name=".SubmitChallengeActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:label="Submit a Challenge"/>
 
     </application>
 
