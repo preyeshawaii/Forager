@@ -151,7 +151,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
 
 
                 Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
-                establishPlayerHuntSingleton(huntID);
+                establishPlayerHuntSingleton(huntID, huntName, teamID, teamName);
 
                 Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
@@ -245,7 +245,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        establishPlayerHuntSingleton(hunt.getHuntID());
+                        establishPlayerHuntSingleton(hunt.getHuntID(), hunt.getHuntName(), uniqueID, teamName);
                         Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
                         intent.putExtra(Hunt.KEY_HUNT_ID, hunt.getHuntID());
                         intent.putExtra(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
@@ -287,7 +287,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                 });
     }
 
-    private void establishPlayerHuntSingleton(String huntID){
-        playerHuntSingleton = PlayerHuntSingleton.init(getApplicationContext(), huntID);
+    private void establishPlayerHuntSingleton(String huntID, String huntName, String teamID, String teamName){
+        playerHuntSingleton = PlayerHuntSingleton.init(getApplicationContext(), huntID, huntName, teamID, teamName);
     }
 }

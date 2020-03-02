@@ -1,7 +1,9 @@
 package com.example.scavengerhuntapp;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -37,34 +39,47 @@ public class PlayerHuntSingleton extends AppCompatActivity {
     private ListenerRegistration registration;
     private Context context;
     private String huntID;
+    private String huntName;
+    private String teamID;
+    private String teamName;
     private Boolean firstRun;
 
     private String TAG = "PlayerHuntSingleton";
 
-    private PlayerHuntSingleton(Context context, String huntID){
+    private PlayerHuntSingleton(Context context, String huntID, String huntName, String teamID, String teamName){
         this.db = FirebaseFirestore.getInstance();
         this.notificationManager = NotificationManagerCompat.from(context);
         this.registration = null;
         this.context = context;
         this.huntID = huntID;
+        this.huntName = huntName;
+        this.teamID = teamID;
+        this.teamName = teamName;
         firstRun = true;
         loadAnnouncements();
     }
 
-    public static synchronized PlayerHuntSingleton init(Context context, String huntID) {
+    public static synchronized PlayerHuntSingleton init(Context context, String huntID, String huntName, String teamID, String teamName) {
         if (playerHuntSingleton == null){
-            playerHuntSingleton = new PlayerHuntSingleton(context, huntID);
+            playerHuntSingleton = new PlayerHuntSingleton(context, huntID, huntName, teamID, teamName);
         } else{
-            playerHuntSingleton.reset(context, huntID);
+            playerHuntSingleton.reset(context, huntID, huntName, teamID, teamName);
         }
         return playerHuntSingleton;
     }
 
-    private void reset(Context context, String huntID){
+    public static synchronized PlayerHuntSingleton getPlayerHuntSingleton(){
+        return playerHuntSingleton;
+    }
+
+    private void reset(Context context, String huntID, String huntName, String teamID, String teamName){
         this.db = FirebaseFirestore.getInstance();
         this.notificationManager = NotificationManagerCompat.from(context);
         this.context = context;
         this.huntID = huntID;
+        this.huntName = huntName;
+        this.teamID = teamID;
+        this.teamName = teamName;
         this.firstRun = true;
         if (registration != null){
             registration.remove();
@@ -107,15 +122,38 @@ public class PlayerHuntSingleton extends AppCompatActivity {
 
 
     private void sendOnAnnouncementChannel(String message) {
+        Intent activityIntent = new Intent(context, AnnouncementsActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context,
+                0, activityIntent, 0);
+
+
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ANNOUNCEMENTS)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle(MESSAGE_NEW_ANNOUNCEMENT)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentIntent(contentIntent)
+                .setAutoCancel(true)
                 .build();
 
         notificationManager.notify(1, notification);
+    }
+
+    public String getHuntID(){
+        return huntID;
+    }
+
+    public String getHuntName(){
+        return huntName;
+    }
+
+    public String getTeamID(){
+        return teamID;
+    }
+
+    public String getTeamName(){
+        return teamName;
     }
 
     /**public void sendOnChannel2() {

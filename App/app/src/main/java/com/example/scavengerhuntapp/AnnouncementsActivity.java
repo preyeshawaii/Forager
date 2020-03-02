@@ -32,7 +32,11 @@ public class AnnouncementsActivity extends AppCompatActivity {
     private ListView announcementsListView;
     private SwipeRefreshLayout swipeContainer;
 
+    private PlayerHuntSingleton playerHuntSingleton;
     private String huntID;
+    private String huntName;
+    private String teamID;
+    private String teamName;
     private List<String> broadcasts;
     private ArrayAdapter<String> adapter;
 
@@ -49,7 +53,12 @@ public class AnnouncementsActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         swipeContainer = findViewById(R.id.swipe_container_announcements);
 
-        huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        playerHuntSingleton = PlayerHuntSingleton.getPlayerHuntSingleton();
+        huntID = playerHuntSingleton.getHuntID();
+        huntName = playerHuntSingleton.getHuntName();
+        teamID = playerHuntSingleton.getTeamID();
+        teamName = playerHuntSingleton.getTeamName();
+
         broadcasts = new ArrayList<>();
         adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.hunt_list_custom_view, R.id.hunt_name_content, broadcasts);
 
@@ -76,27 +85,27 @@ public class AnnouncementsActivity extends AppCompatActivity {
                         break;
                     case R.id.action_challenges:
                         Intent intent = new Intent(AnnouncementsActivity.this, PlayerHuntLandingActivity.class);
-                        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                        intent.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
-                        intent.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+                        intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        intent.putExtra(Team.KEY_TEAM_ID, teamID);
                         startActivity(intent);
                         break;
                     case R.id.action_team:
                         Intent intent1 = new Intent (AnnouncementsActivity.this, PlayerViewTeamActivity.class);
-                        intent1.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                        intent1.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                        intent1.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
-                        intent1.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+                        intent1.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent1.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent1.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        intent1.putExtra(Team.KEY_TEAM_ID, teamID);
                         intent1.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
                         startActivity(intent1);
                         break;
                     case R.id.action_rankings:
                         Intent intent3 = new Intent(AnnouncementsActivity.this, RankingsActivity.class);
-                        intent3.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                        intent3.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                        intent3.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
-                        intent3.putExtra(Team.KEY_TEAM_ID, getIntent().getExtras().getString(Team.KEY_TEAM_ID));
+                        intent3.putExtra(Hunt.KEY_HUNT_ID, huntID);
+                        intent3.putExtra(Hunt.KEY_HUNT_NAME, huntName);
+                        intent3.putExtra(Team.KEY_TEAM_NAME, teamName);
+                        intent3.putExtra(Team.KEY_TEAM_ID, teamID);
                         intent3.putExtra(User.KEY_PLAYER_TYPE, User.KEY_PLAYER);
                         startActivity(intent3);
                         break;
@@ -117,7 +126,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
     private void loadAnnouncements(){
         broadcasts.clear();
 
-        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        final String huntID = this.huntID;
         db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
