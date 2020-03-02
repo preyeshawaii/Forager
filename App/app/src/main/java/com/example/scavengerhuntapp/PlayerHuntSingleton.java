@@ -90,7 +90,6 @@ public class PlayerHuntSingleton extends AppCompatActivity {
     }
 
     private void loadAnnouncements() {
-        Log.w(TAG, "PRINT: " + huntID);
         registration = db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -106,7 +105,6 @@ public class PlayerHuntSingleton extends AppCompatActivity {
 
 
                             if (!firstRun && dc.getType() == DocumentChange.Type.ADDED){
-                                Log.w(TAG, "PRINT: " + broadcast.getMessage());
                                 sendOnAnnouncementChannel(broadcast.getMessage());
                             }
 

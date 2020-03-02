@@ -3,6 +3,7 @@ package com.example.scavengerhuntapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.view.View;
@@ -120,6 +122,12 @@ public class BroadcastActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadBroadcasts();
+    }
+
     private void loadBroadcasts(){
         broadcasts.clear();
 
@@ -135,16 +143,29 @@ public class BroadcastActivity extends AppCompatActivity {
                     }
                 });
 
+        Log.w(TAG, "PRINT: " + broadcasts.toString());
+
         broadcastView.setAdapter(adapter);
     }
 
     private void sendBroadcastToPlayers(){
         String uniqueID = UUID.randomUUID().toString();
-        String broadcastMsg = message.getText().toString();
+        final String broadcastMsg = message.getText().toString();
         Broadcast broadcast = new Broadcast(uniqueID, broadcastMsg);
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
 
         db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).document(uniqueID).set(broadcast)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        message.setText("");
+                        broadcasts.add(0, broadcastMsg);
+                        broadcastView.setAdapter(adapter);
+                        Toast.makeText(getApplicationContext(), "Sent Announcement", Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -153,7 +174,6 @@ public class BroadcastActivity extends AppCompatActivity {
                     }
                 });
 
-        loadBroadcasts();
     }
 
     @Override
