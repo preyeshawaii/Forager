@@ -7,21 +7,13 @@
     tools:context=".BroadcastActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/broadcast"
-
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        style="@style/HeadingText"/>
-
 
 
     <EditText
         android:id="@+id/broadcast_message"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_margin="5dp"
         android:height="@android:dimen/notification_large_icon_width"
         android:hint="Write a message to all teams here!"
         android:inputType="textShortMessage">

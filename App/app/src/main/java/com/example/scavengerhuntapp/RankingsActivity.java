@@ -169,7 +169,7 @@ public class RankingsActivity extends AppCompatActivity {
     public void setAdapter(final String huntID){
         teamsListView.setAdapter(customAdapter);
 
-        teamsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*teamsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String teamName = teams.get(position).getTeamName();
@@ -184,7 +184,7 @@ public class RankingsActivity extends AppCompatActivity {
 
                 startActivity(intent);
             }
-        });
+        });*/
     }
     class CustomAdapter extends BaseAdapter {
 

@@ -43,7 +43,6 @@ import java.util.List;
 public class HuntLandingActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
-    private TextView title;
     private TextView joinCode;
     private Switch viewPointSwitch;
     private Button copyButton;
@@ -64,7 +63,6 @@ public class HuntLandingActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        title = findViewById(R.id.hunt_landing_title);
         joinCode = findViewById(R.id.join_code_text);
         copyButton = findViewById(R.id.copy_button);
         viewPointSwitch = findViewById(R.id.show_points_switch);
@@ -148,7 +146,7 @@ public class HuntLandingActivity extends AppCompatActivity {
 
 
 
-        title.setText(huntName);
+        this.setTitle("Hunt: " + huntName);
         joinCode.setText(huntID);
 
 

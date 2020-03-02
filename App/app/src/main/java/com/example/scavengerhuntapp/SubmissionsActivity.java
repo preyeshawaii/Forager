@@ -40,7 +40,6 @@ public class SubmissionsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    private TextView title;
     private ListView submissionList;
     private SwipeRefreshLayout swipeContainer;
 
@@ -60,7 +59,6 @@ public class SubmissionsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        title = findViewById(R.id.submissionText);
         submissionList = findViewById(R.id.submission_list);
         swipeContainer = findViewById(R.id.swipe_container_subs);
 
@@ -136,7 +134,6 @@ public class SubmissionsActivity extends AppCompatActivity {
     private void loadSubmissions(){
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         final String huntName = getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME);
-        title.setText("Submissions"); //for " + huntName);
 
         subs.clear();
         teamNames.clear();

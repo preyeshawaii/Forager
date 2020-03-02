@@ -6,20 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".SubmissionsActivity">
 
-    <TextView
-        android:id="@+id/submissionText"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        style="@style/HeadingText"
-        android:text="Submissions for xHunt"
-        android:layout_centerHorizontal="true"></TextView>
-
     <RelativeLayout
         android:id="@+id/list_titles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/submissionText">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,7 +44,6 @@
         android:id="@+id/noSubmissionsText"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:textStyle="bold"
         android:paddingTop="10dp"
         android:layout_height="wrap_content"
         style="@style/ParagraphText"

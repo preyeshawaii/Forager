@@ -35,7 +35,6 @@ import java.util.List;
 public class PlayerHuntLandingActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
-    private TextView title;
     private ListView challengesListView;
     private SwipeRefreshLayout swipeContainer;
 
@@ -56,7 +55,6 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        title = findViewById(R.id.hunt_name_text_view);
         challengesListView = findViewById(R.id.challenge_list);
         swipeContainer = findViewById(R.id.swipe_container_challenges);
 
@@ -71,7 +69,7 @@ public class PlayerHuntLandingActivity extends AppCompatActivity {
         teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
         teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
 
-        title.setText(huntName);
+        this.setTitle("Hunt: " + huntName);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

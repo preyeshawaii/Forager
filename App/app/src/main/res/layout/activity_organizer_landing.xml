@@ -8,13 +8,6 @@
     android:orientation="vertical"
     android:gravity="top">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Available Hunts"
-        android:textSize="30dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        style="@style/HeadingText"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/create_new_hunt_btn"
+            android:dividerHeight="1dp"
             android:divider="#A6A6A6"/>
 
         <TextView
