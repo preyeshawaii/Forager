@@ -43,6 +43,7 @@ public class CustomChallengeDialog extends AppCompatDialogFragment {
     private EditText pointsEditText;
     private CustomChallengeListener listener;
     private Spinner spinner;
+    public int icon;
 
 
     @Override
@@ -67,16 +68,20 @@ public class CustomChallengeDialog extends AppCompatDialogFragment {
                 switch (position) {
                     case 0:
                         image.setImageResource(R.drawable.dog);
+                        icon = R.drawable.dog;
                         break;
                     case 1:
                         image.setImageResource(R.drawable.cup);
+                        icon = R.drawable.cup;
                         break;
                     case 2:
                         image.setImageResource(R.drawable.icecream);
+                        icon = R.drawable.icecream;
                         break;
                     default:
                         //Default image
                         image.setImageResource(R.drawable.icecream);
+                        icon = R.drawable.icecream;
                         break;
 
                 }
@@ -104,10 +109,11 @@ public class CustomChallengeDialog extends AppCompatDialogFragment {
                             checkPoints = "10";
                         }
 
+
                         String challenge = challengeEditText.getText().toString();
                         String location = challengeLocationEditText.getText().toString();
                         Integer pointsInt = Integer.parseInt(checkPoints);
-                        listener.getTexts(challenge, location, pointsInt);
+                        listener.getTexts(challenge, location, pointsInt, icon);
                     }
                 });
         challengeEditText = view.findViewById(R.id.challengeEditTextView);
@@ -133,7 +139,7 @@ public class CustomChallengeDialog extends AppCompatDialogFragment {
     }
 
     public interface CustomChallengeListener{
-        void getTexts(String challenge, String location, Integer points);
+        void getTexts(String challenge, String location, Integer points, int icon);
     }
 
 
