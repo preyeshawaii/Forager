@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -54,6 +55,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         premadeChallButton = findViewById(R.id.premade_chall_button);
         createHuntButton = findViewById(R.id.create_hunt_button);
         customChallButton = findViewById(R.id.custom_chall_button);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         creatingHuntSingleton = creatingHuntSingleton.init();
         pendingChallenges = new CustomAdapter();

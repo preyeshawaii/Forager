@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:divider="#A6A6A6"
         android:dividerHeight="1dp"
-        android:textSize="40dp"
+        android:paddingLeft="5dp"
         style="@style/ParagraphText">
     </ListView>
 

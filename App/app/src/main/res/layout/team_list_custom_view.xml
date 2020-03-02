@@ -13,9 +13,10 @@
 
         <TextView
             android:id="@+id/teamview_name"
+            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ParagraphText"
+            style="@style/BiggerParagraphText"
             android:text="Team Name"
             android:layout_centerVertical="true">
         </TextView>
@@ -24,10 +25,11 @@
             android:id="@+id/teamview_points"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            style="@style/ParagraphText"
+            style="@style/BiggerParagraphText"
             android:text="10 points"
             android:layout_centerVertical="true"
             android:textStyle="bold"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 

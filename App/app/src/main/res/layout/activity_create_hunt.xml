@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         style="@style/ParagraphText"
         android:textSize="30dp"
+        android:windowSoftInputMode="stateHidden"
         android:hint="@string/hunt_name_et" />
     <TextView android:id="@+id/challenges_text"
         android:layout_width="wrap_content"

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,12 +26,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 
-public class playerViewTeamActivity extends AppCompatActivity {
+public class PlayerViewTeamActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     private TextView teamNameTV;
@@ -57,6 +57,7 @@ public class playerViewTeamActivity extends AppCompatActivity {
 
         teamNameTV = findViewById(R.id.team_info_name);
         teamMemberListview = findViewById(R.id.team_member_list);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         memberNames = new ArrayList<>();
         memberPhoneNumbers = new ArrayList<>();
@@ -89,7 +90,7 @@ public class playerViewTeamActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.action_alerts:
-                        Intent intent = new Intent(playerViewTeamActivity.this, AnnouncementsActivity.class);
+                        Intent intent = new Intent(PlayerViewTeamActivity.this, AnnouncementsActivity.class);
                         intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                         intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
@@ -97,7 +98,7 @@ public class playerViewTeamActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.action_challenges:
-                        Intent intent1 = new Intent(playerViewTeamActivity.this, PlayerHuntLandingActivity.class);
+                        Intent intent1 = new Intent(PlayerViewTeamActivity.this, PlayerHuntLandingActivity.class);
                         intent1.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                         intent1.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent1.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
@@ -107,7 +108,7 @@ public class playerViewTeamActivity extends AppCompatActivity {
                     case R.id.action_team:
                         break;
                     case R.id.action_rankings:
-                        Intent intent3 = new Intent(playerViewTeamActivity.this, RankingsActivity.class);
+                        Intent intent3 = new Intent(PlayerViewTeamActivity.this, RankingsActivity.class);
                         intent3.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                         intent3.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent3.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));
@@ -224,12 +225,12 @@ public class playerViewTeamActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_all_hunts:
-                Intent intent = new Intent(playerViewTeamActivity.this, PlayerLandingActivity.class);
+                Intent intent = new Intent(PlayerViewTeamActivity.this, PlayerLandingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_sign_out:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent2 = new Intent(playerViewTeamActivity.this, MainActivity.class);
+                Intent intent2 = new Intent(PlayerViewTeamActivity.this, MainActivity.class);
                 startActivity(intent2);
                 break;
         }
