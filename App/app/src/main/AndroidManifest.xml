@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".playerViewTeamActivity">
+        <activity android:name=".PlayerViewTeamActivity">
         </activity>
         <activity android:name=".PlayersViewMembersActivity"></activity>
         <activity android:name=".SubmitChallengeActivity"/>

@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
-import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,7 +34,7 @@ import android.os.Build;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Switch;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +101,7 @@ public class RankingsActivity extends AppCompatActivity {
                         startActivity(intent2);
                         break;
                     case R.id.action_team:
-                        Intent intent1 = new Intent (RankingsActivity.this, playerViewTeamActivity.class);
+                        Intent intent1 = new Intent (RankingsActivity.this, PlayerViewTeamActivity.class);
                         intent1.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
                         intent1.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
                         intent1.putExtra(Team.KEY_TEAM_NAME, getIntent().getExtras().getString(Team.KEY_TEAM_NAME));

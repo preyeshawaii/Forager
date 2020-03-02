@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HuntLandingActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private TextView title;
@@ -63,7 +62,6 @@ public class HuntLandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hunt_landing);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         title = findViewById(R.id.hunt_landing_title);
