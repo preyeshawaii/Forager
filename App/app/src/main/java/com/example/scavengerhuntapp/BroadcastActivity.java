@@ -3,6 +3,7 @@ package com.example.scavengerhuntapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -12,19 +13,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.view.View;
 
 
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class BroadcastActivity extends AppCompatActivity {
@@ -34,6 +42,10 @@ public class BroadcastActivity extends AppCompatActivity {
 
     private Button submitBtn;
     private EditText message;
+    private ListView broadcastView;
+
+    private List<String> broadcasts;
+    private ArrayAdapter<String> adapter;
 
     private String TAG = "BroadcastActivity";
 
@@ -47,7 +59,10 @@ public class BroadcastActivity extends AppCompatActivity {
 
         submitBtn = findViewById(R.id.submit_button);
         message = findViewById(R.id.broadcast_message);
+        broadcastView = findViewById(R.id.sent_announcements_list);
 
+        broadcasts = new ArrayList<>();
+        adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.hunt_list_custom_view, R.id.hunt_name_content, broadcasts);
 
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,9 +122,35 @@ public class BroadcastActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        loadBroadcasts();
+    }
+
+    private void loadBroadcasts(){
+        broadcasts.clear();
+
+        final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            broadcasts.add(documentSnapshot.toObject(Broadcast.class).getMessage());
+                        }
+
+                    }
+                });
+
+        Log.w(TAG, "PRINT: " + broadcasts.toString());
+
+        broadcastView.setAdapter(adapter);
+    }
+
     private void sendBroadcastToPlayers(){
         String uniqueID = UUID.randomUUID().toString();
-        String broadcastMsg = message.getText().toString();
+        final String broadcastMsg = message.getText().toString();
         Broadcast broadcast = new Broadcast(uniqueID, broadcastMsg);
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
 
@@ -117,10 +158,12 @@ public class BroadcastActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Intent intent = new Intent(BroadcastActivity.this, HuntLandingActivity.class);
-                        intent.putExtra(Hunt.KEY_HUNT_ID, getIntent().getExtras().getString(Hunt.KEY_HUNT_ID));
-                        intent.putExtra(Hunt.KEY_HUNT_NAME, getIntent().getExtras().getString(Hunt.KEY_HUNT_NAME));
-                        startActivity(intent);
+                        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        message.setText("");
+                        broadcasts.add(0, broadcastMsg);
+                        broadcastView.setAdapter(adapter);
+                        Toast.makeText(getApplicationContext(), "Sent Announcement", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -130,6 +173,7 @@ public class BroadcastActivity extends AppCompatActivity {
                         Toast.makeText(BroadcastActivity.this, "Error sending message!", Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
 
     @Override

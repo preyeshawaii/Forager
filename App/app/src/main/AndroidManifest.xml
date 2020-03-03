@@ -49,9 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".playerViewTeamActivity"
-            android:label="My Team">
-        </activity>
+        <activity android:name=".PlayerViewTeamActivity"
+            android:label="My Team"/>
         <activity android:name=".PlayersViewMembersActivity"></activity>
         <activity android:name=".SubmitChallengeActivity"
             android:windowSoftInputMode="adjustPan"

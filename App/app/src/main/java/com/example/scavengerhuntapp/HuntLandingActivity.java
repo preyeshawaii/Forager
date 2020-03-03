@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HuntLandingActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     private TextView joinCode;
@@ -62,7 +61,6 @@ public class HuntLandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hunt_landing);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         joinCode = findViewById(R.id.join_code_text);
@@ -262,10 +260,6 @@ public class HuntLandingActivity extends AppCompatActivity {
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
                 intent.putExtra(Team.KEY_TEAM_NAME, teamName);
                 intent.putExtra(Team.KEY_TEAM_ID, teams.get(position).getTeamID());
-
-               // String playerType = isPlayer ? User.KEY_PLAYER : User.KEY_ORGANIZER;
-                intent.putExtra(User.KEY_PLAYER_TYPE, User.KEY_ORGANIZER);
-
                 startActivity(intent);
             }
         });

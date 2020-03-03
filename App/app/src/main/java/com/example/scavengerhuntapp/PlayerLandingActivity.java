@@ -19,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,10 +33,10 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private PlayerHuntSingleton playerHuntSingleton;
 
     private Button signOutButton;
     private Button huntCodeButton;
-
     private TextView noHuntsView;
     private ListView huntsListView;
     private EditText huntCodeEditText;
@@ -152,6 +151,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
 
 
                 Toast.makeText(getApplicationContext(), huntName, Toast.LENGTH_SHORT).show();
+                establishPlayerHuntSingleton(huntID, huntName, teamID, teamName);
 
                 Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
                 intent.putExtra(Hunt.KEY_HUNT_ID, huntID);
@@ -245,7 +245,7 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        establishPlayerHuntSingleton(hunt.getHuntID(), hunt.getHuntName(), uniqueID, teamName);
                         Intent intent = new Intent(PlayerLandingActivity.this, PlayerHuntLandingActivity.class);
                         intent.putExtra(Hunt.KEY_HUNT_ID, hunt.getHuntID());
                         intent.putExtra(Hunt.KEY_HUNT_NAME, hunt.getHuntName());
@@ -285,5 +285,9 @@ public class PlayerLandingActivity extends AppCompatActivity implements TeamDial
                         Log.e(TAG, e.toString());
                     }
                 });
+    }
+
+    private void establishPlayerHuntSingleton(String huntID, String huntName, String teamID, String teamName){
+        playerHuntSingleton = PlayerHuntSingleton.init(getApplicationContext(), huntID, huntName, teamID, teamName);
     }
 }

@@ -7,37 +7,45 @@
     tools:context=".BroadcastActivity"
     android:orientation="vertical">
 
-
-
-    <EditText
-        android:id="@+id/broadcast_message"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="5dp"
-        android:height="@android:dimen/notification_large_icon_width"
-        android:hint="Write a message to all teams here!"
-        android:inputType="textShortMessage">
-
-        <requestFocus />
-
-    </EditText>
-
-    <Button
-        android:layout_marginTop="50dp"
-        android:id="@+id/submit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/submit"
-        style="@style/EmphasisButton"
-        android:layout_margin="5dp"/>
-
-
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/broadcast_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:height="@android:dimen/notification_large_icon_width"
+            android:hint="Write a message to all teams here!"
+            android:inputType="textShortMessage">
+
+            <requestFocus />
+
+        </EditText>
+
+        <Button
+
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            style="@style/EmphasisButton"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/broadcast_message"/>
+
+
+        <ListView
+            android:id="@+id/sent_announcements_list"
+            android:layout_above="@id/organizer_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submit_button"/>
+
+
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/organizer_bottom_navigation"
             android:layout_width="match_parent"
