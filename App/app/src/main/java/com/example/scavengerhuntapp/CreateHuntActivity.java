@@ -183,9 +183,9 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
     }
 
 
-    public void getTexts(String challengeDes, String location, Integer points) {
+    public void getTexts(String challengeDes, String location, Integer points, int icon) {
         final String uniqueID = Utils.generateHuntID();
-        Challenge challenge = new Challenge(uniqueID, challengeDes, location, points, R.drawable.icecream);
+        Challenge challenge = new Challenge(uniqueID, challengeDes, location, points, icon);
         creatingHuntSingleton.addChallenge(challenge);
         challengeList.setAdapter(pendingChallenges);
     }
