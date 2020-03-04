@@ -28,3 +28,6 @@ Jorge | Graphics, Computer Vision, NLP, Android App Dev, Git Version Control, Ga
 2. For project work - [Github](https://github.com/orgs/StanfordCS194/teams/team-15/)
 
 3. Between teammates - Facebook Messenger
+
+## Documentation 
+1. Process Documentation: https://docs.google.com/document/d/1WCWHc2JnRtfZ1WNa06kDQyUOZSid_MkYYANgi1FjsD8/edit?usp=sharing
