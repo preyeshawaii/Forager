@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".CreateHuntActivity"
-            android:label="Create Hunt"></activity>
+            android:label="Create Hunt"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".CurrentTeamActivity" />
         <activity android:name=".SubmissionsActivity"
             android:label="Submissions"/>
