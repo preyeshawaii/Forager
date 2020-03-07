@@ -46,4 +46,9 @@ public class CreatingHuntSingleton {
         this.challenges.clear();
         this.huntTitle = "";
     }
+
+    public void updateList(List<Challenge> challenges){
+        this.challenges = new ArrayList<>(challenges);
+
+    }
 }
