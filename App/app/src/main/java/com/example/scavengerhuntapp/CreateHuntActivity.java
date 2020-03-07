@@ -3,16 +3,20 @@ package com.example.scavengerhuntapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -47,11 +51,8 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
     private Button createHuntButton;
     private Button customChallButton;
 
-    ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener;
-
     private CreatingHuntSingleton creatingHuntSingleton;
     private CustomAdapter pendingChallenges;
-    private List<Challenge> editedChallenges;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -72,7 +73,14 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
         creatingHuntSingleton = creatingHuntSingleton.init();
         pendingChallenges = new CustomAdapter();
-        editedChallenges = new ArrayList<>(creatingHuntSingleton.getChallenges());
+
+        challengeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.w(TAG, "HERE: ");
+                openEditDialog(position);
+            }
+        });
 
         deleteChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +93,6 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
             @Override
             public void onClick(View view) {
                 creatingHuntSingleton.setHuntTitle(huntNameEditText.getText().toString());
-                updateChallenges();
                 Intent intent = new Intent(CreateHuntActivity.this, PremadeHuntsActivity.class);
                 startActivity(intent);
             }
@@ -115,7 +122,6 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
     @Override
     protected void onStart(){
         super.onStart();
-        creatingHuntSingleton.updateList(editedChallenges);
         challengeList.setChoiceMode(challengeList.CHOICE_MODE_MULTIPLE);
         challengeList.setAdapter(pendingChallenges);
         huntNameEditText.setText(creatingHuntSingleton.getHuntTitle());
@@ -139,10 +145,11 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                 Toast.makeText(CreateHuntActivity.this, "There are no challenges to delete!", Toast.LENGTH_SHORT).show();
             } else{
                 for (int i = 0; i < challengesToDelete.size(); i++){
-                    Log.w(TAG, "Index to Delete: " + challengesToDelete.get(i) + ", Current i: "+ i);
                     challenges.remove(challengesToDelete.get(i) - i);
                 }
                 creatingHuntSingleton.updateList(challenges);
+
+                pendingChallenges = new CustomAdapter();
                 challengeList.setAdapter(pendingChallenges);
             }
         }
@@ -156,7 +163,6 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        updateChallenges();
                         UpdateUserHuntList(uniqueID, hunt.getHuntName());
                         AddChallengesToHunt(uniqueID);
                     }
@@ -227,26 +233,44 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
     }
 
-    private void updateChallenges(){
-        List<Challenge> challenges = creatingHuntSingleton.getChallenges();
-        for (int i = 0; i < challengeList.getCount(); i++) {
-            EditText description = challengeList.getChildAt(i).findViewById(R.id.challengeTextView_edit);
-            EditText location = challengeList.getChildAt(i).findViewById(R.id.challengeLocationTextView_edit);
-            EditText points = challengeList.getChildAt(i).findViewById(R.id.challengePoints_edit);
-            ImageView icon = challengeList.getChildAt(i).findViewById(R.id.iconImageView_edit);
-
-            challenges.get(i).setDescription(description.getText().toString());
-            challenges.get(i).setLocation(location.getText().toString());
-            challenges.get(i).setPoints(Integer.parseInt((points.getText().toString())));
-
-           creatingHuntSingleton.updateList(challenges);
-        }
-    }
-
     public void openDialog() {
-        updateChallenges();
         CustomChallengeDialog customChallenge = new CustomChallengeDialog();
         customChallenge.show(getSupportFragmentManager(), "custom challenge");
+    }
+
+    public void openEditDialog(final int position) {
+        LayoutInflater inflater = LayoutInflater.from(CreateHuntActivity.this);
+        final View view = inflater.inflate(R.layout.dialog_custom_challenge_view, null);
+
+        final EditText challenge = view.findViewById(R.id.challengeEditTextView);
+        final EditText location = view.findViewById(R.id.challengeLocationEditTextView);
+        final EditText points = view.findViewById(R.id.pointsEditText);
+
+        challenge.setHint("Challenge Description");
+        location.setHint("Location");
+
+        challenge.setText(creatingHuntSingleton.getChallenges().get(position).getDescription());
+        location.setText(creatingHuntSingleton.getChallenges().get(position).getLocation());
+        points.setText(String.valueOf(creatingHuntSingleton.getChallenges().get(position).getPoints()));
+
+        AlertDialog dialog = new AlertDialog.Builder(CreateHuntActivity.this)
+                .setTitle("Edit Challenge")
+                .setView(view)
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        creatingHuntSingleton.getChallenges().get(position).setDescription(challenge.getText().toString());
+                        creatingHuntSingleton.getChallenges().get(position).setLocation(location.getText().toString());
+
+                        String checkPoints = points.getText().toString();
+                        if (checkPoints.matches("")){
+                            checkPoints = "0";
+                        }
+
+                        creatingHuntSingleton.getChallenges().get(position).setPoints(Integer.parseInt(checkPoints));
+                    }
+                })
+                .setNegativeButton("Cancel", null).create();
+        dialog.show();
     }
 
 
@@ -281,74 +305,14 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
             // Populate list view
             ImageView imageView = view.findViewById(R.id.iconImageView_edit);
-            final EditText challenge = view.findViewById(R.id.challengeTextView_edit);
-            final EditText location = view.findViewById(R.id.challengeLocationTextView_edit);
-            final EditText points = view.findViewById(R.id.challengePoints_edit);
+            final TextView challenge = view.findViewById(R.id.challengeTextView_edit);
+            final TextView location = view.findViewById(R.id.challengeLocationTextView_edit);
+            final TextView points = view.findViewById(R.id.challengePoints_edit);
 
             imageView.setImageResource(challenges.get(i).getIcon());
             challenge.setText(challenges.get(i).getDescription());
             location.setText(challenges.get(i).getLocation());
             points.setText(String.valueOf(challenges.get(i).getPoints()));
-
-
-
-            challenge.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    //challenges.get(i).setDescription(challenge.getText().toString());
-                }
-            });
-
-            location.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    //challenges.get(i).setLocation(location.getText().toString());
-                }
-            });
-
-            points.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    //if (!points.getText().toString().equals("")){
-                        //editedChallenges.get(i).setPoints(Integer.parseInt((points.getText().toString())));
-                    //}
-                }
-            });
-
-
 
             return view;
         }
