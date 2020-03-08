@@ -56,6 +56,10 @@ public class Team {
         this.members.put("NULL: " + name, newPlayer);
     }
 
+    public void deleteMember(String name){
+        this.members.remove("NULL: " + name);
+    }
+
     @Exclude
     public Map<String, String> getNamesAndPhoneNums(){
         if (memberNamesAndPhoneNum == null){

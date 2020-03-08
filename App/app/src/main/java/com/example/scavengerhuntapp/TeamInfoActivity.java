@@ -43,7 +43,6 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
     private ListView teamMemberListview;
 
     private Team team;
-    private Boolean isPlayer;
 
     private  String TAG = "TeamInfoActivity";
 
@@ -97,9 +96,6 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
         String teamID = getIntent().getExtras().getString(Team.KEY_TEAM_ID);
         String teamName = getIntent().getExtras().getString(Team.KEY_TEAM_NAME);
-        String playerType = getIntent().getExtras().getString(User.KEY_PLAYER_TYPE);
-
-        isPlayer = playerType.matches(User.KEY_PLAYER) ? true : false;
 
 
         teamNameView.setText(teamName);
@@ -153,10 +149,7 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
             // initialize all of the different types of views
             TextView teamMemberName = convertView.findViewById(R.id.team_member_view_name);
             TextView teamMemberPhoneNum = convertView.findViewById(R.id.team_member_view_phone);
-
-            if (isPlayer){
-                teamMemberPhoneNum.setVisibility(View.GONE);
-            }
+            convertView.findViewById(R.id.teamMemberDelete).setVisibility(View.GONE); // remove x option from organizer since it's not their team or duty 
 
 
             // NOTE: in future use getDrawable to connect to our database of images. SET DATABASE objects here

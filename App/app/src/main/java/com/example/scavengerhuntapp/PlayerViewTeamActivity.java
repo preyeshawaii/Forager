@@ -2,12 +2,14 @@ package com.example.scavengerhuntapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -123,6 +125,14 @@ public class PlayerViewTeamActivity extends AppCompatActivity {
         });
     }
 
+    public void clickedDeleteMember(View v){
+        ViewParent firstContainer = v.getParent();
+        ViewGroup row = (ViewGroup) firstContainer.getParent();
+        TextView playerName = row.findViewById(R.id.team_member_view_name);
+        deleteMember(playerName.getText().toString());
+
+    }
+
     public void clickedAddMember (View v){
         EditText nameInfo = findViewById(R.id.inputMemberNameText);
         EditText phoneNumberInfo = findViewById(R.id.inputPhoneNumberText);
@@ -161,6 +171,7 @@ public class PlayerViewTeamActivity extends AppCompatActivity {
                         Log.e(TAG, e.toString());
                     }
                 });
+        
     }
 
     private void addMember(final String name, final String number){
@@ -179,6 +190,28 @@ public class PlayerViewTeamActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getApplicationContext(), "Error: Could not add " + name, Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, e.toString());
+                    }
+                });
+    }
+
+    private void deleteMember(String name){
+        team.deleteMember(name);
+        int indexOfName = memberNames.indexOf(name);
+        memberNames.remove(indexOfName);
+        memberPhoneNumbers.remove(indexOfName);
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Team.KEY_TEAMS).document(teamID).set(team)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Removed Member", Toast.LENGTH_SHORT).show();
+                        teamMemberListview.setAdapter(customAdapter);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error: Could not remove member", Toast.LENGTH_SHORT).show();
                         Log.e(TAG, e.toString());
                     }
                 });

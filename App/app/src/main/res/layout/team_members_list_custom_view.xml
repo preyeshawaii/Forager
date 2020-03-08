@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/team_member_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,16 +18,36 @@
             android:text="Name">
         </TextView>
 
-        <TextView
-            android:id="@+id/team_member_view_phone"
-            android:layout_width="wrap_content"
-            style="@style/ParagraphText"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:text="(203) 500-7839"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            >
-        </TextView>
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+            <TextView
+                android:id="@+id/team_member_view_phone"
+                android:layout_width="wrap_content"
+                style="@style/ParagraphText"
+                android:layout_height="wrap_content"
+                android:text="(203) 500-7839"
+                >
+            </TextView>
+
+            <TextView
+                android:id="@+id/teamMemberDelete"
+                android:layout_marginLeft="5dp"
+                style="@style/HeadingText"
+                android:background="@color/colorAccent"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" X "
+                android:onClick="clickedDeleteMember"> </TextView>
+
+        </LinearLayout>
+
+
 
 
 
