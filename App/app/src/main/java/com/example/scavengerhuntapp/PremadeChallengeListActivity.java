@@ -56,6 +56,7 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < premadeChallengesList.getCount(); i++) {
+                    Log.d("COUNT", String.valueOf(i));
                     CheckBox checkedBox = premadeChallengesList.getChildAt(i).findViewById(R.id.checkBox);
                     
                     if (checkedBox.isChecked() == true){
