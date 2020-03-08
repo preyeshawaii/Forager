@@ -149,7 +149,7 @@ public class TeamInfoActivity<teamMembers> extends AppCompatActivity {
             // initialize all of the different types of views
             TextView teamMemberName = convertView.findViewById(R.id.team_member_view_name);
             TextView teamMemberPhoneNum = convertView.findViewById(R.id.team_member_view_phone);
-            convertView.findViewById(R.id.teamMemberDelete).setVisibility(View.GONE); // remove x option from organizer since it's not their team or duty 
+            convertView.findViewById(R.id.teamMemberDelete).setVisibility(View.GONE); // remove x option from organizer since it's not their team or duty
 
 
             // NOTE: in future use getDrawable to connect to our database of images. SET DATABASE objects here
