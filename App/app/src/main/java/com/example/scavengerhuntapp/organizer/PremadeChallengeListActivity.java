@@ -56,7 +56,7 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
         addToHuntButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < premadeChallengesList.getCount()-1; i++) {
+                for (int i = 0; i < premadeChallengesList.getCount(); i++) {
                     CheckBox checkedBox = premadeChallengesList.getChildAt(i).findViewById(R.id.checkBox);
                     
                     if (checkedBox.isChecked() == true){
