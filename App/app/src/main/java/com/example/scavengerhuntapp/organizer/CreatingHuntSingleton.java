@@ -16,6 +16,7 @@ public class CreatingHuntSingleton {
     final static Integer[] POINTS = {5,20,10,10,15};//,25, 45};//,40, 25,30};//, 25, 30, 10, 15, 15, 25, 15, 30,50, 30, 20,40, 35, 100, 60, 300, 30, 50,100,30,40,50,25,35,30,15,35,20,25,100};
     private String huntTitle;
     private List<Challenge> challenges;
+    private List<String> iconNames = null;
 
     private CreatingHuntSingleton(){
         this.huntTitle = "";
@@ -52,6 +53,190 @@ public class CreatingHuntSingleton {
 
     public void updateList(List<Challenge> challenges){
         this.challenges = new ArrayList<>(challenges);
+    }
 
+    public int getSpinnerIcon(int position){
+        int icon = R.drawable.icecream;
+        switch (position) {
+            case 0:
+                icon = R.drawable.a1;
+                break;
+            case 1:
+                icon = R.drawable.a2;
+                break;
+            case 2:
+                icon = R.drawable.a3;
+                break;
+            case 3:
+                icon = R.drawable.a4;
+                break;
+            case 4:
+                icon = R.drawable.a5;
+                break;
+            case 5:
+                icon = R.drawable.a6;
+                break;
+            case 6:
+                icon = R.drawable.a7;
+                break;
+            case 7:
+                icon = R.drawable.a8;
+                break;
+            case 8:
+                icon = R.drawable.a9;
+                break;
+            case 9:
+                icon = R.drawable.a10;
+                break;
+            case 10:
+                icon = R.drawable.a11;
+                break;
+            case 11:
+                icon = R.drawable.a12;
+                break;
+            case 12:
+                icon = R.drawable.a13;
+                break;
+            case 13:
+                icon = R.drawable.a14;
+                break;
+            case 14:
+                icon = R.drawable.a15;
+                break;
+            case 15:
+                icon = R.drawable.a16;
+                break;
+            case 16:
+                icon = R.drawable.a17;
+                break;
+            case 17:
+                icon = R.drawable.a18;
+                break;
+            case 18:
+                icon = R.drawable.a19;
+                break;
+            case 19:
+                icon = R.drawable.a20;
+                break;
+            case 20:
+                icon = R.drawable.a21;
+                break;
+            case 21:
+                icon = R.drawable.a2;
+                break;
+            case 22:
+                icon = R.drawable.a23;
+                break;
+            case 23:
+                icon = R.drawable.a24;
+                break;
+            case 24:
+                icon = R.drawable.a25;
+                break;
+            case 25:
+                icon = R.drawable.a26;
+                break;
+            case 26:
+                icon = R.drawable.a27;
+                break;
+            case 27:
+                icon = R.drawable.a28;
+                break;
+            case 28:
+                icon = R.drawable.a29;
+                break;
+            case 29:
+                icon = R.drawable.a30;
+                break;
+            case 30:
+                icon = R.drawable.a31;
+                break;
+            case 31:
+                icon = R.drawable.a32;
+                break;
+            case 32:
+                icon = R.drawable.a33;
+                break;
+            case 33:
+                icon = R.drawable.a34;
+                break;
+            case 34:
+                icon = R.drawable.a35;
+                break;
+            case 35:
+                icon = R.drawable.a36;
+                break;
+            case 36:
+                icon = R.drawable.a37;
+                break;
+            case 37:
+                icon = R.drawable.a38;
+                break;
+            case 38:
+                icon = R.drawable.a39;
+                break;
+            case 39:
+                icon = R.drawable.a40;
+                break;
+
+            default:
+                //Default image
+                icon = R.drawable.icecream;
+                break;
+        }
+
+        return icon;
+    }
+
+    public List<String> getIconNameList(){
+        if (iconNames == null){
+            createList();
+        }
+
+        return iconNames;
+    }
+
+    private void createList(){
+        iconNames = new ArrayList<>();
+        iconNames.add("train");//1
+        iconNames.add("abc blocks");//2
+        iconNames.add("lion");//3
+        iconNames.add("holding hands");//4
+        iconNames.add("octopus");//5
+        iconNames.add("podium");//6
+        iconNames.add("henna");//7
+        iconNames.add("ice cream");//8
+        iconNames.add("megaphone");//9
+        iconNames.add("dancing");//10
+        iconNames.add("dog");//11
+        iconNames.add("happy");//12
+        iconNames.add("playground");//13
+        iconNames.add("peace");//14
+        iconNames.add("cha cha");//15
+        iconNames.add("dancing girls");//16
+        iconNames.add("mannequin");//17
+        iconNames.add("abc blocks 2");//18
+        iconNames.add("megaphone 2");//19
+        iconNames.add("tattoo parlor");//20
+        iconNames.add("priest");//21
+        iconNames.add("musician");//22
+        iconNames.add("taxi driver");//23
+        iconNames.add("music note");//24
+        iconNames.add("tv");
+        iconNames.add("president");
+        iconNames.add("fish");
+        iconNames.add("piggy bank");
+        iconNames.add("tie");
+        iconNames.add("makeover");
+        iconNames.add("flower");
+        iconNames.add("bus");
+        iconNames.add("crawl");
+        iconNames.add("car");
+        iconNames.add("axe");
+        iconNames.add("guitarist");
+        iconNames.add("piano");
+        iconNames.add("shoe");
+        iconNames.add("dove");
+        iconNames.add("rings");
     }
 }

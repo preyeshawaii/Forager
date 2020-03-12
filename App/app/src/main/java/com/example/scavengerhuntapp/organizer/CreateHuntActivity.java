@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
 
     private CreatingHuntSingleton creatingHuntSingleton;
     private CustomAdapter pendingChallenges;
+    private int iconInt;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -75,7 +78,6 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         challengeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.w(TAG, "HERE: ");
                 openEditDialog(position);
             }
         });
@@ -243,6 +245,8 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         final EditText challenge = view.findViewById(R.id.challengeEditTextView);
         final EditText location = view.findViewById(R.id.challengeLocationEditTextView);
         final EditText points = view.findViewById(R.id.pointsEditText);
+        final ImageView icon = view.findViewById(R.id.iconImageView);
+        Spinner spinner = view.findViewById(R.id.spinner);
 
         challenge.setHint("Challenge Description");
         location.setHint("Location");
@@ -250,6 +254,27 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         challenge.setText(creatingHuntSingleton.getChallenges().get(position).getDescription());
         location.setText(creatingHuntSingleton.getChallenges().get(position).getLocation());
         points.setText(String.valueOf(creatingHuntSingleton.getChallenges().get(position).getPoints()));
+        icon.setImageResource(creatingHuntSingleton.getChallenges().get(position).getIcon());
+
+        List<String> iconNames = creatingHuntSingleton.getIconNameList();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (view.getContext(), android.R.layout.simple_spinner_item, iconNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                iconInt = creatingHuntSingleton.getSpinnerIcon(position);
+                icon.setImageResource(iconInt);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         AlertDialog dialog = new AlertDialog.Builder(CreateHuntActivity.this)
                 .setTitle("Edit Challenge")
@@ -258,6 +283,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                     public void onClick(DialogInterface dialog, int whichButton) {
                         creatingHuntSingleton.getChallenges().get(position).setDescription(challenge.getText().toString());
                         creatingHuntSingleton.getChallenges().get(position).setLocation(location.getText().toString());
+                        creatingHuntSingleton.getChallenges().get(position).setIcon(iconInt);
 
                         String checkPoints = points.getText().toString();
                         if (checkPoints.matches("")){
