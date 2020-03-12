@@ -32,3 +32,4 @@ Jorge | Graphics, Computer Vision, NLP, Android App Dev, Git Version Control, Ga
 ## Documentation 
 1. Process Documentation: https://docs.google.com/document/d/1WCWHc2JnRtfZ1WNa06kDQyUOZSid_MkYYANgi1FjsD8/edit?usp=sharing
 2. Technical Documentation: https://docs.google.com/document/d/1rHstpipldx7fWDxYxHF8QUEPtvRfX6c9bU8GtV21EPY/edit?usp=sharing
+3. Decision-making log: https://docs.google.com/document/d/1wFbg90TCWmBg7hKyoMpt9uz_aQvH-wZeH89_rNkYV4Q/edit?usp=sharing
