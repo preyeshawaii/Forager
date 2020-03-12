@@ -55,7 +55,7 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
         addToHuntButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < premadeChallengesList.getCount(); i++) {
+                for (int i = 0; i < premadeChallengesList.getCount()-1; i++) {
                     CheckBox checkedBox = premadeChallengesList.getChildAt(i).findViewById(R.id.checkBox);
                     
                     if (checkedBox.isChecked() == true){
@@ -73,7 +73,7 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
         String description = creatingHuntSingleton.CHALLENGES[i];
         String location = creatingHuntSingleton.LOCATIONS[i];
         int icon = creatingHuntSingleton.ICONS[i];
-        Integer points = 10;
+        Integer points =creatingHuntSingleton.POINTS[i];
         Challenge challenge = new Challenge(uniqueID, description, location, points, icon);
         creatingHuntSingleton.addChallenge(challenge);
     }
@@ -118,12 +118,14 @@ public class PremadeChallengeListActivity extends AppCompatActivity {
             ImageView imageView = view.findViewById(R.id.iconImageView);
             TextView challengeTextView = view.findViewById(R.id.challengeTextView);
             TextView challengeLocationTextView = view.findViewById(R.id.challengeLocationTextView);
+            TextView challengePointsTextView = view.findViewById(R.id.challengePoints);
             CheckBox checkBox = view.findViewById(R.id.checkBox);
             Button submitButton = view.findViewById(R.id.submitButtonChallenge);
             submitButton.setVisibility(View.GONE);
             imageView.setImageResource(creatingHuntSingleton.ICONS[i]);
             challengeTextView.setText(creatingHuntSingleton.CHALLENGES[i]);
             challengeLocationTextView.setText(creatingHuntSingleton.LOCATIONS[i]);
+            challengePointsTextView.setText(creatingHuntSingleton.POINTS[i].toString() + " Pts");
             checkBox.setChecked(bools.get(i));
 
             return view;

@@ -61,5 +61,21 @@ public class Challenge {
     public void setState(String state){
         this.state = state;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
 }
 

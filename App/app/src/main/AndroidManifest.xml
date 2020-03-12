@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="Forager"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -15,7 +16,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".CreateHuntActivity"
-            android:label="Create Hunt"></activity>
+            android:label="Create Hunt"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".CurrentTeamActivity" />
         <activity android:name=".SubmissionsActivity"
             android:label="Submissions"/>
