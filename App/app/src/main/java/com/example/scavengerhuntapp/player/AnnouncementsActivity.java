@@ -130,18 +130,20 @@ public class AnnouncementsActivity extends AppCompatActivity {
         broadcasts.clear();
 
         final String huntID = this.huntID;
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).get()
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS)
+                .orderBy(Broadcast.KEY_MESSAGE_NUM).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                            broadcasts.add(documentSnapshot.toObject(Broadcast.class).getMessage());
+                            broadcasts.add(0, documentSnapshot.toObject(Broadcast.class).getMessage());
                         }
 
+                        announcementsListView.setAdapter(adapter);
                     }
                 });
 
-        announcementsListView.setAdapter(adapter);
+
     }
 
     @Override
