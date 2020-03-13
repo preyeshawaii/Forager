@@ -36,6 +36,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
     private TextView description;
     private TextView location;
     private ImageView imageView;
+    private ImageView iconView;
 
     private String huntID;
     private String submissionID;
@@ -57,6 +58,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         message = findViewById(R.id.process_submission_challenge_description);
         description = findViewById(R.id.challengeTextView);
         imageView = findViewById(R.id.process_submission_photo);
+        iconView = findViewById(R.id.iconImageView);
 
         Button submitButton = findViewById(R.id.submitButtonChallenge);
         submitButton.setVisibility(View.GONE);
@@ -81,6 +83,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         String points = getIntent().getExtras().getString(Submission.KEY_POINTS);
         String teamComments = getIntent().getExtras().getString(Submission.KEY_TEAM_COMMENTS);
         String imageURI = getIntent().getExtras().getString(Submission.KEY_IMAGE_URI);
+        String iconStr = getIntent().getExtras().getString(Submission.KEY_ICON);
 
         challenge = new Challenge(challengeID, description, location, Integer.parseInt(points), Integer.parseInt(icon));
 
@@ -92,6 +95,7 @@ public class ProcessSubmissionActivity  extends AppCompatActivity {
         this.challengePoints.setText(points + " Pts");
         this.location.setText(location);
         this.message.setText(teamComments);
+        this.iconView.setImageResource(Integer.parseInt(iconStr));
 
         Picasso.get().load(Uri.parse(imageURI)).into(imageView);
     }
