@@ -54,6 +54,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
     private CreatingHuntSingleton creatingHuntSingleton;
     private CustomAdapter pendingChallenges;
     private int iconInt;
+    private Boolean firstRound;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -264,11 +265,15 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        firstRound = true;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                iconInt = creatingHuntSingleton.getSpinnerIcon(position);
+                if (!firstRound){
+                    iconInt = creatingHuntSingleton.getSpinnerIcon(position);
+                }
                 icon.setImageResource(iconInt);
+                firstRound = false;
             }
 
             @Override
