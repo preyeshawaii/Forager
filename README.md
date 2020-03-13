@@ -2,7 +2,7 @@
 
 
 ## Project Synopsis
-Based on our team's collective skills, we plan to build an Android app that centers around one of our many interests - we still need to brainstorm which one.
+We decided to build an Android scavenger hunt specifically for stanford dorms to be used by dorm staff and students. Many dorms tend to host scavenger hunts for students but often struggle with the logistics of such event. This app would assist in the creation and managment of scavenger hunts!
 
 
 ## Team Members
@@ -31,3 +31,5 @@ Jorge | Graphics, Computer Vision, NLP, Android App Dev, Git Version Control, Ga
 
 ## Documentation 
 1. Process Documentation: https://docs.google.com/document/d/1WCWHc2JnRtfZ1WNa06kDQyUOZSid_MkYYANgi1FjsD8/edit?usp=sharing
+2. Technical Documentation: https://docs.google.com/document/d/1rHstpipldx7fWDxYxHF8QUEPtvRfX6c9bU8GtV21EPY/edit?usp=sharing
+3. Decision-making log: https://docs.google.com/document/d/1wFbg90TCWmBg7hKyoMpt9uz_aQvH-wZeH89_rNkYV4Q/edit?usp=sharing
