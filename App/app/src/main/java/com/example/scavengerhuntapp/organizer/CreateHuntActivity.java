@@ -255,6 +255,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         location.setText(creatingHuntSingleton.getChallenges().get(position).getLocation());
         points.setText(String.valueOf(creatingHuntSingleton.getChallenges().get(position).getPoints()));
         icon.setImageResource(creatingHuntSingleton.getChallenges().get(position).getIcon());
+        iconInt = creatingHuntSingleton.getChallenges().get(position).getIcon();
 
         List<String> iconNames = creatingHuntSingleton.getIconNameList();
 
@@ -291,6 +292,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                         }
 
                         creatingHuntSingleton.getChallenges().get(position).setPoints(Integer.parseInt(checkPoints));
+                        challengeList.setAdapter(pendingChallenges);
                     }
                 })
                 .setNegativeButton("Cancel", null).create();
