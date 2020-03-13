@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -120,7 +121,9 @@ public class PlayerHuntSingleton extends AppCompatActivity {
 
 
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ANNOUNCEMENTS)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.tree)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.logo))
                 .setContentTitle(MESSAGE_NEW_ANNOUNCEMENT)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
