@@ -54,6 +54,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
     private CreatingHuntSingleton creatingHuntSingleton;
     private CustomAdapter pendingChallenges;
     private int iconInt;
+    private Boolean firstRound;
 
     private  String TAG = "CreateHuntActivity";
 
@@ -255,6 +256,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         location.setText(creatingHuntSingleton.getChallenges().get(position).getLocation());
         points.setText(String.valueOf(creatingHuntSingleton.getChallenges().get(position).getPoints()));
         icon.setImageResource(creatingHuntSingleton.getChallenges().get(position).getIcon());
+        iconInt = creatingHuntSingleton.getChallenges().get(position).getIcon();
 
         List<String> iconNames = creatingHuntSingleton.getIconNameList();
 
@@ -263,11 +265,15 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        firstRound = true;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                iconInt = creatingHuntSingleton.getSpinnerIcon(position);
+                if (!firstRound){
+                    iconInt = creatingHuntSingleton.getSpinnerIcon(position);
+                }
                 icon.setImageResource(iconInt);
+                firstRound = false;
             }
 
             @Override
@@ -291,6 +297,7 @@ public class CreateHuntActivity extends AppCompatActivity implements CustomChall
                         }
 
                         creatingHuntSingleton.getChallenges().get(position).setPoints(Integer.parseInt(checkPoints));
+                        challengeList.setAdapter(pendingChallenges);
                     }
                 })
                 .setNegativeButton("Cancel", null).create();
