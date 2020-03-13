@@ -84,7 +84,6 @@ public class PlayerViewTeamActivity extends AppCompatActivity {
         teamNameTV.setText(teamName);
 
         loadTeam();
-        teamMemberListview.setAdapter(customAdapter);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
@@ -168,6 +167,8 @@ public class PlayerViewTeamActivity extends AppCompatActivity {
                             memberNames.add(entry.getKey());
                             memberPhoneNumbers.add(entry.getValue());
                         }
+
+                        teamMemberListview.setAdapter(customAdapter);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

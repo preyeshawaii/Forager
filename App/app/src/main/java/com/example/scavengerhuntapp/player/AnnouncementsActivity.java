@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.scavengerhuntapp.shared.MainActivity;
 import com.example.scavengerhuntapp.R;
@@ -32,6 +34,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
+    private TextView noAnnouncementTextVIew;
     private ListView announcementsListView;
     private SwipeRefreshLayout swipeContainer;
 
@@ -52,6 +55,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        noAnnouncementTextVIew = findViewById(R.id.no_announcement_tv);
         announcementsListView = findViewById(R.id.announcements_list);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         swipeContainer = findViewById(R.id.swipe_container_announcements);
@@ -130,18 +134,24 @@ public class AnnouncementsActivity extends AppCompatActivity {
         broadcasts.clear();
 
         final String huntID = this.huntID;
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).get()
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS)
+                .orderBy(Broadcast.KEY_MESSAGE_NUM).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                            broadcasts.add(documentSnapshot.toObject(Broadcast.class).getMessage());
+                            broadcasts.add(0, documentSnapshot.toObject(Broadcast.class).getMessage());
                         }
-
+                        if (broadcasts.size() == 0){
+                            noAnnouncementTextVIew.setVisibility(View.VISIBLE);
+                        } else{
+                            noAnnouncementTextVIew.setVisibility(View.GONE);
+                        }
+                        announcementsListView.setAdapter(adapter);
                     }
                 });
 
-        announcementsListView.setAdapter(adapter);
+
     }
 
     @Override

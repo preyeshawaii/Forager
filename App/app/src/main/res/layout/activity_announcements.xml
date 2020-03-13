@@ -10,10 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/no_announcement_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Announcements"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="30dp"
+            android:visibility="gone"/>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container_announcements"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/no_announcement_tv"
             android:layout_above="@id/bottom_navigation">
 
             <ListView

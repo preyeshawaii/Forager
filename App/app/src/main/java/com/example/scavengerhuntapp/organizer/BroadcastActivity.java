@@ -36,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -136,26 +137,23 @@ public class BroadcastActivity extends AppCompatActivity {
         broadcasts.clear();
 
         final String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
-        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).get()
+        db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS)
+                .orderBy(Broadcast.KEY_MESSAGE_NUM).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                            broadcasts.add(documentSnapshot.toObject(Broadcast.class).getMessage());
+                            broadcasts.add(0, documentSnapshot.toObject(Broadcast.class).getMessage());
                         }
-
+                        broadcastView.setAdapter(adapter);
                     }
                 });
-
-        Log.w(TAG, "PRINT: " + broadcasts.toString());
-
-        broadcastView.setAdapter(adapter);
     }
 
     private void sendBroadcastToPlayers(){
         String uniqueID = UUID.randomUUID().toString();
         final String broadcastMsg = message.getText().toString();
-        Broadcast broadcast = new Broadcast(uniqueID, broadcastMsg);
+        Broadcast broadcast = new Broadcast(uniqueID, broadcastMsg, broadcasts.size() + 1);
         String huntID = getIntent().getExtras().getString(Hunt.KEY_HUNT_ID);
 
         db.collection(Hunt.KEY_HUNTS).document(huntID).collection(Broadcast.KEY_BROADCASTS).document(uniqueID).set(broadcast)
