@@ -82,6 +82,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         submissionComment = findViewById(R.id.submitChallengeText);
         mProgressBar = findViewById(R.id.progress_bar);
         submitChallengeButton = findViewById(R.id.submit_challenge_button);
+        iconView = findViewById(R.id.iconImageView);
 
         uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +117,7 @@ public class SubmitChallengeActivity extends AppCompatActivity {
         pointsTextView.setText(getIntent().getExtras().getString(Submission.KEY_POINTS) + " Pts");
         locationTextView = findViewById(R.id.challengeLocationTextView);
         locationTextView.setText(getIntent().getExtras().getString(Submission.KEY_LOCATION));
+        iconView.setImageResource(Integer.parseInt(getIntent().getExtras().getString(Submission.KEY_ICON)));
 
     }
 
